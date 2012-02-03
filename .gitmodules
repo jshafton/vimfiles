@@ -164,3 +164,12 @@
 [submodule "bundle/vim-slim"]
 	path = bundle/vim-slim
 	url = git://github.com/bbommarito/vim-slim.git
+[submodule "bundle/threesome"]
+	path = bundle/threesome
+	url = git://github.com/sjl/threesome.vim.git
+[submodule "bundle/vim-command-w"]
+	path = bundle/vim-command-w
+	url = git://github.com/nathanaelkane/vim-command-w
+[submodule "bundle/vim-easymotion"]
+	path = bundle/vim-easymotion
+	url = git://github.com/Lokaltog/vim-easymotion
