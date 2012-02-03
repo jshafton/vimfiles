@@ -164,6 +164,3 @@
 [submodule "bundle/vim-slim"]
 	path = bundle/vim-slim
 	url = git://github.com/bbommarito/vim-slim.git
-[submodule "bundle/vim-textobj-user"]
-	path = bundle/vim-textobj-user
-	url = git://github.com/kana/vim-textobj-user.git
