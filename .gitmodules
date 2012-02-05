@@ -169,3 +169,6 @@
 [submodule "bundle/vim-repeat"]
 	path = bundle/vim-repeat
 	url = git://github.com/tpope/vim-repeat.git
+[submodule "bundle/bufexplorer"]
+	path = bundle/bufexplorer
+	url = git://github.com/onehouse/vim-bufexplorer.git

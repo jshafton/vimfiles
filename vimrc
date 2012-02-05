@@ -60,7 +60,7 @@ nnoremap <silent><D-CR> :set paste<CR>m`o<Esc>``:set nopaste<CR>
 nnoremap <silent><D-K> :set paste<CR>m`O<Esc>``:set nopaste<CR>
 
 " map a hotkey for the buffer explorer
-nmap <F4> :BufExplorerHorizontalSplit<CR>
+nnoremap <F4> :BufExplorerHorizontalSplit<CR>
 
 " use CTRL-tab to switch between buffers
 nnoremap <C-Tab> :bnext<CR>
@@ -488,3 +488,5 @@ nmap gV `[v`]
 " Expand %% to full directory path in command line
 cnoremap %% <C-R>=expand('%:h').'/'<cr>
 
+" Rails menu items
+set viminfo^=!
