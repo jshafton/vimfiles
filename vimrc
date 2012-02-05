@@ -490,3 +490,7 @@ cnoremap %% <C-R>=expand('%:h').'/'<cr>
 
 " Rails menu items
 set viminfo^=!
+
+" == YankRing mapping
+nnoremap <Leader>yr :YRShow<CR>
+nnoremap <Leader>yrs :YRSearch<space>
