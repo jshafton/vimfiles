@@ -102,10 +102,17 @@ set statusline+=%{fugitive#statusline()}
 " RVM
 set statusline+=%{exists('g:loaded_rvm')?rvm#statusline():''}
 
-set statusline+=%=      "left/right separator
-set statusline+=%c,     "cursor column
-set statusline+=%l/%L   "cursor line/total lines
-set statusline+=\ %P    "percent through file
+" left/right separator
+set statusline+=%=
+
+" Syntax error indications
+set statusline+=%#warningmsg#
+set statusline+=%{SyntasticStatuslineFlag()}
+set statusline+=%*
+
+set statusline+=\ %c, " cursor column
+set statusline+=%l/%L " cursor line/total lines
+set statusline+=\ %P  " percent through file
 set laststatus=2
 
 " turn off needless toolbar on gvim/mvim
@@ -313,12 +320,15 @@ noremap Q gq
 nnoremap Y y$
 
 " bindings for ragtag
-inoremap <M-o>       <Esc>o
-inoremap <C-j>       <Down>
+inoremap <M-o> <Esc>o
+inoremap <C-j> <Down>
 let g:ragtag_global_maps = 1
 
-" mark syntax errors with :signs
-let g:syntastic_enable_signs=1
+" == Syntastic configuration
+let g:syntastic_auto_loc_list=1
+let g:syntastic_mode_map = { 'mode': 'active',
+														\ 'active_filetypes': ['ruby', 'coffee', 'javascript', 'json'],
+														\ 'passive_filetypes': ['puppet'] }
 
 " key mapping for vimgrep result navigation
 map <A-o> :copen<CR>
@@ -458,7 +468,23 @@ let g:dbext_default_use_sep_result_buffer = 1
 " Paste intelligently by default, use option+p to paste raw.
 nnoremap p pv`]=
 nnoremap P Pv`]=
-nnoremap π p nnoremap ∏ P
+nnoremap π p
+nnoremap ∏ P
 
 " Short-cut for substitution without having to type all the extra bits
 nnoremap <leader>s :%s//g<left><left>
+
+" == Bubble text (requires unimpaired plugin) ==
+" -- Bubble single lines
+nmap <D-Up> [e
+nmap <D-Down> ]e
+" -- Bubble multiple lines
+vmap <D-Up> [egv
+vmap <D-Down> ]egv
+
+" Visually select the text that was last edited/pasted
+nmap gV `[v`]
+
+" Expand %% to full directory path in command line
+cnoremap %% <C-R>=expand('%:h').'/'<cr>
+
