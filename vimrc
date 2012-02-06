@@ -494,3 +494,13 @@ set viminfo^=!
 " == YankRing mapping
 nnoremap <Leader>yr :YRShow<CR>
 nnoremap <Leader>yrs :YRSearch<space>
+
+" == Highlight current line for graphical VIM
+set cul
+hi CursorLine term=none cterm=none ctermbg=3
+
+" == Taglist plugin configuration
+nnoremap <D-\> :TlistToggle<CR>
+let Tlist_Auto_Update = 1
+let Tlist_GainFocus_On_ToggleOpen = 1
+let Tlist_Close_On_Select = 1
