@@ -4,15 +4,14 @@ set guifont=Monaco:h14
 " uncomment to replace the Mac Command-T key to Command-T plugin
 macmenu &File.Print key=<nop>
 map <D-p> :CommandT<CR>
+map <D-u> :CommandTBuffer<CR>
 
 " When the GUI starts, t_vb is reset to its default value.
 " Reassert that no flash or beep is wanted.
 set visualbell t_vb=
 
-" Set Command-W to close buffers instead of tabs!
-macmenu &File.Close key=<nop>
-nmap <D-w> :CommandW<CR>
-imap <D-w> <Esc>:CommandW<CR>
+" Enable bottom scrollbar
+set guioptions+=b
 
 " More Mac-like tab handling
 map <D-1> :tabn 1<CR>

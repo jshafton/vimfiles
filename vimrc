@@ -5,24 +5,23 @@ let g:CSApprox_verbose_level = 0
 filetype on
 filetype off
 
+" Use Vim settings, rather then Vi settings (much better!).
+" This must be first, because it changes other options as a side effect.
+set nocompatible
+
 " load pathogen managed plugins
 if !exists("g:loaded_pathogen")
   call pathogen#runtime_append_all_bundles()
 endif
-
-" Use Vim settings, rather then Vi settings (much better!).
-" This must be first, because it changes other options as a side effect.
-set nocompatible
 
 " Reprocess this file if it's saved
 if has("autocmd")
   autocmd! bufwritepost vimrc source $MYVIMRC
 endif
 
-" move VIM swap files to a temp directory so they don't clutter everything up
-silent execute '!rm -f ~/.vimtemp/*~'
-set backupdir=~/.vimtemp//
-set directory=~/.vimtemp//
+" Disable backup and swap files - more trouble than they're worth
+set nobackup
+set noswapfile
 
 " allow backspacing over everything in insert mode
 set backspace=indent,eol,start
@@ -37,9 +36,26 @@ set incsearch   "find the next match as we type the search
 set hlsearch    "hilight searches by default
 set ignorecase  "case-insensitive searching
 
+set gdefault    "default replace to global (rather than first instance)
+
 set number      "add line numbers
 set showbreak=...
 set wrap linebreak nolist
+
+" Show relative line numbers in normal mode for easy movement
+if exists('+relativenumber')
+    autocmd InsertEnter * setl nu
+    autocmd InsertLeave * setl rnu
+    autocmd WinLeave *
+      \ if &rnu==1 |
+      \ exe "setl norelativenumber" |
+      \ exe "setl nu" |
+      \ endif
+    autocmd WinEnter *
+      \ if &rnu==0 |
+      \ exe "setl rnu" |
+      \ endif
+endif
 
 " set the leader to something reasonable
 let mapleader = ","
@@ -58,9 +74,6 @@ inoremap jk <Esc>
 " insert blank line above/below cursor
 nnoremap <silent><D-CR> :set paste<CR>m`o<Esc>``:set nopaste<CR>
 nnoremap <silent><D-K> :set paste<CR>m`O<Esc>``:set nopaste<CR>
-
-" map a hotkey for the buffer explorer
-nnoremap <F4> :BufExplorerHorizontalSplit<CR>
 
 " use CTRL-tab to switch between buffers
 nnoremap <C-Tab> :bnext<CR>
@@ -93,136 +106,10 @@ nmap <Down> gj
 nmap <Up> gk
 set fo=l
 
-" statusline setup
-set statusline=%f       "tail of the filename
-
-" Git
-set statusline+=%{fugitive#statusline()}
-
-" RVM
-set statusline+=%{exists('g:loaded_rvm')?rvm#statusline():''}
-
-" left/right separator
-set statusline+=%=
-
-" Syntax error indications
-set statusline+=%#warningmsg#
-set statusline+=%{SyntasticStatuslineFlag()}
-set statusline+=%*
-
-set statusline+=\ %c, " cursor column
-set statusline+=%l/%L " cursor line/total lines
-set statusline+=\ %P  " percent through file
 set laststatus=2
 
 " turn off needless toolbar on gvim/mvim
 set guioptions-=T
-
-" recalculate the trailing whitespace warning when idle, and after saving
-autocmd cursorhold,bufwritepost * unlet! b:statusline_trailing_space_warning
-
-" return '[\s]' if trailing white space is detected
-" return '' otherwise
-function! StatuslineTrailingSpaceWarning()
-    if !exists("b:statusline_trailing_space_warning")
-        if search('\s\+$', 'nw') != 0
-            let b:statusline_trailing_space_warning = '[\s]'
-        else
-            let b:statusline_trailing_space_warning = ''
-        endif
-    endif
-    return b:statusline_trailing_space_warning
-endfunction
-
-" return the syntax highlight group under the cursor ''
-function! StatuslineCurrentHighlight()
-    let name = synIDattr(synID(line('.'),col('.'),1),'name')
-    if name == ''
-        return ''
-    else
-        return '[' . name . ']'
-    endif
-endfunction
-
-" recalculate the tab warning flag when idle and after writing
-autocmd cursorhold,bufwritepost * unlet! b:statusline_tab_warning
-
-" return '[&et]' if &et is set wrong
-" return '[mixed-indenting]' if spaces and tabs are used to indent
-" return an empty string if everything is fine
-function! StatuslineTabWarning()
-    if !exists("b:statusline_tab_warning")
-        let tabs = search('^\t', 'nw') != 0
-        let spaces = search('^ ', 'nw') != 0
-
-        if tabs && spaces
-            let b:statusline_tab_warning =  '[mixed-indenting]'
-        elseif (spaces && !&et) || (tabs && &et)
-            let b:statusline_tab_warning = '[&et]'
-        else
-            let b:statusline_tab_warning = ''
-        endif
-    endif
-    return b:statusline_tab_warning
-endfunction
-
-" recalculate the long line warning when idle and after saving
-autocmd cursorhold,bufwritepost * unlet! b:statusline_long_line_warning
-
-" return a warning for "long lines" where "long" is either &textwidth or 80 (if
-" no &textwidth is set)
-"
-" return '' if no long lines
-" return '[#x,my,$z] if long lines are found, were x is the number of long
-" lines, y is the median length of the long lines and z is the length of the
-" longest line
-function! StatuslineLongLineWarning()
-    if !exists("b:statusline_long_line_warning")
-        let long_line_lens = s:LongLines()
-
-        if len(long_line_lens) > 0
-            let b:statusline_long_line_warning = "[" .
-                        \ '#' . len(long_line_lens) . "," .
-                        \ 'm' . s:Median(long_line_lens) . "," .
-                        \ '$' . max(long_line_lens) . "]"
-        else
-            let b:statusline_long_line_warning = ""
-        endif
-    endif
-    return b:statusline_long_line_warning
-endfunction
-
-" return a list containing the lengths of the long lines in this buffer
-function! s:LongLines()
-    let threshold = (&tw ? &tw : 80)
-    let spaces = repeat(" ", &ts)
-
-    let long_line_lens = []
-
-    let i = 1
-    while i <= line("$")
-        let len = strlen(substitute(getline(i), '\t', spaces, 'g'))
-        if len > threshold
-            call add(long_line_lens, len)
-        endif
-        let i += 1
-    endwhile
-
-    return long_line_lens
-endfunction
-
-" find the median of the given array of numbers
-function! s:Median(nums)
-    let nums = sort(a:nums)
-    let l = len(nums)
-
-    if l % 2 == 1
-        let i = (l-1) / 2
-        return nums[i]
-    else
-        return (nums[l/2] + nums[(l/2)-1]) / 2
-    endif
-endfunction
 
 " indent settings
 set shiftwidth=2
@@ -270,9 +157,6 @@ if has("gui_running")
     set t_Co=256
 
     colorscheme railscasts
-    set guitablabel=%M%t
-    set lines=40
-    set columns=115
 
     if has("gui_gnome")
         set term=gnome-256color
@@ -297,21 +181,10 @@ else
     endif
 endif
 
-"  PeepOpen uses <Leader>p as well so you will need to redefine it so something
-"  else in your ~/.vimrc file, such as:
-"  nmap <silent> <Leader>q <Plug>PeepOpen
-
 silent! nmap <silent> <Leader>p :NERDTreeToggle<CR>
-nnoremap <silent> <C-f> :call FindInNERDTree()<CR>
 
-" make <a-l> clear the highlight as well as redraw
-nnoremap <leader>hl :nohl<CR><leader>hl
-
-" map to bufexplorer
-nnoremap <leader>b :BufExplorer<cr>
-
-" map to CommandT TextMate style finder
-nnoremap <leader>t :CommandT<CR>
+" clear the highlight as well as redraw
+silent! nnoremap <leader><space> :nohl<CR>:redraw<CR>
 
 " map Q to something useful
 noremap Q gq
@@ -325,10 +198,9 @@ inoremap <C-j> <Down>
 let g:ragtag_global_maps = 1
 
 " == Syntastic configuration
-let g:syntastic_auto_loc_list=1
 let g:syntastic_mode_map = { 'mode': 'active',
-														\ 'active_filetypes': ['ruby', 'coffee', 'javascript', 'json'],
-														\ 'passive_filetypes': ['puppet'] }
+                            \ 'active_filetypes': ['ruby', 'coffee', 'javascript', 'json'],
+                            \ 'passive_filetypes': ['puppet'] }
 
 " key mapping for vimgrep result navigation
 map <A-o> :copen<CR>
@@ -376,8 +248,8 @@ function! s:VSetSearch()
     let @/ = '\V' . substitute(escape(@@, '\'), '\n', '\\n', 'g')
     let @@ = temp
 endfunction
-vnoremap * :<C-u>call <SID>VSetSearch()<CR>//<CR>
-vnoremap # :<C-u>call <SID>VSetSearch()<CR>??<CR>
+vnoremap * :<C-u>call <SID>VSetSearch()<CR>//<CR>zz
+vnoremap # :<C-u>call <SID>VSetSearch()<CR>??<CR>zz
 
 " jump to last cursor position when opening a file
 " dont do it when writing a commit log entry
@@ -423,6 +295,12 @@ map <C-j> <C-w>j
 map <C-k> <C-w>k
 map <C-l> <C-w>l
 
+" easy window close
+nnoremap <Leader>q :q<CR>
+
+" Easy window focus (closes all others)
+nnoremap <Leader>f <C-W>o
+
 " key mapping for saving file
 nmap <C-s> :w<CR>
 
@@ -457,22 +335,24 @@ let g:user_zen_settings = {
 
 " == DbExt configuration ==
 " -- profiles
-let g:dbext_default_type       = 'PGSQL'
-let g:dbext_default_profile_PG = 'type=PGSQL:host=localhost:dbname=network360_development'
-let g:dbext_default_profile    = 'PG'
+let g:dbext_default_type                 = 'PGSQL'
+let g:dbext_default_profile_Local_N360   = 'type=PGSQL:host=localhost:dbname=network360_development'
+let g:dbext_default_profile_Staging_N360 = 'type=PGSQL:host=devdb01:dbname=network360:user=jshafton:passwd=@askb'
+let g:dbext_default_profile_Triscuit_N360 = 'type=SQLSRV:host=triscuit:dbname=network360:user=jshafton:passwd=@askb'
+let g:dbext_default_profile              = 'Local_N360'
 
 " -- results buffer
 let g:dbext_default_buffer_lines = 10
 let g:dbext_default_use_sep_result_buffer = 1
+
+" -- misc config
+let g:dbext_default_always_prompt_for_variables = -1 " never prompt for variables
 
 " Paste intelligently by default, use option+p to paste raw.
 nnoremap p pv`]=
 nnoremap P Pv`]=
 nnoremap π p
 nnoremap ∏ P
-
-" Short-cut for substitution without having to type all the extra bits
-nnoremap <leader>s :%s//g<left><left>
 
 " == Bubble text (requires unimpaired plugin) ==
 " -- Bubble single lines
@@ -482,14 +362,17 @@ nmap <D-Down> ]e
 vmap <D-Up> [egv
 vmap <D-Down> ]egv
 
+" Duplicate selected text
+vnoremap <D-d> y`>p
+
 " Visually select the text that was last edited/pasted
 nmap gV `[v`]
 
+" Shortcut for selecting the last selection
+nnoremap <Leader>v gv
+
 " Expand %% to full directory path in command line
 cnoremap %% <C-R>=expand('%:h').'/'<cr>
-
-" Rails menu items
-set viminfo^=!
 
 " == YankRing mapping
 nnoremap <Leader>yr :YRShow<CR>
@@ -504,3 +387,17 @@ nnoremap <D-\> :TlistToggle<CR>
 let Tlist_Auto_Update = 1
 let Tlist_GainFocus_On_ToggleOpen = 1
 let Tlist_Close_On_Select = 1
+
+" Edit this file!
+nnoremap <leader>ev :e ~/.vim/vimrc<cr>
+
+" Command for saving when you don't have permission
+command! W :execute ':silent w !sudo tee % > /dev/null' | :edit!
+
+" Always focus search terms
+nnoremap n nzz
+nnoremap N Nzz
+
+" scroll down
+nmap <SPACE> <C-D>
+nmap <S-SPACE> <C-U>

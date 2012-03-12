@@ -99,9 +99,6 @@
 [submodule "bundle/vim-preview"]
 	path = bundle/vim-preview
 	url = git://github.com/greyblake/vim-preview.git
-[submodule "bundle/abolish"]
-	path = bundle/abolish
-	url = git://github.com/tpope/vim-abolish.git
 [submodule "bundle/liftweb"]
 	path = bundle/liftweb
 	url = git://github.com/Shadowfiend/liftweb-vim.git
@@ -153,9 +150,6 @@
 [submodule "bundle/threesome"]
 	path = bundle/threesome
 	url = git://github.com/sjl/threesome.vim.git
-[submodule "bundle/vim-command-w"]
-	path = bundle/vim-command-w
-	url = git://github.com/nathanaelkane/vim-command-w
 [submodule "bundle/vim-easymotion"]
 	path = bundle/vim-easymotion
 	url = git://github.com/Lokaltog/vim-easymotion
@@ -168,3 +162,9 @@
 [submodule "bundle/taglist"]
 	path = bundle/taglist
 	url = git://github.com/vim-scripts/taglist.vim.git
+[submodule "bundle/vim-ruby-refactoring"]
+	path = bundle/vim-ruby-refactoring
+	url = git://github.com/ecomba/vim-ruby-refactoring.git
+[submodule "bundle/vim-powerline"]
+	path = bundle/vim-powerline
+	url = git://github.com/Lokaltog/vim-powerline.git
