@@ -42,21 +42,6 @@ set number      "add line numbers
 set showbreak=...
 set wrap linebreak nolist
 
-" Show relative line numbers in normal mode for easy movement
-if exists('+relativenumber')
-    autocmd InsertEnter * setl nu
-    autocmd InsertLeave * setl rnu
-    autocmd WinLeave *
-      \ if &rnu==1 |
-      \ exe "setl norelativenumber" |
-      \ exe "setl nu" |
-      \ endif
-    autocmd WinEnter *
-      \ if &rnu==0 |
-      \ exe "setl rnu" |
-      \ endif
-endif
-
 " set the leader to something reasonable
 let mapleader = ","
 
@@ -125,7 +110,7 @@ set nofoldenable        "dont fold by default
 
 set wildmode=list:longest   "make cmdline tab completion similar to bash
 set wildmenu                "enable ctrl-n and ctrl-p to scroll thru matches
-set wildignore=*.o,*.obj,*~ "stuff to ignore when tab completing
+set wildignore=*.o,*.obj,*~,**/compiled/**,**/vendor/** "stuff to ignore when tab completing
 
 set formatoptions-=o "dont continue comments when pushing o/O
 
@@ -156,11 +141,11 @@ if has("gui_running")
     "tell the term has 256 colors
     set t_Co=256
 
-    colorscheme railscasts
+    colorscheme twilight
 
     if has("gui_gnome")
         set term=gnome-256color
-        colorscheme railscasts
+        colorscheme twilight
         set guifont=Monospace\ Bold\ 12
     endif
 
@@ -172,10 +157,9 @@ else
     " dont load csapprox if there is no gui support - silences an annoying warning
     let g:CSApprox_loaded = 1
 
-    " set railscasts colorscheme when running vim in gnome terminal
     if $COLORTERM == 'gnome-terminal'
         set term=gnome-256color
-        colorscheme railscasts
+        colorscheme twilight
     else
         colorscheme default
     endif
@@ -378,9 +362,9 @@ cnoremap %% <C-R>=expand('%:h').'/'<cr>
 nnoremap <Leader>yr :YRShow<CR>
 nnoremap <Leader>yrs :YRSearch<space>
 
-" == Highlight current line for graphical VIM
-set cul
-hi CursorLine term=none cterm=none ctermbg=3
+" == Highlight current line for graphical VIM <-- THIS SLOWED THINGS DOWN!
+" set cul
+"hi CursorLine term=none cterm=none ctermbg=3
 
 " == Taglist plugin configuration
 nnoremap <D-\> :TlistToggle<CR>
@@ -398,6 +382,39 @@ command! W :execute ':silent w !sudo tee % > /dev/null' | :edit!
 nnoremap n nzz
 nnoremap N Nzz
 
+" Open a Quickfix window for the last search.
+nnoremap <silent> <leader>? :execute 'vimgrep /'.@/.'/g %'<CR>:copen<CR>
+
 " scroll down
 nmap <SPACE> <C-D>
 nmap <S-SPACE> <C-U>
+
+" Turn off diff formatting
+noremap <leader>do :set nodiff fdc=0 \| norm zR<CR>
+
+" Show relative line numbers in normal mode for easy movement
+if exists('+relativenumber')
+  function! g:ToggleNuMode()
+    if(&rnu == 1)
+      set nu
+    else
+      set rnu
+    endif
+  endfunc
+  nnoremap <leader>ln :cal g:ToggleNuMode()<cr>
+
+  autocmd InsertEnter * setl nu
+  autocmd InsertLeave * setl rnu
+  autocmd WinLeave *
+        \ if &rnu==1 |
+        \ exe "setl norelativenumber" |
+        \ exe "setl nu" |
+        \ endif
+  autocmd WinEnter *
+        \ if &rnu==0 |
+        \ exe "setl rnu" |
+        \ endif
+endif
+
+" Find current word in project using Ack
+nnoremap <leader>u :Ack <C-R><C-W><cr>

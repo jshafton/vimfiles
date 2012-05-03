@@ -1,9 +1,9 @@
-set guifont=Monaco:h14
+set guifont=Monaco:h11
 
 " key binding for Command-T to behave properly
 " uncomment to replace the Mac Command-T key to Command-T plugin
 macmenu &File.Print key=<nop>
-map <D-p> :CommandT<CR>
+map <D-p> :CommandTFlush<CR>:CommandT<CR>
 map <D-u> :CommandTBuffer<CR>
 
 " When the GUI starts, t_vb is reset to its default value.
