@@ -199,7 +199,10 @@ nnoremap <F5> :GundoToggle<CR>
 try
   source ~/.vim/snippets/support_functions.vim
 catch
-  source ~/vimfiles/snippets/support_functions.vim
+	try
+		source ~/vimfiles/snippets/support_functions.vim
+	catch
+	endtry
 endtry
 autocmd vimenter * call s:SetupSnippets()
 function! s:SetupSnippets()

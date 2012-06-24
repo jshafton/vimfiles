@@ -168,3 +168,12 @@
 [submodule "bundle/vim-powerline"]
 	path = bundle/vim-powerline
 	url = git://github.com/Lokaltog/vim-powerline.git
+[submodule "bundle/vim-handlebars"]
+	path = bundle/vim-handlebars
+	url = git://github.com/nono/vim-handlebars.git
+[submodule "bundle/vim-indent-guides"]
+	path = bundle/vim-indent-guides
+	url = git://github.com/nathanaelkane/vim-indent-guides.git
+[submodule "bundle/vim-buffergator"]
+	path = bundle/vim-buffergator
+	url = git://github.com/jeetsukumaran/vim-buffergator.git
