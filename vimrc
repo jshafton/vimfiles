@@ -421,3 +421,6 @@ endif
 
 " Find current word in project using Ack
 nnoremap <leader>u :Ack <C-R><C-W><cr>
+
+" Powerline tweaks
+let Powerline_theme = "./themes/powerline-edited-theme"
