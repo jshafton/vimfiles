@@ -174,3 +174,6 @@
 [submodule "bundle/vim-buffergator"]
 	path = bundle/vim-buffergator
 	url = git://github.com/jeetsukumaran/vim-buffergator.git
+[submodule "bundle/vim-powerline"]
+	path = bundle/vim-powerline
+	url = https://github.com/jshafton/vim-powerline.git
