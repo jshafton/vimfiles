@@ -174,3 +174,6 @@
 [submodule "bundle/vim-powerline"]
 	path = bundle/vim-powerline
 	url = git://github.com/jshafton/vim-powerline.git
+[submodule "bundle/YankRing.vim"]
+	path = bundle/YankRing.vim
+	url = git://github.com/vim-scripts/YankRing.vim.git
