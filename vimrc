@@ -55,6 +55,7 @@ set timeout timeoutlen=500 ttimeoutlen=100
 " map for shift-enter to get out of insert mode
 inoremap <S-CR> <Esc>
 inoremap jk <Esc>
+inoremap JK <Esc>
 
 " insert blank line above/below cursor
 nnoremap <silent><D-CR> :set paste<CR>m`o<Esc>``:set nopaste<CR>
@@ -276,6 +277,16 @@ function! <SID>StripTrailingWhitespaces()
 endfunction
 autocmd BufWritePre * :call <SID>StripTrailingWhitespaces()
 
+function! MoveFunction(newname)
+    " get the current file name
+    let a:oldname = expand("%:p")
+    " save under the new name
+    exec "saveas " . a:newname
+    " delete the old file
+    call delete(a:oldname)
+endfunction
+command! -nargs=1 MoveTo call MoveFunction(<f-args>)
+
 " key mapping for window navigation
 map <C-h> <C-w>h
 map <C-j> <C-w>j
@@ -287,6 +298,9 @@ nnoremap <Leader>q :q<CR>
 
 " Easy window focus (closes all others)
 nnoremap <Leader>f <C-W>o
+
+" Close all open buffers
+nnoremap <Leader>bda :bufdo bd!<CR>
 
 " key mapping for saving file
 nmap <C-s> :w<CR>
@@ -322,11 +336,11 @@ let g:user_zen_settings = {
 
 " == DbExt configuration ==
 " -- profiles
-let g:dbext_default_type                 = 'PGSQL'
-let g:dbext_default_profile_Local_N360   = 'type=PGSQL:host=localhost:dbname=network360_development'
-let g:dbext_default_profile_Staging_N360 = 'type=PGSQL:host=devdb01:dbname=network360:user=jshafton:passwd=@askb'
-let g:dbext_default_profile_Triscuit_N360 = 'type=SQLSRV:host=triscuit:dbname=network360:user=jshafton:passwd=@askb'
-let g:dbext_default_profile              = 'Local_N360'
+let g:dbext_default_type                    = 'PGSQL'
+let g:dbext_default_profile_Local_N360      = 'type=PGSQL:host=localhost:dbname=network360_development'
+let g:dbext_default_profile_Staging_N360    = 'type=PGSQL:host=devdb01:dbname=network360:user=jshafton:passwd=@askb'
+let g:dbext_default_profile_Production_N360 = 'type=PGSQL:host=proddb01.arsalon:dbname=network360:user=jshafton:passwd=@askb'
+let g:dbext_default_profile                 = 'Local_N360'
 
 " -- results buffer
 let g:dbext_default_buffer_lines = 10
@@ -393,7 +407,7 @@ nmap <SPACE> <C-D>
 nmap <S-SPACE> <C-U>
 
 " Turn off diff formatting
-noremap <leader>do :set nodiff fdc=0 \| norm zR<CR>
+noremap <leader>do :set nodiff fdc=0 \| norm zR<CR><C-W>h:bwipeout<CR>
 
 " Show relative line numbers in normal mode for easy movement
 if exists('+relativenumber')
@@ -421,3 +435,9 @@ endif
 
 " Find current word in project using Ack
 nnoremap <leader>u :Ack <C-R><C-W><cr>
+nnoremap <leader>F :Ack -i<SPACE>
+
+" Fugitive short-cuts
+nnoremap <leader>gs :Gstatus<CR>
+nnoremap <leader>gc :Gcommit<CR>
+nnoremap <leader>gd :Gdiff<CR>
