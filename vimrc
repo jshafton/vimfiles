@@ -134,9 +134,11 @@ set ttymouse=xterm2
 " hide buffers when not displayed
 set hidden
 
-" Command-T configuration
-let g:CommandTMaxHeight=10
-let g:CommandTMatchWindowAtTop=1
+" CtrlP configuration
+let g:ctrlp_map = '<D-p>'
+let g:ctrlp_match_window_bottom = 0
+let g:ctrlp_match_window_reversed = 0
+let g:ctrlp_max_height = 15
 
 if has("gui_running")
     "tell the term has 256 colors
