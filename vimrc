@@ -135,6 +135,10 @@ set ttymouse=xterm2
 set hidden
 
 " CtrlP configuration
+"let g:ctrlp_user_command = "find %s -type f | egrep -v '/\.(git|hg|svn)|solr|tmp/' | egrep -v '\.(png|exe|jpg|gif|jar|class|swp|swo|log|gitkep|keepme|so|o)$'"
+let g:ctrlp_user_command = ['.git/', 'cd %s && git ls-files --exclude-standard -co']
+
+
 let g:ctrlp_map = '<D-p>'
 let g:ctrlp_match_window_bottom = 0
 let g:ctrlp_match_window_reversed = 0
@@ -443,3 +447,7 @@ nnoremap <leader>F :Ack -i<SPACE>
 nnoremap <leader>gs :Gstatus<CR>
 nnoremap <leader>gc :Gcommit<CR>
 nnoremap <leader>gd :Gdiff<CR>
+
+" DelimitMate config
+let delimitMate_expand_cr = 1
+au FileType handlebars let b:delimitMate_expand_cr = 0
