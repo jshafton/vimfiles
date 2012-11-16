@@ -61,8 +61,9 @@ inoremap JK <Esc>
 nnoremap <silent><D-CR> :set paste<CR>m`o<Esc>``:set nopaste<CR>
 nnoremap <silent><D-K> :set paste<CR>m`O<Esc>``:set nopaste<CR>
 
-" use CTRL-tab to switch between buffers
-nnoremap <C-Tab> :bnext<CR>
+" use tab and shift-tab to switch between buffers
+nnoremap <Tab> :bnext<CR>
+nnoremap <S-Tab> :bprev<CR>
 
 " use H to go to begin of line and L to go to end of line
 noremap H ^
@@ -137,8 +138,6 @@ set hidden
 " CtrlP configuration
 "let g:ctrlp_user_command = "find %s -type f | egrep -v '/\.(git|hg|svn)|solr|tmp/' | egrep -v '\.(png|exe|jpg|gif|jar|class|swp|swo|log|gitkep|keepme|so|o)$'"
 let g:ctrlp_user_command = ['.git/', 'cd %s && git ls-files --exclude-standard -co']
-
-
 let g:ctrlp_map = '<D-p>'
 let g:ctrlp_match_window_bottom = 0
 let g:ctrlp_match_window_reversed = 0
@@ -201,39 +200,6 @@ map <A-k> :cprevious<CR>
 
 " key mapping for Gundo
 nnoremap <F5> :GundoToggle<CR>
-
-" snipmate setup
-try
-  source ~/.vim/snippets/support_functions.vim
-catch
-	try
-		source ~/vimfiles/snippets/support_functions.vim
-	catch
-	endtry
-endtry
-autocmd vimenter * call s:SetupSnippets()
-function! s:SetupSnippets()
-    "if we're in a rails env then read in the rails snippets
-    if filereadable("./config/environment.rb")
-      try
-        call ExtractSnips("~/.vim/snippets/ruby-rails", "ruby")
-        call ExtractSnips("~/.vim/snippets/eruby-rails", "eruby")
-      catch
-        call ExtractSnips("~/vimfiles/snippets/ruby-rails", "ruby")
-        call ExtractSnips("~/vimfiles/snippets/eruby-rails", "eruby")
-      endtry
-    endif
-
-    try
-      call ExtractSnips("~/.vim/snippets/html", "eruby")
-      call ExtractSnips("~/.vim/snippets/html", "xhtml")
-      call ExtractSnips("~/.vim/snippets/html", "php")
-    catch
-      call ExtractSnips("~/vimfiles/snippets/html", "eruby")
-      call ExtractSnips("~/vimfiles/snippets/html", "xhtml")
-      call ExtractSnips("~/vimfiles/snippets/html", "php")
-    endtry
-endfunction
 
 " visual search mappings
 function! s:VSetSearch()
@@ -310,10 +276,6 @@ nnoremap <Leader>bda :bufdo bd!<CR>
 
 " key mapping for saving file
 nmap <C-s> :w<CR>
-
-" key mapping for tab navigation
-nmap <Tab> gt
-nmap <S-Tab> gT
 
 " Key mapping for textmate-like indentation
 nmap <D-[> <<
