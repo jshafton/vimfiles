@@ -142,6 +142,7 @@ let g:ctrlp_map = '<D-p>'
 let g:ctrlp_match_window_bottom = 0
 let g:ctrlp_match_window_reversed = 0
 let g:ctrlp_max_height = 15
+map <D-u> :CtrlPBuffer<CR>
 
 if has("gui_running")
     "tell the term has 256 colors
@@ -273,6 +274,7 @@ nnoremap <Leader>f <C-W>o
 
 " Close all open buffers
 nnoremap <Leader>bda :bufdo bd!<CR>
+nnoremap <Leader>bwa :bufdo bw!<CR>
 
 " key mapping for saving file
 nmap <C-s> :w<CR>
