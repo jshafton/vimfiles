@@ -102,11 +102,11 @@ set guioptions-=T
 set shiftwidth=2
 set softtabstop=2
 set tabstop=2
-set noexpandtab
+set expandtab
 set autoindent
 
 " folding settings
-set foldmethod=indent   "fold based on indent
+set foldmethod=manual   "manual folding for performance
 set foldnestmax=3       "deepest fold is 3 levels
 set nofoldenable        "dont fold by default
 
@@ -148,11 +148,11 @@ if has("gui_running")
     "tell the term has 256 colors
     set t_Co=256
 
-    colorscheme twilight
+    colorscheme railscasts2
 
     if has("gui_gnome")
         set term=gnome-256color
-        colorscheme twilight
+        colorscheme railscasts2
         set guifont=Monospace\ Bold\ 12
     endif
 
@@ -166,7 +166,7 @@ else
 
     if $COLORTERM == 'gnome-terminal'
         set term=gnome-256color
-        colorscheme twilight
+        colorscheme railscasts2
     else
         colorscheme default
     endif
@@ -308,8 +308,8 @@ let g:user_zen_settings = {
 " -- profiles
 let g:dbext_default_type                    = 'PGSQL'
 let g:dbext_default_profile_Local_N360      = 'type=PGSQL:host=localhost:dbname=network360_development'
-let g:dbext_default_profile_Staging_N360    = 'type=PGSQL:host=devdb01:dbname=network360:user=jshafton:passwd=@askb'
-let g:dbext_default_profile_Production_N360 = 'type=PGSQL:host=proddb01.arsalon:dbname=network360:user=jshafton:passwd=@askb'
+let g:dbext_default_profile_Staging_N360    = 'type=PGSQL:host=stagingdb01:dbname=network360:user=jshafton:passwd=xxx'
+let g:dbext_default_profile_Production_N360 = 'type=PGSQL:host=proddb01.arsalon:dbname=network360:user=jshafton:passwd=xxx'
 let g:dbext_default_profile                 = 'Local_N360'
 
 " -- results buffer
@@ -381,26 +381,26 @@ noremap <leader>do :set nodiff fdc=0 \| norm zR<CR><C-W>h:bwipeout<CR>
 
 " Show relative line numbers in normal mode for easy movement
 if exists('+relativenumber')
-  function! g:ToggleNuMode()
-    if(&rnu == 1)
-      set nu
-    else
-      set rnu
-    endif
-  endfunc
-  nnoremap <leader>ln :cal g:ToggleNuMode()<cr>
+	function! g:ToggleNuMode()
+		if(&rnu == 1)
+			set nu
+		else
+			set rnu
+		endif
+	endfunc
+	nnoremap <leader>ln :cal g:ToggleNuMode()<cr>
 
-  autocmd InsertEnter * setl nu
-  autocmd InsertLeave * setl rnu
-  autocmd WinLeave *
-        \ if &rnu==1 |
-        \ exe "setl norelativenumber" |
-        \ exe "setl nu" |
-        \ endif
-  autocmd WinEnter *
-        \ if &rnu==0 |
-        \ exe "setl rnu" |
-        \ endif
+	autocmd InsertEnter * setl nu
+	autocmd InsertLeave * setl rnu
+	autocmd WinLeave *
+				\ if &rnu==1 |
+				\ exe "setl norelativenumber" |
+				\ exe "setl nu" |
+				\ endif
+	autocmd WinEnter *
+				\ if &rnu==0 |
+				\ exe "setl rnu" |
+				\ endif
 endif
 
 " Find current word in project using Ack
@@ -414,4 +414,3 @@ nnoremap <leader>gd :Gdiff<CR>
 
 " DelimitMate config
 let delimitMate_expand_cr = 1
-au FileType handlebars let b:delimitMate_expand_cr = 0
