@@ -131,7 +131,7 @@
 	url = git://github.com/asux/vim-capybara.git
 [submodule "bundle/vim-slim"]
 	path = bundle/vim-slim
-	url = git://github.com/bbommarito/vim-slim.git
+	url = git://github.com/slim-template/vim-slim.git
 [submodule "bundle/threesome"]
 	path = bundle/threesome
 	url = git://github.com/sjl/threesome.vim.git

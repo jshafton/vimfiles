@@ -136,7 +136,6 @@ set ttymouse=xterm2
 set hidden
 
 " CtrlP configuration
-"let g:ctrlp_user_command = "find %s -type f | egrep -v '/\.(git|hg|svn)|solr|tmp/' | egrep -v '\.(png|exe|jpg|gif|jar|class|swp|swo|log|gitkep|keepme|so|o)$'"
 let g:ctrlp_user_command = ['.git/', 'cd %s && git ls-files --exclude-standard -co']
 let g:ctrlp_map = '<D-p>'
 let g:ctrlp_match_window_bottom = 0
@@ -273,8 +272,8 @@ nnoremap <Leader>q :q<CR>
 nnoremap <Leader>f <C-W>o
 
 " Close all open buffers
-nnoremap <Leader>bda :bufdo bd!<CR>
-nnoremap <Leader>bwa :bufdo bw!<CR>
+nnoremap <Leader>bda :%bd!<CR>
+nnoremap <Leader>bwa :%bw!<CR>:bw!<CR>
 
 " key mapping for saving file
 nmap <C-s> :w<CR>
@@ -414,3 +413,9 @@ nnoremap <leader>gd :Gdiff<CR>
 
 " DelimitMate config
 let delimitMate_expand_cr = 1
+
+" Use . to repeat last command over a visual range
+vnoremap . :normal .<CR>
+
+" Use the @q macro over a visual range
+vnoremap @q :normal @q<CR>
