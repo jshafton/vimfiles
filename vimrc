@@ -14,9 +14,13 @@ if !exists("g:loaded_pathogen")
   call pathogen#runtime_append_all_bundles()
 endif
 
-" Reprocess this file if it's saved
+" Reprocess this file if it's saved, and reload the vim-powerline bar
+" since it's colors get fux0red after saving
 if has("autocmd")
-  autocmd! bufwritepost vimrc source $MYVIMRC
+  autocmd! bufwritepost vimrc |
+    \ source $MYVIMRC |
+    \ PowerlineReloadColorscheme |
+    \ redraw
 endif
 
 " Disable backup and swap files - more trouble than they're worth
@@ -147,11 +151,10 @@ if has("gui_running")
     "tell the term has 256 colors
     set t_Co=256
 
-    colorscheme railscasts2
+    colorscheme darkspectrum
 
     if has("gui_gnome")
         set term=gnome-256color
-        colorscheme railscasts2
         set guifont=Monospace\ Bold\ 12
     endif
 
@@ -165,9 +168,8 @@ else
 
     if $COLORTERM == 'gnome-terminal'
         set term=gnome-256color
-        colorscheme railscasts2
     else
-        colorscheme default
+        colorscheme railscasts
     endif
 endif
 
@@ -178,9 +180,6 @@ silent! nnoremap <leader><space> :nohl<CR>:redraw<CR>
 
 " map Q to something useful
 noremap Q gq
-
-" make Y consistent with C and D
-nnoremap Y y$
 
 " bindings for ragtag
 inoremap <M-o> <Esc>o
@@ -318,11 +317,18 @@ let g:dbext_default_use_sep_result_buffer = 1
 " -- misc config
 let g:dbext_default_always_prompt_for_variables = -1 " never prompt for variables
 
-" Paste intelligently by default, use option+p to paste raw.
-nnoremap p pv`]=
-nnoremap P Pv`]=
-nnoremap π p
-nnoremap ∏ P
+function! YRRunAfterMaps()
+  " make Y consistent with C and D
+  nnoremap Y :<C-U>YRYankCount 'y$'<CR>
+
+  " Paste intelligently by default
+  nnoremap p :<C-U>YRPaste 'p'<CR>v`]=`]
+  nnoremap P :<C-U>YRPaste 'P'<CR>v`]=`]
+
+  " Option p/P to paste raw
+  nnoremap π :<C-U>YRPaste 'p'<CR>
+  nnoremap ∏ :<C-U>YRPaste 'P'<CR>
+endfunction
 
 " == Bubble text (requires unimpaired plugin) ==
 " -- Bubble single lines
@@ -404,7 +410,7 @@ endif
 
 " Find current word in project using Ack
 nnoremap <leader>u :Ack <C-R><C-W><cr>
-nnoremap <leader>F :Ack -i<SPACE>
+nnoremap <leader>F :Ack! -i<SPACE>
 
 " Fugitive short-cuts
 nnoremap <leader>gs :Gstatus<CR>
