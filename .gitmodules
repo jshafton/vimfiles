@@ -77,9 +77,6 @@
 [submodule "bundle/vim-textobj-user"]
 	path = bundle/vim-textobj-user
 	url = git://github.com/kana/vim-textobj-user.git
-[submodule "bundle/vim-textobj-rubybloc"]
-	path = bundle/vim-textobj-rubybloc
-	url = git://github.com/nelstrom/vim-textobj-rubyblock.git
 [submodule "bundle/vim-preview"]
 	path = bundle/vim-preview
 	url = git://github.com/greyblake/vim-preview.git
