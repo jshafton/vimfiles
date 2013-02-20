@@ -7,9 +7,7 @@ You will need these dependencies figured out:
 
 In Ubuntu, for example, you will have to do:
 
-<pre><code>
-apt-get install exuberant-ctags
-</code></pre>
+<pre><code>apt-get install exuberant-ctags</code></pre>
 
 In OS X, you can install ctags with homebrew
 
@@ -24,24 +22,18 @@ look for Luis Lavena's latest Ruby Installer (http://rubyforge.org/projects/ruby
 
 h1. Installation
 
-<pre><code>
-git clone git://github.com/jshafton/vimfiles.git ~/.vim
-</pre></code>
+<pre><code>git clone git://github.com/jshafton/vimfiles.git ~/.vim</pre></code>
 
 Now you should create a new <tt>.vimrc</tt> file in your home directory that
 loads the pre-configured one that comes bundled in this package. You can do it
 on Linux/Mac like this:
 
-<pre><code>
-echo "source ~/.vim/vimrc" > ~/.vimrc
-</code></pre>
+<pre><code>echo "source ~/.vim/vimrc" > ~/.vimrc</code></pre>
 
 On Windows you should create a <tt>_vimrc</tt> (underline instead of dot) and add
 the following line inside:
 
-<pre><code>
-source ~/vimfiles/vimrc
-</code></pre>
+<pre><code>source ~/vimfiles/vimrc</code></pre>
 
 This way you can override the default configuration by adding your own inside
 this file.
@@ -49,22 +41,16 @@ this file.
 You should also create a new <tt>.gvimrc</tt> file in your home directory. You can do
 it on Linux/Mac like this:
 
-<pre><code>
-echo "source ~/.vim/gvimrc" > ~/.gvimrc
-</code></pre>
+<pre><code>echo "source ~/.vim/gvimrc" > ~/.gvimrc</code></pre>
 
 h1. Bundle installation
 
 In order to install all the required plugins, you'll need to use Vundle. First, clone its repo into your bundle folder:
 
-<pre><code>
-$ git clone https://github.com/gmarik/vundle.git bundle/vundle
-</code></pre>
+<pre><code>$ git clone https://github.com/gmarik/vundle.git bundle/vundle</code></pre>
 
 Then Load up Vim and run the following:
 
-<pre><code>
-:BundleInstall
-</code></pre>
+<pre><code>:BundleInstall</code></pre>
 
 This should install all the plugins you need and you should be good to go.
