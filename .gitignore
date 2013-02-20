@@ -17,4 +17,4 @@ tags
 tmp/
 log/
 bundle/
-!bundle/vundle
+!bundle/vundle/
