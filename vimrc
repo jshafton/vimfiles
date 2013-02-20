@@ -1,7 +1,7 @@
 ﻿" avoiding annoying CSApprox warning message
 let g:CSApprox_verbose_level = 0
 
-" necessary on some Linux distros for pathogen to properly load bundles
+" necessary on some Linux distros
 filetype on
 filetype off
 
@@ -9,18 +9,13 @@ filetype off
 " This must be first, because it changes other options as a side effect.
 set nocompatible
 
-" load pathogen managed plugins
-if !exists("g:loaded_pathogen")
-  call pathogen#runtime_append_all_bundles()
-endif
+" Load all bundles
+runtime vundle.vim
 
 " Reprocess this file if it's saved, and reload the vim-powerline bar
 " since it's colors get fux0red after saving
 if has("autocmd")
-  autocmd! bufwritepost vimrc |
-    \ source $MYVIMRC |
-    \ PowerlineReloadColorscheme |
-    \ redraw
+  autocmd! bufwritepost vimrc source $MYVIMRC
 endif
 
 " Disable backup and swap files - more trouble than they're worth
