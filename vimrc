@@ -64,6 +64,14 @@ nnoremap <silent><D-K> :set paste<CR>m`O<Esc>``:set nopaste<CR>
 nnoremap <Tab> :bnext<CR>
 nnoremap <S-Tab> :bprev<CR>
 
+" open/close buffer list with enter
+nnoremap <Enter> :BuffergatorToggle<CR>
+
+" other buffergator config
+let g:buffergator_viewport_split_policy='T' " default buffer window on the top
+let g:buffergator_sort_regime='mru'         " sort buffers by most recently used
+let g:buffergator_split_size=5
+
 " use H to go to begin of line and L to go to end of line
 noremap H ^
 noremap L g_
@@ -266,8 +274,7 @@ nnoremap <Leader>q :q<CR>
 nnoremap <Leader>f <C-W>o
 
 " Close all open buffers
-nnoremap <Leader>bda :%bd!<CR>
-nnoremap <Leader>bwa :%bw!<CR>:bw!<CR>
+nnoremap <Leader>bwa :%bw!<CR>:bw!<CR>:bufdo bw!<CR>
 
 " key mapping for saving file
 nmap <C-s> :w<CR>
@@ -372,9 +379,11 @@ nnoremap N Nzz
 " Open a Quickfix window for the last search.
 nnoremap <silent> <leader>? :execute 'vimgrep /'.@/.'/g %'<CR>:copen<CR>
 
-" scroll down
-nmap <SPACE> <C-D>
-nmap <S-SPACE> <C-U>
+" EasyMotion - use s/S for searching
+let g:EasyMotion_leader_key = '<SPACE>'
+nmap s <SPACE><SPACE>f
+nmap S <SPACE><SPACE>F
+vmap s <SPACE><SPACE>f
 
 " Turn off diff formatting
 noremap <leader>do :set nodiff fdc=0 \| norm zR<CR><C-W>h:bwipeout<CR>
@@ -420,3 +429,6 @@ vnoremap . :normal .<CR>
 
 " Use the @q macro over a visual range
 vnoremap @q :normal @q<CR>
+
+" associate *.pp (Puppet files) with ruby filetype
+au BufRead,BufNewFile *.pp setfiletype ruby
