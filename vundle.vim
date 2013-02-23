@@ -44,6 +44,7 @@ Bundle 'timcharper/textile.vim.git'
 " General ruby
 Bundle 'tpope/vim-bundler.git'
 Bundle 'vim-ruby/vim-ruby.git'
+Bundle 'Puppet-Syntax-Highlighting'
 
 " Web development
 Bundle 'tpope/vim-rails.git'

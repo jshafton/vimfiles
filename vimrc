@@ -430,5 +430,5 @@ vnoremap . :normal .<CR>
 " Use the @q macro over a visual range
 vnoremap @q :normal @q<CR>
 
-" associate *.pp (Puppet files) with ruby filetype
-au BufRead,BufNewFile *.pp setfiletype ruby
+" enable matching
+runtime macros/matchit.vim
