@@ -172,7 +172,7 @@ else
     if $COLORTERM == 'gnome-terminal'
         set term=gnome-256color
     else
-        colorscheme railscasts
+        colorscheme darkspectrum
     endif
 endif
 
