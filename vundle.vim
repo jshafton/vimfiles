@@ -81,5 +81,9 @@ Bundle 'nelstrom/vim-textobj-rubyblock.git'
 Bundle 'mileszs/ack.vim.git'
 Bundle 'AutoTag'
 
+" SQL
+Bundle 'dbext.vim'
+Bundle 'exu/pgsql.vim'
+
 " Misc junk
 Bundle 'ciaranm/securemodelines.git'

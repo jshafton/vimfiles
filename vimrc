@@ -319,6 +319,11 @@ let g:dbext_default_use_sep_result_buffer = 1
 " -- misc config
 let g:dbext_default_always_prompt_for_variables = -1 " never prompt for variables
 
+" Syntax highlighting
+au BufNewFile,BufRead *.sql setf pgsql
+au BufEnter,BufNewFile *.sql colorscheme jellybeans
+au BufLeave *.sql colorscheme darkspectrum
+
 function! YRRunAfterMaps()
   " make Y consistent with C and D
   nnoremap Y :<C-U>YRYankCount 'y$'<CR>
