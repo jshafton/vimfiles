@@ -72,6 +72,9 @@ let g:buffergator_viewport_split_policy='T' " default buffer window on the top
 let g:buffergator_sort_regime='mru'         " sort buffers by most recently used
 let g:buffergator_split_size=5
 
+" close other buffers
+nnoremap <leader>co :BufOnly!<CR>
+
 " use H to go to begin of line and L to go to end of line
 noremap H ^
 noremap L g_
@@ -267,8 +270,11 @@ map <C-j> <C-w>j
 map <C-k> <C-w>k
 map <C-l> <C-w>l
 
-" easy window close
+" easy window quit
 nnoremap <Leader>q :q<CR>
+
+" easy buffer wipe
+nnoremap <C-b> :bw!<cr>
 
 " Easy window focus (closes all others)
 nnoremap <Leader>f <C-W>o
@@ -321,8 +327,8 @@ let g:dbext_default_always_prompt_for_variables = -1 " never prompt for variable
 
 " Syntax highlighting
 au BufNewFile,BufRead *.sql setf pgsql
-au BufEnter,BufNewFile *.sql colorscheme jellybeans
-au BufLeave *.sql colorscheme darkspectrum
+au BufEnter,BufNewFile *.sql,result-* colorscheme railscasts2
+au BufLeave *.sql,result-* colorscheme darkspectrum
 
 function! YRRunAfterMaps()
   " make Y consistent with C and D
@@ -347,6 +353,9 @@ vmap <D-Down> ]egv
 
 " Duplicate selected text
 vnoremap <D-d> y`>p
+
+" Transpose words configuration
+nmap gs <Plug>Transposewords
 
 " Visually select the text that was last edited/pasted
 nmap gV `[v`]
@@ -423,6 +432,7 @@ nnoremap <leader>F :Ack! -i<SPACE>
 
 " Fugitive short-cuts
 nnoremap <leader>gs :Gstatus<CR>
+nnoremap <S-CR> :Gstatus<CR>
 nnoremap <leader>gc :Gcommit<CR>
 nnoremap <leader>gd :Gdiff<CR>
 
@@ -437,3 +447,6 @@ vnoremap @q :normal @q<CR>
 
 " enable matching
 runtime macros/matchit.vim
+
+" format json
+nnoremap <leader>jpp :%!python -m json.tool<CR>

@@ -18,6 +18,7 @@ Bundle 'kien/ctrlp.vim.git'
 Bundle 'onehouse/vim-bufexplorer.git'
 Bundle 'jeetsukumaran/vim-buffergator.git'
 Bundle 'scrooloose/nerdtree.git'
+Bundle 'duff/vim-bufonly'
 
 " UI enhancements
 Bundle 'jshafton/vim-powerline.git'
@@ -31,6 +32,7 @@ Bundle 'tpope/vim-endwise.git'
 Bundle 'tpope/vim-repeat.git'
 Bundle 'Raimondi/delimitMate.git'
 Bundle 'Align'
+Bundle 'transpose-words'
 
 " Commenting, auto-completion, general syntax
 Bundle 'scrooloose/nerdcommenter.git'
