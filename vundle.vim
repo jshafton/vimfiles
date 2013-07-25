@@ -62,6 +62,7 @@ Bundle 'itspriddle/vim-jquery.git'
 Bundle 'othree/html5.vim.git'
 Bundle 'mattn/zencoding-vim.git'
 Bundle 'jshafton/vim-handlebars.git'
+Bundle 'Valloric/MatchTagAlways'
 
 " Badass undo history
 Bundle 'sjl/gundo.vim.git'
@@ -81,11 +82,15 @@ Bundle 'nelstrom/vim-textobj-rubyblock.git'
 
 " Code searching
 Bundle 'mileszs/ack.vim.git'
+Bundle 'rking/ag.vim'
 Bundle 'AutoTag'
 
 " SQL
 Bundle 'dbext.vim'
 Bundle 'exu/pgsql.vim'
+
+" Windows shit
+Bundle 'PProvost/vim-ps1'
 
 " Misc junk
 Bundle 'ciaranm/securemodelines.git'

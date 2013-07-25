@@ -152,6 +152,7 @@ let g:ctrlp_match_window_bottom = 0
 let g:ctrlp_match_window_reversed = 0
 let g:ctrlp_max_height = 15
 map <D-u> :CtrlPBuffer<CR>
+map <D-t> :CtrlPTag<CR>
 
 if has("gui_running")
     "tell the term has 256 colors
@@ -426,9 +427,9 @@ if exists('+relativenumber')
 				\ endif
 endif
 
-" Find current word in project using Ack
-nnoremap <leader>u :Ack <C-R><C-W><cr>
-nnoremap <leader>F :Ack! -i<SPACE>
+" Find current word in project using Ag
+nnoremap <leader>u :Ag! <C-R><C-W><cr>
+nnoremap <leader>F :Ag! -i<SPACE>
 
 " Fugitive short-cuts
 nnoremap <leader>gs :Gstatus<CR>
@@ -450,3 +451,12 @@ runtime macros/matchit.vim
 
 " format json
 nnoremap <leader>jpp :%!python -m json.tool<CR>
+
+" tag matching for HTML/templates
+let g:mta_filetypes = {
+      \ 'html' : 1,
+      \ 'handlebars' : 1,
+      \ 'xhtml' : 1,
+      \ 'xml' : 1,
+      \ 'jinja' : 1,
+      \}
