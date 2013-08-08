@@ -1,5 +1,5 @@
 if has("gui_macvim")
-  set guifont=Monaco:h12
+  set guifont=Inconsolata\ for\ Powerline:h12
 
   " key binding for Command-T to behave properly
   " uncomment to replace the Mac Command-T key to Command-T plugin

@@ -30,18 +30,14 @@ set history=1000
 
 set showcmd     "show incomplete cmds down the bottom
 set showmode    "show current mode down the bottom
-
 set incsearch   "find the next match as we type the search
 set hlsearch    "hilight searches by default
 set ignorecase  "case-insensitive searching
-
 set gdefault    "default replace to global (rather than first instance)
-
 set number      "add line numbers
 set showbreak=...
 set wrap linebreak nolist
 
-" set the leader to something reasonable
 let mapleader = ","
 
 " show whitespace with a hotkey
@@ -51,7 +47,7 @@ nmap <silent> <leader>ws :set nolist!<CR>
 " set the leader timeout to a short interval (defaults to 1 sec)
 set timeout timeoutlen=500 ttimeoutlen=100
 
-" map for shift-enter to get out of insert mode
+" get out of insert mode w/ shift-enter, or jk
 inoremap <S-CR> <Esc>
 inoremap jk <Esc>
 inoremap JK <Esc>
@@ -68,9 +64,9 @@ nnoremap <S-Tab> :bprev<CR>
 nnoremap <Enter> :BuffergatorToggle<CR>
 
 " other buffergator config
-let g:buffergator_viewport_split_policy='T' " default buffer window on the top
-let g:buffergator_sort_regime='mru'         " sort buffers by most recently used
-let g:buffergator_split_size=5
+let g:buffergator_viewport_split_policy = 'T'   " default buffer window on the top
+let g:buffergator_sort_regime           = 'mru' " sort buffers by most recently used
+let g:buffergator_split_size            = 5
 
 " close other buffers
 nnoremap <leader>co :BufOnly!<CR>
@@ -116,15 +112,15 @@ set expandtab
 set autoindent
 
 " folding settings
-set foldmethod=manual   "manual folding for performance
-set foldnestmax=3       "deepest fold is 3 levels
-set nofoldenable        "dont fold by default
+set foldmethod=manual   " manual folding for performance
+set foldnestmax=3       " deepest fold is 3 levels
+set nofoldenable        " dont fold by default
 
-set wildmode=list:longest   "make cmdline tab completion similar to bash
-set wildmenu                "enable ctrl-n and ctrl-p to scroll thru matches
-set wildignore=*.o,*.obj,*~,**/compiled/**,**/vendor/** "stuff to ignore when tab completing
+set wildmode=list:longest                               " make cmdline tab completion similar to bash
+set wildmenu                                            " enable ctrl-n and ctrl-p to scroll thru matches
+set wildignore=*.o,*.obj,*~,**/compiled/**,**/vendor/** " stuff to ignore when tab completing
 
-set formatoptions-=o "dont continue comments when pushing o/O
+set formatoptions-=o " dont continue comments when pushing o/O
 
 " vertical/horizontal scroll off settings
 set scrolloff=3
@@ -155,31 +151,31 @@ map <D-u> :CtrlPBuffer<CR>
 map <D-t> :CtrlPTag<CR>
 
 if has("gui_running")
-    "tell the term has 256 colors
-    set t_Co=256
+  set t_Co=256 " tell the term has 256 colors
 
-    colorscheme darkspectrum
+  colorscheme Monokai-Refined
 
-    if has("gui_gnome")
-        set term=gnome-256color
-        set guifont=Monospace\ Bold\ 12
-    endif
+  if has("gui_gnome")
+    set term=gnome-256color
+    set guifont=Monospace\ Bold\ 10
+  endif
 
-    if has("gui_win32") || has("gui_win32s")
-        set guifont=Consolas:h12
-        set enc=utf-8
-    endif
+  if has("gui_win32") || has("gui_win32s")
+    set guifont=Consolas:h12
+    set enc=utf-8
+  endif
 else
-    " dont load csapprox if there is no gui support - silences an annoying warning
-    let g:CSApprox_loaded = 1
+  " dont load csapprox if there is no gui support - silences an annoying warning
+  let g:CSApprox_loaded = 1
 
-    if $COLORTERM == 'gnome-terminal'
-        set term=gnome-256color
-    else
-        colorscheme darkspectrum
-    endif
+  if $COLORTERM == 'gnome-terminal'
+    set term=gnome-256color
+  else
+    colorscheme Monokai-Refined
+  endif
 endif
 
+" show/hide NERDtre
 silent! nmap <silent> <Leader>p :NERDTreeToggle<CR>
 
 " clear the highlight as well as redraw
@@ -209,10 +205,10 @@ nnoremap <F5> :GundoToggle<CR>
 
 " visual search mappings
 function! s:VSetSearch()
-    let temp = @@
-    norm! gvy
-    let @/ = '\V' . substitute(escape(@@, '\'), '\n', '\\n', 'g')
-    let @@ = temp
+  let temp = @@
+  norm! gvy
+  let @/ = '\V' . substitute(escape(@@, '\'), '\n', '\\n', 'g')
+  let @@ = temp
 endfunction
 vnoremap * :<C-u>call <SID>VSetSearch()<CR>//<CR>zz
 vnoremap # :<C-u>call <SID>VSetSearch()<CR>??<CR>zz
@@ -221,47 +217,49 @@ vnoremap # :<C-u>call <SID>VSetSearch()<CR>??<CR>zz
 " dont do it when writing a commit log entry
 autocmd BufReadPost * call SetCursorPosition()
 function! SetCursorPosition()
-    if &filetype !~ 'commit\c'
-        if line("'\"") > 0 && line("'\"") <= line("$")
-            exe "normal! g`\""
-            normal! zz
-        endif
-    end
+  if &filetype !~ 'commit\c'
+    if line("'\"") > 0 && line("'\"") <= line("$")
+      exe "normal! g`\""
+      normal! zz
+    endif
+  end
 endfunction
 
 " define :HighlightLongLines command to highlight the offending parts of
 " lines that are longer than the specified length (defaulting to 80)
 command! -nargs=? HighlightLongLines call s:HighlightLongLines('<args>')
 function! s:HighlightLongLines(width)
-    let targetWidth = a:width != '' ? a:width : 79
-    if targetWidth > 0
-        exec 'match Todo /\%>' . (targetWidth) . 'v/'
-    else
-        echomsg "Usage: HighlightLongLines [natural number]"
-    endif
+  let targetWidth = a:width != '' ? a:width : 79
+  if targetWidth > 0
+    exec 'match Todo /\%>' . (targetWidth) . 'v/'
+  else
+    echomsg "Usage: HighlightLongLines [natural number]"
+  endif
 endfunction
 
 "  Strip trailing whitespace
 function! <SID>StripTrailingWhitespaces()
-    " Preparation: save last search, and cursor position.
-    let _s=@/
-    let l = line(".")
-    let c = col(".")
-    " Do the business:
-    %s/\s\+$//e
-    " Clean up: restore previous search history, and cursor position
-    let @/=_s
-    call cursor(l, c)
+  " Preparation: save last search, and cursor position.
+  let _s = @/
+  let l  = line(".")
+  let c  = col(".")
+
+  " Do the business:
+  %s/\s\+$//e
+
+  " Clean up: restore previous search history, and cursor position
+  let @/ = _s
+  call cursor(l, c)
 endfunction
 autocmd BufWritePre * :call <SID>StripTrailingWhitespaces()
 
 function! MoveFunction(newname)
-    " get the current file name
-    let a:oldname = expand("%:p")
-    " save under the new name
-    exec "saveas " . a:newname
-    " delete the old file
-    call delete(a:oldname)
+  " get the current file name
+  let a:oldname = expand("%:p")
+  " save under the new name
+  exec "saveas " . a:newname
+  " delete the old file
+  call delete(a:oldname)
 endfunction
 command! -nargs=1 MoveTo call MoveFunction(<f-args>)
 
@@ -277,16 +275,16 @@ nnoremap <Leader>q :q<CR>
 " easy buffer wipe
 nnoremap <C-b> :bw!<cr>
 
-" Easy window focus (closes all others)
+" easy window focus (closes all others)
 nnoremap <Leader>f <C-W>o
 
-" Close all open buffers
+" close all open buffers
 nnoremap <Leader>bwa :%bw!<CR>:bw!<CR>:bufdo bw!<CR>
 
 " key mapping for saving file
 nmap <C-s> :w<CR>
 
-" Key mapping for textmate-like indentation
+" key mapping for textmate-like indentation
 nmap <D-[> <<
 nmap <D-]> >>
 vmap <D-[> <gv
@@ -294,7 +292,7 @@ vmap <D-]> >gv
 
 let ScreenShot = {'Icon':0, 'Credits':0, 'force_background':'#FFFFFF'}
 
-" Enabling Zencoding
+" enabling Zencoding
 let g:user_zen_settings = {
   \  'php' : {
   \    'extends' : 'html',
@@ -326,13 +324,13 @@ let g:dbext_default_use_sep_result_buffer = 1
 " -- misc config
 let g:dbext_default_always_prompt_for_variables = -1 " never prompt for variables
 
-" Syntax highlighting
+" switch to railscasts2 for better SQL syntax highlighting
 au BufNewFile,BufRead *.sql setf pgsql
 au BufEnter,BufNewFile *.sql,result-* colorscheme railscasts2
-au BufLeave *.sql,result-* colorscheme darkspectrum
+au BufLeave *.sql,result-* colorscheme Monokai-Refined
 
 function! YRRunAfterMaps()
-  " make Y consistent with C and D
+  " make Y consistent with C and D (yank to end of line)
   nnoremap Y :<C-U>YRYankCount 'y$'<CR>
 
   " Paste intelligently by default
@@ -352,19 +350,19 @@ nmap <D-Down> ]e
 vmap <D-Up> [egv
 vmap <D-Down> ]egv
 
-" Duplicate selected text
+" duplicate selected text
 vnoremap <D-d> y`>p
 
-" Transpose words configuration
+" transpose words configuration
 nmap gs <Plug>Transposewords
 
-" Visually select the text that was last edited/pasted
+" visually select the text that was last edited/pasted
 nmap gV `[v`]
 
-" Shortcut for selecting the last selection
+" shortcut for selecting the last selection
 nnoremap <Leader>v gv
 
-" Expand %% to full directory path in command line
+" expand %% to full directory path in command line
 cnoremap %% <C-R>=expand('%:h').'/'<cr>
 
 " == YankRing mapping
@@ -381,17 +379,17 @@ let Tlist_Auto_Update = 1
 let Tlist_GainFocus_On_ToggleOpen = 1
 let Tlist_Close_On_Select = 1
 
-" Edit this file!
+" edit this file!
 nnoremap <leader>ev :e ~/.vim/vimrc<cr>
 
-" Command for saving when you don't have permission
+" command for saving when you don't have permission
 command! W :execute ':silent w !sudo tee % > /dev/null' | :edit!
 
-" Always focus search terms
+" always focus search terms
 nnoremap n nzz
 nnoremap N Nzz
 
-" Open a Quickfix window for the last search.
+" open a Quickfix window for the last search.
 nnoremap <silent> <leader>? :execute 'vimgrep /'.@/.'/g %'<CR>:copen<CR>
 
 " EasyMotion - use s/S for searching
@@ -400,34 +398,34 @@ nmap s <SPACE><SPACE>f
 nmap S <SPACE><SPACE>F
 vmap s <SPACE><SPACE>f
 
-" Turn off diff formatting
+" turn off diff formatting
 noremap <leader>do :set nodiff fdc=0 \| norm zR<CR><C-W>h:bwipeout<CR>
 
-" Show relative line numbers in normal mode for easy movement
+" show relative line numbers in normal mode for easy movement
 if exists('+relativenumber')
-	function! g:ToggleNuMode()
-		if(&rnu == 1)
-			set nu
-		else
-			set rnu
-		endif
-	endfunc
-	nnoremap <leader>ln :cal g:ToggleNuMode()<cr>
+  function! g:ToggleNuMode()
+    if(&rnu == 1)
+      set nu
+    else
+      set rnu
+    endif
+  endfunc
+  nnoremap <leader>ln :cal g:ToggleNuMode()<cr>
 
-	autocmd InsertEnter * setl nu
-	autocmd InsertLeave * setl rnu
-	autocmd WinLeave *
-				\ if &rnu==1 |
-				\ exe "setl norelativenumber" |
-				\ exe "setl nu" |
-				\ endif
-	autocmd WinEnter *
-				\ if &rnu==0 |
-				\ exe "setl rnu" |
-				\ endif
+  autocmd InsertEnter * setl nu
+  autocmd InsertLeave * setl rnu
+  autocmd WinLeave *
+        \ if &rnu==1 |
+        \ exe "setl norelativenumber" |
+        \ exe "setl nu" |
+        \ endif
+  autocmd WinEnter *
+        \ if &rnu==0 |
+        \ exe "setl rnu" |
+        \ endif
 endif
 
-" Find current word in project using Ag
+" find current word in project using Ag
 nnoremap <leader>u :Ag! <C-R><C-W><cr>
 nnoremap <leader>F :Ag! -i<SPACE>
 
@@ -436,14 +434,15 @@ nnoremap <leader>gs :Gstatus<CR>
 nnoremap <S-CR> :Gstatus<CR>
 nnoremap <leader>gc :Gcommit<CR>
 nnoremap <leader>gd :Gdiff<CR>
+nnoremap <leader>gp :Git push<CR>
 
 " DelimitMate config
 let delimitMate_expand_cr = 1
 
-" Use . to repeat last command over a visual range
+" use . to repeat last command over a visual range
 vnoremap . :normal .<CR>
 
-" Use the @q macro over a visual range
+" use the @q macro over a visual range
 vnoremap @q :normal @q<CR>
 
 " enable matching
@@ -460,3 +459,8 @@ let g:mta_filetypes = {
       \ 'xml' : 1,
       \ 'jinja' : 1,
       \}
+
+if has("gui_macvim")
+  " sweet statusline indicators
+  let g:airline_powerline_fonts = 1
+endif

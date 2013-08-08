@@ -21,7 +21,7 @@ Bundle 'scrooloose/nerdtree.git'
 Bundle 'duff/vim-bufonly'
 
 " UI enhancements
-Bundle 'jshafton/vim-powerline.git'
+Bundle 'bling/vim-airline'
 Bundle 'vim-scripts/quickfixsigns.git'
 Bundle 'nathanaelkane/vim-indent-guides.git'
 
@@ -33,6 +33,7 @@ Bundle 'tpope/vim-repeat.git'
 Bundle 'Raimondi/delimitMate.git'
 Bundle 'Align'
 Bundle 'transpose-words'
+Bundle 'ReplaceWithRegister'
 
 " Commenting, auto-completion, general syntax
 Bundle 'scrooloose/nerdcommenter.git'
