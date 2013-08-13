@@ -36,7 +36,7 @@ Bundle 'transpose-words'
 Bundle 'ReplaceWithRegister'
 
 " Commenting, auto-completion, general syntax
-Bundle 'scrooloose/nerdcommenter.git'
+Bundle 'tComment'
 Bundle 'scrooloose/syntastic.git'
 Bundle 'Valloric/YouCompleteMe.git'
 
@@ -78,13 +78,27 @@ Bundle 'Lokaltog/vim-easymotion'
 Bundle 'vim-scripts/YankRing.vim.git'
 
 " Text selection
-Bundle 'kana/vim-textobj-user.git'
-Bundle 'nelstrom/vim-textobj-rubyblock.git'
+Bundle 'kana/vim-textobj-user'
+" ar, ir
+Bundle 'nelstrom/vim-textobj-rubyblock'
+" aa, ia
+Bundle 'vim-scripts/argtextobj.vim'
+" ae, ie
+Bundle 'kana/vim-textobj-entire'
+" a/, i/, a?, i?
+Bundle 'kana/vim-textobj-lastpat'
+" al, il
+Bundle 'kana/vim-textobj-line'
+" ai, ii, aI, iI
+Bundle 'kana/vim-textobj-indent'
+" a_, i_
+Bundle 'lucapette/vim-textobj-underscore'
 
 " Code searching
 Bundle 'mileszs/ack.vim.git'
 Bundle 'rking/ag.vim'
 Bundle 'AutoTag'
+Bundle 'tpope/vim-abolish.git'
 
 " SQL
 Bundle 'dbext.vim'

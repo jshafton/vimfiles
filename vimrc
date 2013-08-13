@@ -32,7 +32,8 @@ set showcmd     "show incomplete cmds down the bottom
 set showmode    "show current mode down the bottom
 set incsearch   "find the next match as we type the search
 set hlsearch    "hilight searches by default
-set ignorecase  "case-insensitive searching
+set ignorecase  "case-insensitive searching ...
+set smartcase   "unless an uppercase is provided
 set gdefault    "default replace to global (rather than first instance)
 set number      "add line numbers
 set showbreak=...
@@ -103,6 +104,9 @@ set laststatus=2
 
 " turn off needless toolbar on gvim/mvim
 set guioptions-=T
+" turn off needless vertical scrollbars"
+set guioptions-=r
+set guioptions-=l
 
 " indent settings
 set shiftwidth=2
@@ -178,8 +182,8 @@ endif
 " show/hide NERDtre
 silent! nmap <silent> <Leader>p :NERDTreeToggle<CR>
 
-" clear the highlight as well as redraw
-silent! nnoremap <leader><space> :nohl<CR>:redraw<CR>
+" toggle search higlight with space
+nnoremap <space> :set hlsearch! hlsearch?<cr>
 
 " map Q to something useful
 noremap Q gq
@@ -318,7 +322,7 @@ let g:dbext_default_profile_Production_N360 = 'type=PGSQL:host=proddb01.arsalon:
 let g:dbext_default_profile                 = 'Local_N360'
 
 " -- results buffer
-let g:dbext_default_buffer_lines = 10
+let g:dbext_default_buffer_lines          = 20
 let g:dbext_default_use_sep_result_buffer = 1
 
 " -- misc config
@@ -393,10 +397,9 @@ nnoremap N Nzz
 nnoremap <silent> <leader>? :execute 'vimgrep /'.@/.'/g %'<CR>:copen<CR>
 
 " EasyMotion - use s/S for searching
-let g:EasyMotion_leader_key = '<SPACE>'
-nmap s <SPACE><SPACE>f
-nmap S <SPACE><SPACE>F
-vmap s <SPACE><SPACE>f
+nmap s <leader><leader>f
+nmap S <leader><leader>F
+vmap s <leader><leader>f
 
 " turn off diff formatting
 noremap <leader>do :set nodiff fdc=0 \| norm zR<CR><C-W>h:bwipeout<CR>
@@ -430,10 +433,13 @@ nnoremap <leader>u :Ag! <C-R><C-W><cr>
 nnoremap <leader>F :Ag! -i<SPACE>
 
 " Fugitive short-cuts
-nnoremap <leader>gs :Gstatus<CR>
 nnoremap <S-CR> :Gstatus<CR>
+nnoremap <leader>gs :Gstatus<CR>
 nnoremap <leader>gc :Gcommit<CR>
+nnoremap <leader>gb :Gblame<CR>
 nnoremap <leader>gd :Gdiff<CR>
+nnoremap <leader>gr :Gread<CR>
+nnoremap <leader>gw :Gwrite<CR>
 nnoremap <leader>gp :Git push<CR>
 
 " DelimitMate config
@@ -464,3 +470,7 @@ if has("gui_macvim")
   " sweet statusline indicators
   let g:airline_powerline_fonts = 1
 endif
+
+" Comment lines with cmd+/
+map <d-/> :TComment<cr>
+vmap <d-/> :TComment<cr>gv
