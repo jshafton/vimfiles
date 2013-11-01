@@ -4,7 +4,7 @@ if has("gui_macvim")
   " key binding for Command-T to behave properly
   " uncomment to replace the Mac Command-T key to Command-T plugin
   macmenu &File.Print key=<nop>
-  macmenu &File.New\ Tab key=<nop>
+  macmenu &File.Open\ Tab\.\.\. key=<nop>
 
   " More Mac-like tab handling
   map <D-1> :tabn 1<CR>

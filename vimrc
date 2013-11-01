@@ -11,6 +11,7 @@ set nocompatible
 
 " Load all bundles
 runtime vundle.vim
+let g:vundle_default_git_proto = 'ssh'
 
 " Reprocess this file if it's saved, and reload the vim-powerline bar
 " since it's colors get fux0red after saving
@@ -53,13 +54,8 @@ inoremap <S-CR> <Esc>
 inoremap jk <Esc>
 inoremap JK <Esc>
 
-" insert blank line above/below cursor
-nnoremap <silent><D-CR> :set paste<CR>m`o<Esc>``:set nopaste<CR>
-nnoremap <silent><D-K> :set paste<CR>m`O<Esc>``:set nopaste<CR>
-
-" use tab and shift-tab to switch between buffers
-nnoremap <Tab> :bnext<CR>
-nnoremap <S-Tab> :bprev<CR>
+" use tab for switching back and for between prev buffer
+nnoremap <Tab> <C-^>
 
 " open/close buffer list with enter
 nnoremap <Enter> :BuffergatorToggle<CR>
@@ -152,7 +148,23 @@ let g:ctrlp_match_window_bottom = 0
 let g:ctrlp_match_window_reversed = 0
 let g:ctrlp_max_height = 15
 map <D-u> :CtrlPBuffer<CR>
-map <D-t> :CtrlPTag<CR>
+map <D-\> :CtrlPBufTag<CR>
+map <D-\|> :CtrlPTag<CR>
+map <D-C> :CtrlPChange<CR>
+
+" TagBar configuration
+map <F9> :TagbarToggle<CR>
+let g:tagbar_type_coffee = {
+    \ 'ctagstype' : 'coffee',
+    \ 'kinds'     : [
+        \ 'c:classes',
+        \ 'm:methods',
+        \ 'f:functions',
+        \ 'v:variables',
+        \ 'f:fields',
+        \ 'f:static fields',
+    \ ]
+\ }
 
 if has("gui_running")
   set t_Co=256 " tell the term has 256 colors
@@ -180,7 +192,7 @@ else
 endif
 
 " show/hide NERDtre
-silent! nmap <silent> <Leader>p :NERDTreeToggle<CR>
+silent! nmap <silent> <leader>p :NERDTreeFind<CR>
 
 " toggle search higlight with space
 nnoremap <space> :set hlsearch! hlsearch?<cr>
@@ -285,6 +297,10 @@ nnoremap <Leader>f <C-W>o
 " close all open buffers
 nnoremap <Leader>bwa :%bw!<CR>:bw!<CR>:bufdo bw!<CR>
 
+" easy splits
+nnoremap <bar> :vsplit<CR><C-W><C-L>
+nnoremap _ :split<CR><C-W><C-J>
+
 " key mapping for saving file
 nmap <C-s> :w<CR>
 
@@ -296,42 +312,26 @@ vmap <D-]> >gv
 
 let ScreenShot = {'Icon':0, 'Credits':0, 'force_background':'#FFFFFF'}
 
-" enabling Zencoding
-let g:user_zen_settings = {
-  \  'php' : {
-  \    'extends' : 'html',
-  \    'filters' : 'c',
-  \  },
-  \  'xml' : {
-  \    'extends' : 'html',
-  \  },
-  \  'haml' : {
-  \    'extends' : 'html',
-  \  },
-  \  'erb' : {
-  \    'extends' : 'html',
-  \  },
- \}
-
 " == DbExt configuration ==
 " -- profiles
 let g:dbext_default_type                    = 'PGSQL'
 let g:dbext_default_profile_Local_N360      = 'type=PGSQL:host=localhost:dbname=network360_development'
 let g:dbext_default_profile_Staging_N360    = 'type=PGSQL:host=stagingdb01:dbname=network360:user=jshafton:passwd=xxx'
 let g:dbext_default_profile_Production_N360 = 'type=PGSQL:host=proddb01.arsalon:dbname=network360:user=jshafton:passwd=xxx'
+let g:dbext_default_profile_Triscuit_sqsh   = 'type=SQLSRV:user=jshafton:passwd=@askg:host=triscuit:SQLSRV_bin=sqsh:SQLSRV_cmd_options=:extra=-Striscuit -D Network360 -w 9999999'
+let g:dbext_default_profile_Strenuus5_sqsh  = 'type=SQLSRV:user=jshafton:passwd=@askg:host=strenuus5:SQLSRV_bin=sqsh:SQLSRV_cmd_options=:extra=-Sstrenuus5 -D Network360 -w 9999999'
 let g:dbext_default_profile                 = 'Local_N360'
 
 " -- results buffer
 let g:dbext_default_buffer_lines          = 20
 let g:dbext_default_use_sep_result_buffer = 1
+let g:dbext_display_command_line          = 1
 
 " -- misc config
 let g:dbext_default_always_prompt_for_variables = -1 " never prompt for variables
 
-" switch to railscasts2 for better SQL syntax highlighting
-au BufNewFile,BufRead *.sql setf pgsql
-au BufEnter,BufNewFile *.sql,result-* colorscheme railscasts2
-au BufLeave *.sql,result-* colorscheme Monokai-Refined
+" set file type for Postgres for SQL files
+au BufNewFile,BufRead *.sql set ft=pgsql
 
 function! YRRunAfterMaps()
   " make Y consistent with C and D (yank to end of line)
@@ -369,6 +369,9 @@ nnoremap <Leader>v gv
 " expand %% to full directory path in command line
 cnoremap %% <C-R>=expand('%:h').'/'<cr>
 
+" copy current file path to the system clipboard
+nmap <leader>cfp :let @* = expand("%")<CR>
+
 " == YankRing mapping
 nnoremap <Leader>yr :YRShow<CR>
 nnoremap <Leader>yrs :YRSearch<space>
@@ -376,12 +379,6 @@ nnoremap <Leader>yrs :YRSearch<space>
 " == Highlight current line for graphical VIM <-- THIS SLOWED THINGS DOWN!
 " set cul
 "hi CursorLine term=none cterm=none ctermbg=3
-
-" == Taglist plugin configuration
-nnoremap <D-\> :TlistToggle<CR>
-let Tlist_Auto_Update = 1
-let Tlist_GainFocus_On_ToggleOpen = 1
-let Tlist_Close_On_Select = 1
 
 " edit this file!
 nnoremap <leader>ev :e ~/.vim/vimrc<cr>
@@ -400,6 +397,9 @@ nnoremap <silent> <leader>? :execute 'vimgrep /'.@/.'/g %'<CR>:copen<CR>
 nmap s <leader><leader>f
 nmap S <leader><leader>F
 vmap s <leader><leader>f
+
+" Replace current word in file
+nmap <leader>R :%s/<C-R><C-W>/<C-R><C-W><C-F>vb
 
 " turn off diff formatting
 noremap <leader>do :set nodiff fdc=0 \| norm zR<CR><C-W>h:bwipeout<CR>
@@ -429,7 +429,7 @@ if exists('+relativenumber')
 endif
 
 " find current word in project using Ag
-nnoremap <leader>u :Ag! <C-R><C-W><cr>
+nnoremap <leader>u :Ag! '\b<C-R><C-W>\b'<cr>
 nnoremap <leader>F :Ag! -i<SPACE>
 
 " Fugitive short-cuts
@@ -469,8 +469,39 @@ let g:mta_filetypes = {
 if has("gui_macvim")
   " sweet statusline indicators
   let g:airline_powerline_fonts = 1
+
+  " Disable MacVim's default mac-like cmd key bindings
+  let g:macvim_skip_cmd_opt_movement = 1
 endif
 
 " Comment lines with cmd+/
 map <d-/> :TComment<cr>
 vmap <d-/> :TComment<cr>gv
+
+" Snippets
+
+" Configuration below is to allow harmony between UltiSnips and YouCompleteMe
+" credit goes here: http://stackoverflow.com/a/18685821
+function! g:UltiSnips_Complete()
+  call UltiSnips_ExpandSnippet()
+  if g:ulti_expand_res == 0
+    if pumvisible()
+      return "\<C-n>"
+    else
+      call UltiSnips_JumpForwards()
+      if g:ulti_jump_forwards_res == 0
+        return "\<TAB>"
+      endif
+    endif
+  endif
+    return ""
+endfunction
+
+au BufEnter * exec "inoremap <silent> " . g:UltiSnipsExpandTrigger . " <C-R>=g:UltiSnips_Complete()<cr>"
+
+let g:UltiSnipsJumpForwardTrigger = "<tab>"
+let g:UltiSnipsListSnippets       = "<c-e>"
+
+" Persistent undo
+set undofile
+set undodir=~/.vim/.undo

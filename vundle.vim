@@ -15,7 +15,7 @@ Bundle 'gregsexton/gitv.git'
 
 " Buffer/file browsing
 Bundle 'kien/ctrlp.vim.git'
-Bundle 'onehouse/vim-bufexplorer.git'
+Bundle 'jlanzarotta/bufexplorer'
 Bundle 'jeetsukumaran/vim-buffergator.git'
 Bundle 'scrooloose/nerdtree.git'
 Bundle 'duff/vim-bufonly'
@@ -60,18 +60,18 @@ Bundle 'kchmck/vim-coffee-script.git'
 Bundle 'slim-template/vim-slim.git'
 Bundle 'itspriddle/vim-jquery.git'
 Bundle 'othree/html5.vim.git'
-Bundle 'mattn/zencoding-vim.git'
+Bundle 'mattn/emmet-vim.git'
 Bundle 'jshafton/vim-handlebars.git'
 Bundle 'Valloric/MatchTagAlways'
 
 " Badass undo history
 Bundle 'sjl/gundo.vim.git'
 
-" Tag management
-Bundle 'vim-scripts/taglist.vim.git'
-
 " Quick file navigation
 Bundle 'Lokaltog/vim-easymotion'
+
+" Tag navigation / display
+Bundle 'majutsushi/tagbar'
 
 " Awesome paste history
 Bundle 'vim-scripts/YankRing.vim.git'
@@ -108,3 +108,12 @@ Bundle 'PProvost/vim-ps1'
 
 " Misc junk
 Bundle 'ciaranm/securemodelines.git'
+
+" Snippets
+" -- this is the engine
+Bundle "git@github.com:SirVer/ultisnips.git"
+
+" -- these are snippets; vim-snipmate requires the other 2
+Bundle "git@github.com:MarcWeber/vim-addon-mw-utils"
+Bundle "git@github.com:tomtom/tlib_vim"
+Bundle "git@github.com:garbas/vim-snipmate.git"
