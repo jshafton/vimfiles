@@ -11,7 +11,6 @@ set nocompatible
 
 " Load all bundles
 runtime vundle.vim
-let g:vundle_default_git_proto = 'ssh'
 
 " Reprocess this file if it's saved
 if has("autocmd")
@@ -144,11 +143,13 @@ set ttymouse=xterm2
 set hidden
 
 " CtrlP configuration
-let g:ctrlp_user_command = ['.git/', 'cd %s && git ls-files --exclude-standard -co']
-let g:ctrlp_map = '<D-p>'
-let g:ctrlp_match_window_bottom = 0
+let g:ctrlp_user_command          = ['.git/', 'cd %s && git ls-files --exclude-standard -co']
+let g:ctrlp_map                   = '<D-p>'
+let g:ctrlp_match_window_bottom   = 0
 let g:ctrlp_match_window_reversed = 0
-let g:ctrlp_max_height = 15
+let g:ctrlp_max_height            = 15
+let g:ctrlp_dont_split            = 'NERD_tree_1'
+
 map <D-u> :CtrlPBuffer<CR>
 map <D-\> :CtrlPBufTag<CR>
 map <D-\|> :CtrlPTag<CR>
