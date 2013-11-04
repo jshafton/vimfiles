@@ -17,6 +17,9 @@ let g:vundle_default_git_proto = 'ssh'
 if has("autocmd")
   autocmd! bufwritepost vimrc source $MYVIMRC
 endif
+if has("autocmd")
+  autocmd! bufwritepost vundle.vim source ~/.vim/vundle.vim | BundleInstall
+endif
 
 " Disable backup and swap files - more trouble than they're worth
 set nobackup
@@ -381,6 +384,8 @@ nnoremap <Leader>yrs :YRSearch<space>
 
 " edit this file!
 nnoremap <leader>ev :e ~/.vim/vimrc<cr>
+" edit bundles
+nnoremap <leader>eV :e ~/.vim/vundle.vim<cr>
 
 " command for saving when you don't have permission
 command! W :execute ':silent w !sudo tee % > /dev/null' | :edit!

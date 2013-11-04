@@ -6,108 +6,110 @@ call vundle#rc()
 
 " let Vundle manage Vundle
 " required!
-Bundle 'gmarik/vundle'
+Bundle 'git@github.com:gmarik/vundle'
 
 " Git and related
-Bundle 'tpope/vim-git.git'
-Bundle 'tpope/vim-fugitive.git'
-Bundle 'gregsexton/gitv.git'
+Bundle 'git@github.com:tpope/vim-git.git'
+Bundle 'git@github.com:tpope/vim-fugitive.git'
+Bundle 'git@github.com:gregsexton/gitv.git'
 
 " Buffer/file browsing
-Bundle 'kien/ctrlp.vim.git'
-Bundle 'jlanzarotta/bufexplorer'
-Bundle 'jeetsukumaran/vim-buffergator.git'
-Bundle 'scrooloose/nerdtree.git'
-Bundle 'duff/vim-bufonly'
+Bundle 'git@github.com:kien/ctrlp.vim.git'
+Bundle 'git@github.com:jlanzarotta/bufexplorer'
+Bundle 'git@github.com:jeetsukumaran/vim-buffergator.git'
+Bundle 'git@github.com:scrooloose/nerdtree.git'
+Bundle 'git@github.com:duff/vim-bufonly'
 
 " UI enhancements
-Bundle 'bling/vim-airline'
-Bundle 'vim-scripts/quickfixsigns.git'
-Bundle 'nathanaelkane/vim-indent-guides.git'
+Bundle 'git@github.com:bling/vim-airline'
+Bundle 'git@github.com:vim-scripts/quickfixsigns.git'
+Bundle 'git@github.com:nathanaelkane/vim-indent-guides.git'
 
 " General text editing, delimiter pairing
-Bundle 'tpope/vim-surround.git'
-Bundle 'tpope/vim-unimpaired.git'
-Bundle 'tpope/vim-endwise.git'
-Bundle 'tpope/vim-repeat.git'
-Bundle 'Raimondi/delimitMate.git'
+Bundle 'git@github.com:tpope/vim-surround.git'
+Bundle 'git@github.com:tpope/vim-unimpaired.git'
+Bundle 'git@github.com:tpope/vim-endwise.git'
+Bundle 'git@github.com:tpope/vim-repeat.git'
+Bundle 'git@github.com:Raimondi/delimitMate.git'
 Bundle 'Align'
 Bundle 'transpose-words'
 Bundle 'ReplaceWithRegister'
 
 " Commenting, auto-completion, general syntax
 Bundle 'tComment'
-Bundle 'scrooloose/syntastic.git'
-Bundle 'Valloric/YouCompleteMe.git'
+Bundle 'git@github.com:scrooloose/syntastic.git'
+Bundle 'git@github.com:Valloric/YouCompleteMe.git'
 
 " Mark-down
-Bundle 'tpope/vim-markdown.git'
-Bundle 'timcharper/textile.vim.git'
+Bundle 'git@github.com:tpope/vim-markdown.git'
+Bundle 'git@github.com:timcharper/textile.vim.git'
 
 " General ruby
-Bundle 'tpope/vim-bundler.git'
-Bundle 'vim-ruby/vim-ruby.git'
-Bundle 'tpope/vim-rbenv'
+Bundle 'git@github.com:tpope/vim-bundler.git'
+Bundle 'git@github.com:vim-ruby/vim-ruby.git'
+Bundle 'git@github.com:tpope/vim-rbenv'
 Bundle 'Puppet-Syntax-Highlighting'
 
 " Web development
-Bundle 'tpope/vim-rails.git'
-Bundle 'hallison/vim-ruby-sinatra.git'
-Bundle 'cakebaker/scss-syntax.vim.git'
-Bundle 'tpope/vim-cucumber.git'
-Bundle 'tpope/vim-haml.git'
-Bundle 'kchmck/vim-coffee-script.git'
-Bundle 'slim-template/vim-slim.git'
-Bundle 'itspriddle/vim-jquery.git'
-Bundle 'othree/html5.vim.git'
-Bundle 'mattn/emmet-vim.git'
-Bundle 'jshafton/vim-handlebars.git'
-Bundle 'Valloric/MatchTagAlways'
+Bundle 'git@github.com:tpope/vim-rails.git'
+Bundle 'git@github.com:hallison/vim-ruby-sinatra.git'
+
+Bundle 'git@github.com:git@github.com:cakebaker/scss-syntax.vim.git'
+Bundle 'git@github.com:groenewege/vim-less.git'
+Bundle 'git@github.com:tpope/vim-cucumber.git'
+Bundle 'git@github.com:tpope/vim-haml.git'
+Bundle 'git@github.com:kchmck/vim-coffee-script.git'
+Bundle 'git@github.com:slim-template/vim-slim.git'
+Bundle 'git@github.com:itspriddle/vim-jquery.git'
+Bundle 'git@github.com:othree/html5.vim.git'
+Bundle 'git@github.com:mattn/emmet-vim.git'
+Bundle 'git@github.com:jshafton/vim-handlebars.git'
+Bundle 'git@github.com:Valloric/MatchTagAlways'
 
 " Badass undo history
-Bundle 'sjl/gundo.vim.git'
+Bundle 'git@github.com:sjl/gundo.vim.git'
 
 " Quick file navigation
-Bundle 'Lokaltog/vim-easymotion'
+Bundle 'git@github.com:Lokaltog/vim-easymotion'
 
 " Tag navigation / display
-Bundle 'majutsushi/tagbar'
+Bundle 'git@github.com:majutsushi/tagbar'
 
 " Awesome paste history
-Bundle 'vim-scripts/YankRing.vim.git'
+Bundle 'git@github.com:vim-scripts/YankRing.vim.git'
 
 " Text selection
-Bundle 'kana/vim-textobj-user'
+Bundle 'git@github.com:kana/vim-textobj-user'
 " ar, ir
-Bundle 'nelstrom/vim-textobj-rubyblock'
+Bundle 'git@github.com:nelstrom/vim-textobj-rubyblock'
 " aa, ia
-Bundle 'vim-scripts/argtextobj.vim'
+Bundle 'git@github.com:vim-scripts/argtextobj.vim'
 " ae, ie
-Bundle 'kana/vim-textobj-entire'
+Bundle 'git@github.com:kana/vim-textobj-entire'
 " a/, i/, a?, i?
-Bundle 'kana/vim-textobj-lastpat'
+Bundle 'git@github.com:kana/vim-textobj-lastpat'
 " al, il
-Bundle 'kana/vim-textobj-line'
+Bundle 'git@github.com:kana/vim-textobj-line'
 " ai, ii, aI, iI
-Bundle 'kana/vim-textobj-indent'
+Bundle 'git@github.com:kana/vim-textobj-indent'
 " a_, i_
-Bundle 'lucapette/vim-textobj-underscore'
+Bundle 'git@github.com:lucapette/vim-textobj-underscore'
 
 " Code searching
-Bundle 'mileszs/ack.vim.git'
-Bundle 'rking/ag.vim'
+Bundle 'git@github.com:mileszs/ack.vim.git'
+Bundle 'git@github.com:rking/ag.vim'
 Bundle 'AutoTag'
-Bundle 'tpope/vim-abolish.git'
+Bundle 'git@github.com:tpope/vim-abolish.git'
 
 " SQL
 Bundle 'dbext.vim'
-Bundle 'exu/pgsql.vim'
+Bundle 'git@github.com:exu/pgsql.vim'
 
 " Windows shit
-Bundle 'PProvost/vim-ps1'
+Bundle 'git@github.com:PProvost/vim-ps1'
 
 " Misc junk
-Bundle 'ciaranm/securemodelines.git'
+Bundle 'git@github.com:ciaranm/securemodelines.git'
 
 " Snippets
 " -- this is the engine
