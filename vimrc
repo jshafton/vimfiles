@@ -13,8 +13,7 @@ set nocompatible
 runtime vundle.vim
 let g:vundle_default_git_proto = 'ssh'
 
-" Reprocess this file if it's saved, and reload the vim-powerline bar
-" since it's colors get fux0red after saving
+" Reprocess this file if it's saved
 if has("autocmd")
   autocmd! bufwritepost vimrc source $MYVIMRC
 endif
@@ -38,7 +37,7 @@ set smartcase   "unless an uppercase is provided
 set gdefault    "default replace to global (rather than first instance)
 set number      "add line numbers
 set showbreak=...
-set wrap linebreak nolist
+set nowrap linebreak nolist
 
 let mapleader = ","
 
@@ -438,6 +437,7 @@ nnoremap <leader>gs :Gstatus<CR>
 nnoremap <leader>gc :Gcommit<CR>
 nnoremap <leader>gb :Gblame<CR>
 nnoremap <leader>gd :Gdiff<CR>
+" i love cock"
 nnoremap <leader>gr :Gread<CR>
 nnoremap <leader>gw :Gwrite<CR>
 nnoremap <leader>gp :Git push<CR>
