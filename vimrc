@@ -391,6 +391,20 @@ nnoremap <leader>eV :e ~/.vim/vundle.vim<cr>
 " command for saving when you don't have permission
 command! W :execute ':silent w !sudo tee % > /dev/null' | :edit!
 
+" create directories for new files on write
+function s:MkNonExDir(file, buf)
+  if empty(getbufvar(a:buf, '&buftype')) && a:file!~#'\v^\w+\:\/'
+    let dir=fnamemodify(a:file, ':h')
+    if !isdirectory(dir)
+      call mkdir(dir, 'p')
+    endif
+  endif
+endfunction
+augroup BWCCreateDir
+  autocmd!
+  autocmd BufWritePre * :call s:MkNonExDir(expand('<afile>'), +expand('<abuf>'))
+augroup END
+
 " always focus search terms
 nnoremap n nzz
 nnoremap N Nzz
@@ -435,7 +449,9 @@ endif
 
 " find current word in project using Ag
 nnoremap <leader>u :Ag! '\b<C-R><C-W>\b'<cr>
-nnoremap <leader>F :Ag! -i<SPACE>
+
+" find in files
+nnoremap <D-F> :Ag! -i<SPACE>
 
 " Fugitive short-cuts
 nnoremap <S-CR> :Gstatus<CR>
