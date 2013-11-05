@@ -1,10 +1,13 @@
 if has("gui_macvim")
   set guifont=Inconsolata\ for\ Powerline:h12
 
-  " key binding for Command-T to behave properly
-  " uncomment to replace the Mac Command-T key to Command-T plugin
+  " unbind annoying MacVim keybindings
+  macmenu &File.Save key=<nop>
+  macmenu &File.Save\ As\.\.\. key=<nop>
   macmenu &File.Print key=<nop>
   macmenu &File.Open\ Tab\.\.\. key=<nop>
+  macmenu &Tools.Make key=<nop>
+  macmenu &Tools.List\ Errors key=<nop>
 
   " More Mac-like tab handling
   map <D-1> :tabn 1<CR>

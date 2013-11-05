@@ -40,6 +40,7 @@ set gdefault    "default replace to global (rather than first instance)
 set number      "add line numbers
 set showbreak=...
 set nowrap linebreak nolist
+set lazyredraw  " don't redraw during complex operations
 
 let mapleader = ","
 
@@ -143,17 +144,20 @@ set ttymouse=xterm2
 set hidden
 
 " CtrlP configuration
+let g:ctrlp_extensions            = ['tag', 'buffertag', 'quickfix', 'undo', 'line', 'changes']
 let g:ctrlp_user_command          = ['.git/', 'cd %s && git ls-files --exclude-standard -co']
 let g:ctrlp_map                   = '<D-p>'
 let g:ctrlp_match_window_bottom   = 0
 let g:ctrlp_match_window_reversed = 0
 let g:ctrlp_max_height            = 15
-let g:ctrlp_dont_split            = 'NERD_tree_1'
+let g:ctrlp_dont_split            = 'NERD\|help\|quickfix'
 
-map <D-u> :CtrlPBuffer<CR>
+map <D-b> :CtrlPBuffer<CR>
 map <D-\> :CtrlPBufTag<CR>
 map <D-\|> :CtrlPTag<CR>
 map <D-C> :CtrlPChange<CR>
+map <D-l> :CtrlPLine<CR>
+map <D-u> :CtrlPUndo<CR>
 
 " TagBar configuration
 map <F9> :TagbarToggle<CR>
@@ -391,8 +395,13 @@ nnoremap <leader>eV :e ~/.vim/vundle.vim<cr>
 " command for saving when you don't have permission
 command! W :execute ':silent w !sudo tee % > /dev/null' | :edit!
 
+" Mac-like save
+map <D-s> :w<CR>
+" save all unsaved buffers
+map <D-S> :wa<CR>
+
 " create directories for new files on write
-function s:MkNonExDir(file, buf)
+function! s:MkNonExDir(file, buf)
   if empty(getbufvar(a:buf, '&buftype')) && a:file!~#'\v^\w+\:\/'
     let dir=fnamemodify(a:file, ':h')
     if !isdirectory(dir)
@@ -459,10 +468,16 @@ nnoremap <leader>gs :Gstatus<CR>
 nnoremap <leader>gc :Gcommit<CR>
 nnoremap <leader>gb :Gblame<CR>
 nnoremap <leader>gd :Gdiff<CR>
-" i love cock"
 nnoremap <leader>gr :Gread<CR>
 nnoremap <leader>gw :Gwrite<CR>
 nnoremap <leader>gp :Git push<CR>
+
+" GitV configuration
+let g:Gitv_WipeAllOnClose = 1
+let g:Gitv_DoNotMapCtrlKey = 1
+nmap <leader>gv :Gitv --all<cr>
+nmap <leader>gV :Gitv! --all<cr>
+vmap <leader>gV :Gitv! --all<cr>
 
 " DelimitMate config
 let delimitMate_expand_cr = 1
