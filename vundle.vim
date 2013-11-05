@@ -35,6 +35,10 @@ Bundle 'Align'
 Bundle 'transpose-words'
 Bundle 'ReplaceWithRegister'
 
+" Better matching with %
+Bundle 'matchit.zip'
+Bundle 'ruby-matchit'
+
 " Commenting, auto-completion, general syntax
 Bundle 'tComment'
 Bundle 'git@github.com:scrooloose/syntastic.git'
