@@ -1,2 +1,2 @@
 " align hashes at the colon
-nnoremap <buffer> <D-+> vi{:Align :\zs<CR>
+nnoremap <buffer> <D-+> vi{:EasyAlign :<CR>

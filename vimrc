@@ -37,30 +37,30 @@ set hlsearch    "hilight searches by default
 set ignorecase  "case-insensitive searching ...
 set smartcase   "unless an uppercase is provided
 set gdefault    "default replace to global (rather than first instance)
-set number      "add line numbers
 set showbreak=...
 set nowrap linebreak nolist
 set lazyredraw  " don't redraw during complex operations
 
+" use vim's 'hybrid line number' method
+set relativenumber
+set number
 let mapleader = ","
 
 " show whitespace with a hotkey
 set listchars=tab:>-,trail:·,eol:$
-nmap <silent> <leader>ws :set nolist!<CR>
 
 " set the leader timeout to a short interval (defaults to 1 sec)
 set timeout timeoutlen=500 ttimeoutlen=100
 
 " get out of insert mode w/ shift-enter, or jk
-inoremap <S-CR> <Esc>
-inoremap jk <Esc>
-inoremap JK <Esc>
+inoremap jk <Esc>`^
+inoremap JK <Esc>`^
 
 " use tab for switching back and for between prev buffer
 nnoremap <Tab> <C-^>
 
 " open/close buffer list with enter
-nnoremap <Enter> :BuffergatorToggle<CR>
+nnoremap <D-CR> :BuffergatorToggle<CR>
 
 " other buffergator config
 let g:buffergator_viewport_split_policy = 'T'   " default buffer window on the top
@@ -73,19 +73,6 @@ nnoremap <leader>co :BufOnly!<CR>
 " use H to go to begin of line and L to go to end of line
 noremap H ^
 noremap L g_
-
-" mapping for command key to map navigation thru display lines instead
-" of just numbered lines
-vmap <D-j> gj
-vmap <D-k> gk
-vmap <D-4> g$
-vmap <D-6> g^
-vmap <D-0> g^
-nmap <D-j> gj
-nmap <D-k> gk
-nmap <D-4> g$
-nmap <D-6> g^
-nmap <D-0> g^
 
 " add some line space for easy reading
 set linespace=4
@@ -144,7 +131,7 @@ set ttymouse=xterm2
 set hidden
 
 " CtrlP configuration
-let g:ctrlp_extensions            = ['tag', 'buffertag', 'quickfix', 'undo', 'line', 'changes']
+let g:ctrlp_extensions            = ['tag', 'buffertag', 'quickfix', 'line', 'changes']
 let g:ctrlp_user_command          = ['.git/', 'cd %s && git ls-files --exclude-standard -co']
 let g:ctrlp_map                   = '<D-p>'
 let g:ctrlp_match_window_bottom   = 0
@@ -157,7 +144,12 @@ map <D-\> :CtrlPBufTag<CR>
 map <D-\|> :CtrlPTag<CR>
 map <D-C> :CtrlPChange<CR>
 map <D-l> :CtrlPLine<CR>
-map <D-u> :CtrlPUndo<CR>
+map <D-M> :CtrlPMRUFiles<CR>
+
+let g:ctrlp_buftag_types = {
+      \ 'javascript' : '--language-force=js',
+      \ 'coffee'     : '--language-force=coffee',
+      \ }
 
 " TagBar configuration
 map <F9> :TagbarToggle<CR>
@@ -201,11 +193,9 @@ endif
 " show/hide NERDtre
 silent! nmap <silent> <leader>p :NERDTreeFind<CR>
 
-" toggle search higlight with space
-nnoremap <space> :set hlsearch! hlsearch?<cr>
-
 " map Q to something useful
-noremap Q gq
+nnoremap Q @@
+vnoremap Q :normal @@<CR>
 
 " bindings for ragtag
 inoremap <M-o> <Esc>o
@@ -215,18 +205,12 @@ let g:ragtag_global_maps = 1
 " == Syntastic configuration
 let g:syntastic_mode_map = { 'mode': 'active',
                             \ 'active_filetypes': ['ruby', 'coffee', 'javascript', 'json'],
-                            \ 'passive_filetypes': ['puppet'] }
-
-" key mapping for vimgrep result navigation
-map <A-o> :copen<CR>
-map <A-q> :cclose<CR>
-map <A-j> :cnext<CR>
-map <A-k> :cprevious<CR>
+                            \ 'passive_filetypes': ['puppet', 'html', 'handlebars'] }
 
 " key mapping for Gundo
 nnoremap <F5> :GundoToggle<CR>
 
-" visual search mappings
+" visual search mappings - find selection
 function! s:VSetSearch()
   let temp = @@
   norm! gvy
@@ -235,6 +219,10 @@ function! s:VSetSearch()
 endfunction
 vnoremap * :<C-u>call <SID>VSetSearch()<CR>//<CR>zz
 vnoremap # :<C-u>call <SID>VSetSearch()<CR>??<CR>zz
+
+" search and replace using Over
+nnoremap g/r :<c-u>OverCommandLine<cr>%s/
+xnoremap g/r :<c-u>OverCommandLine<cr>%s/\%V
 
 " jump to last cursor position when opening a file
 " dont do it when writing a commit log entry
@@ -276,16 +264,6 @@ function! <SID>StripTrailingWhitespaces()
 endfunction
 autocmd BufWritePre * :call <SID>StripTrailingWhitespaces()
 
-function! MoveFunction(newname)
-  " get the current file name
-  let a:oldname = expand("%:p")
-  " save under the new name
-  exec "saveas " . a:newname
-  " delete the old file
-  call delete(a:oldname)
-endfunction
-command! -nargs=1 MoveTo call MoveFunction(<f-args>)
-
 " key mapping for window navigation
 map <C-h> <C-w>h
 map <C-j> <C-w>j
@@ -295,14 +273,17 @@ map <C-l> <C-w>l
 " easy window quit
 nnoremap <Leader>q :q<CR>
 
+" buffkill configuration
+let g:BufKillFunctionSelectingValidBuffersToDisplay = 'auto'
+
 " easy buffer wipe
-nnoremap <C-b> :bw!<cr>
+nnoremap <C-b> :BW!<cr>
 
 " easy window focus (closes all others)
 nnoremap <Leader>f <C-W>o
 
 " close all open buffers
-nnoremap <Leader>bwa :%bw!<CR>:bw!<CR>:bufdo bw!<CR>
+nnoremap <Leader>bwa ::BW!<CR>:bufdo BW!<CR>
 
 " easy splits
 nnoremap <bar> :vsplit<CR><C-W><C-L>
@@ -337,12 +318,25 @@ let g:dbext_display_command_line          = 1
 " -- misc config
 let g:dbext_default_always_prompt_for_variables = -1 " never prompt for variables
 
+" set up autocompletion for SQL
+autocmd FileType sql set omnifunc=sqlcomplete#Complete
+autocmd FileType pgsql set omnifunc=sqlcomplete#Complete
+
 " set file type for Postgres for SQL files
 au BufNewFile,BufRead *.sql set ft=pgsql
+
+" set file type for sneaky Handlebars files
+au BufNewFile,BufRead *.hbs.html set ft=handlebars
+
+" set file type for sneaky Slim files
+au BufNewFile,BufRead *.html.slim set ft=slim
 
 function! YRRunAfterMaps()
   " make Y consistent with C and D (yank to end of line)
   nnoremap Y :<C-U>YRYankCount 'y$'<CR>
+
+  " in visual mode Y selects to clipboard
+  xnoremap Y "+y
 
   " Paste intelligently by default
   nnoremap p :<C-U>YRPaste 'p'<CR>v`]=`]
@@ -388,9 +382,9 @@ nnoremap <Leader>yrs :YRSearch<space>
 "hi CursorLine term=none cterm=none ctermbg=3
 
 " edit this file!
-nnoremap <leader>ev :e ~/.vim/vimrc<cr>
+nnoremap <leader>ev :tabnew ~/.vim/vimrc<cr>
 " edit bundles
-nnoremap <leader>eV :e ~/.vim/vundle.vim<cr>
+nnoremap <leader>eV :tabnew ~/.vim/vundle.vim<cr>
 
 " command for saving when you don't have permission
 command! W :execute ':silent w !sudo tee % > /dev/null' | :edit!
@@ -421,10 +415,10 @@ nnoremap N Nzz
 " open a Quickfix window for the last search.
 nnoremap <silent> <leader>? :execute 'vimgrep /'.@/.'/g %'<CR>:copen<CR>
 
-" EasyMotion - use s/S for searching
-nmap s <leader><leader>f
-nmap S <leader><leader>F
-vmap s <leader><leader>f
+" Sneak configuration
+let g:sneak#streak = 1
+let g:sneak#f_reset = 1
+let g:sneak#t_reset = 1
 
 " Replace current word in file
 nmap <leader>R :%s/<C-R><C-W>/<C-R><C-W><C-F>vb
@@ -432,32 +426,8 @@ nmap <leader>R :%s/<C-R><C-W>/<C-R><C-W><C-F>vb
 " turn off diff formatting
 noremap <leader>do :set nodiff fdc=0 \| norm zR<CR><C-W>h:bwipeout<CR>
 
-" show relative line numbers in normal mode for easy movement
-if exists('+relativenumber')
-  function! g:ToggleNuMode()
-    if(&rnu == 1)
-      set nu
-    else
-      set rnu
-    endif
-  endfunc
-  nnoremap <leader>ln :cal g:ToggleNuMode()<cr>
-
-  autocmd InsertEnter * setl nu
-  autocmd InsertLeave * setl rnu
-  autocmd WinLeave *
-        \ if &rnu==1 |
-        \ exe "setl norelativenumber" |
-        \ exe "setl nu" |
-        \ endif
-  autocmd WinEnter *
-        \ if &rnu==0 |
-        \ exe "setl rnu" |
-        \ endif
-endif
-
 " find current word in project using Ag
-nnoremap <leader>u :Ag! '\b<C-R><C-W>\b'<cr>
+nnoremap gu :Ag! '\b<C-R><C-W>\b'<cr>
 
 " find in files
 nnoremap <D-F> :Ag! -i<SPACE>
@@ -515,30 +485,32 @@ endif
 map <d-/> :TComment<cr>
 vmap <d-/> :TComment<cr>gv
 
-" Snippets
+" Comment to the right
+nmap gcr :TCommentRight<CR>
 
-" Configuration below is to allow harmony between UltiSnips and YouCompleteMe
-" credit goes here: http://stackoverflow.com/a/18685821
-function! g:UltiSnips_Complete()
-  call UltiSnips_ExpandSnippet()
-  if g:ulti_expand_res == 0
-    if pumvisible()
-      return "\<C-n>"
-    else
-      call UltiSnips_JumpForwards()
-      if g:ulti_jump_forwards_res == 0
-        return "\<TAB>"
-      endif
-    endif
-  endif
-    return ""
-endfunction
-
-au BufEnter * exec "inoremap <silent> " . g:UltiSnipsExpandTrigger . " <C-R>=g:UltiSnips_Complete()<cr>"
-
-let g:UltiSnipsJumpForwardTrigger = "<tab>"
-let g:UltiSnipsListSnippets       = "<c-e>"
+" Inline comment selection
+vmap gci :TCommentInline<CR>
 
 " Persistent undo
 set undofile
 set undodir=~/.vim/.undo
+
+" Start interactive EasyAlign in visual mode
+vmap <Enter> <Plug>(EasyAlign)
+
+" Align selection based on last instance of word
+vmap <Leader>aw :EasyAlign -// {'ig': []}<Left><Left><Left><Left><Left><Left><Left><Left><Left><Left><Left><Left>
+
+" Put ; to good use! <-- have to wait for vim sneak to get updated
+" https://github.com/justinmk/vim-sneak/issues/41
+" https://github.com/justinmk/vim-sneak/issues/52
+nnoremap ; :
+
+" Gist configuration
+let g:gist_detect_filetype = 1
+let g:gist_show_privates   = 1
+let g:gist_post_private    = 1
+let g:gist_update_on_write = 2 " Only :w! updates a gist.
+
+" investigate.vim
+let g:investigate_use_dash=1

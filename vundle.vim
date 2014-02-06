@@ -13,12 +13,24 @@ Bundle 'git@github.com:tpope/vim-git.git'
 Bundle 'git@github.com:tpope/vim-fugitive.git'
 Bundle 'git@github.com:gregsexton/gitv.git'
 
+" Required for gist interaction
+Bundle 'git@github.com:mattn/webapi-vim.git'
+" Upload stuff to gist.github.com
+Bundle 'git@github.com:mattn/gist-vim.git'
+
+" Look up stuff in Dash / the internets
+Bundle 'git@github.com:Keithbsmiley/investigate.vim.git'
+
 " Buffer/file browsing
 Bundle 'git@github.com:kien/ctrlp.vim.git'
 Bundle 'git@github.com:jlanzarotta/bufexplorer'
 Bundle 'git@github.com:jeetsukumaran/vim-buffergator.git'
 Bundle 'git@github.com:scrooloose/nerdtree.git'
 Bundle 'git@github.com:duff/vim-bufonly'
+Bundle 'bufkill.vim'
+
+" Share registers across Vim instances
+Bundle 'git@github.com:ardagnir/united-front.git'
 
 " UI enhancements
 Bundle 'git@github.com:bling/vim-airline'
@@ -32,8 +44,10 @@ Bundle 'git@github.com:tpope/vim-endwise.git'
 Bundle 'git@github.com:tpope/vim-repeat.git'
 Bundle 'git@github.com:Raimondi/delimitMate.git'
 Bundle 'Align'
+Bundle 'git@github.com:junegunn/vim-easy-align'
 Bundle 'transpose-words'
 Bundle 'ReplaceWithRegister'
+Bundle 'git@github.com:sk1418/Join.git'
 
 " Better matching with %
 Bundle 'matchit.zip'
@@ -60,6 +74,7 @@ Bundle 'git@github.com:hallison/vim-ruby-sinatra.git'
 
 Bundle 'git@github.com:git@github.com:cakebaker/scss-syntax.vim.git'
 Bundle 'git@github.com:groenewege/vim-less.git'
+Bundle 'git@github.com:wavded/vim-stylus.git'
 Bundle 'git@github.com:tpope/vim-cucumber.git'
 Bundle 'git@github.com:tpope/vim-haml.git'
 Bundle 'git@github.com:kchmck/vim-coffee-script.git'
@@ -73,8 +88,9 @@ Bundle 'git@github.com:Valloric/MatchTagAlways'
 " Badass undo history
 Bundle 'git@github.com:sjl/gundo.vim.git'
 
-" Quick file navigation
-Bundle 'git@github.com:Lokaltog/vim-easymotion'
+" Quick intra-buffer navigation
+Bundle 'git@github.com:justinmk/vim-sneak.git'
+Bundle 'git@github.com:spiiph/vim-space.git'
 
 " Tag navigation / display
 Bundle 'git@github.com:majutsushi/tagbar'
@@ -98,12 +114,20 @@ Bundle 'git@github.com:kana/vim-textobj-line'
 Bundle 'git@github.com:kana/vim-textobj-indent'
 " a_, i_
 Bundle 'git@github.com:lucapette/vim-textobj-underscore'
+" expand selection
+Bundle 'git@github.com:terryma/vim-expand-region.git'
+" looser searching for text objects
+Bundle 'git@github.com:paradigm/TextObjectify.git'
+
+" Movement through camel case and snake case words
+Bundle 'git@github.com:bkad/CamelCaseMotion.git'
 
 " Code searching
 Bundle 'git@github.com:mileszs/ack.vim.git'
 Bundle 'git@github.com:rking/ag.vim'
 Bundle 'AutoTag'
 Bundle 'git@github.com:tpope/vim-abolish.git'
+Bundle 'git@github.com:osyo-manga/vim-over.git'
 
 " SQL
 Bundle 'dbext.vim'
@@ -115,11 +139,8 @@ Bundle 'git@github.com:PProvost/vim-ps1'
 " Misc junk
 Bundle 'git@github.com:ciaranm/securemodelines.git'
 
-" Snippets
-" -- this is the engine
-Bundle "git@github.com:SirVer/ultisnips.git"
+" Random shell helper commands
+Bundle 'git@github.com:tpope/vim-eunuch.git'
 
-" -- these are snippets; vim-snipmate requires the other 2
-Bundle "git@github.com:MarcWeber/vim-addon-mw-utils"
-Bundle "git@github.com:tomtom/tlib_vim"
-Bundle "git@github.com:garbas/vim-snipmate.git"
+" Session management
+Bundle 'git@github.com:tpope/vim-obsession.git'
