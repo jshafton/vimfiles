@@ -1,3 +1,16 @@
+h1. Vim installation
+
+Ubuntu:
+
+<pre><code>sudo add-apt-repository ppa:fcwu-tw/ppa
+sudo apt-get update
+sudo apt-get install vim
+</code></pre>
+
+OS X
+
+<pre><code>brew install macvim</code></pre>
+
 h1. Dependencies
 
 You will need these dependencies figured out:
@@ -11,18 +24,16 @@ In Ubuntu, for example, you will have to do:
 
 In OS X, you can install ctags with homebrew
 
-<pre><code>
-brew install ctags-exuberant
-</code></pre>
+<pre><code>brew install ctags-exuberant</code></pre>
 
 On Windows you have to download Ctags and add ctags.exe in your PATH.
 
 Mac OS X and most Linux distros come with Ruby already. If you're in Windows
 look for Luis Lavena's latest Ruby Installer (http://rubyforge.org/projects/rubyinstaller/)
 
-h1. Installation
+h1. Vimfiles installation
 
-<pre><code>git clone git://github.com/jshafton/vimfiles.git ~/.vim</pre></code>
+<pre><code>git clone https://github.com/jshafton/vimfiles.git ~/.vim</pre></code>
 
 Now you should create a new <tt>.vimrc</tt> file in your home directory that
 loads the pre-configured one that comes bundled in this package. You can do it
@@ -43,14 +54,26 @@ it on Linux/Mac like this:
 
 <pre><code>echo "source ~/.vim/gvimrc" > ~/.gvimrc</code></pre>
 
+h1. YouCompleteMe support
+
+The YouCompleteMe plugin has a bunch of requirements to build it.
+
+In Ubuntu:
+
+<pre><code>sudo apt-get install python-software-properties build-essential python-dev -y</code></pre>
+
 h1. Bundle installation
 
 In order to install all the required plugins, you'll need to use Vundle. First, clone its repo into your bundle folder:
 
 <pre><code>$ git clone https://github.com/gmarik/vundle.git bundle/vundle</code></pre>
 
-Then Load up Vim and run the following:
+Install the bundles with the following:
 
-<pre><code>:BundleInstall</code></pre>
+<pre><code>$ vim +BundleInstall</code></pre>
 
-This should install all the plugins you need and you should be good to go.
+h1. Compile YouCompleteMe
+
+<pre><code>cd ~/.vim/bundle/YouCompleteMe
+./install.sh
+</code></pre>
