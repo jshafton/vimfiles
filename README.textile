@@ -2,9 +2,10 @@ h1. Vim installation
 
 Ubuntu:
 
-<pre><code>sudo add-apt-repository ppa:fcwu-tw/ppa
-sudo apt-get update
-sudo apt-get install vim
+<pre><code>sudo apt-get install python-software-properties -y
+sudo add-apt-repository ppa:fcwu-tw/ppa
+sudo apt-get update -y
+sudo apt-get install vim -y
 </code></pre>
 
 OS X
@@ -60,7 +61,7 @@ The YouCompleteMe plugin has a bunch of requirements to build it.
 
 In Ubuntu:
 
-<pre><code>sudo apt-get install python-software-properties build-essential python-dev -y</code></pre>
+<pre><code>sudo apt-get install build-essential python-dev cmake -y</code></pre>
 
 h1. Bundle installation
 
