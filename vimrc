@@ -207,6 +207,12 @@ let g:syntastic_mode_map = { 'mode': 'active',
                             \ 'active_filetypes': ['ruby', 'coffee', 'javascript', 'json'],
                             \ 'passive_filetypes': ['puppet', 'html', 'handlebars'] }
 
+let g:syntastic_always_populate_loc_list = 1
+
+" When set to 2 the cursor will jump to the first issue detected, but only if
+" this issue is an error. >
+let g:syntastic_auto_jump = 2
+
 " key mapping for Gundo
 nnoremap <F5> :GundoToggle<CR>
 
@@ -301,6 +307,8 @@ vmap <D-]> >gv
 let ScreenShot = {'Icon':0, 'Credits':0, 'force_background':'#FFFFFF'}
 
 " == DbExt configuration ==
+let g:rails_no_dbext = 1
+
 " -- profiles
 let g:dbext_default_type                    = 'PGSQL'
 let g:dbext_default_profile_Local_N360      = 'type=PGSQL:host=localhost:dbname=network360_development'
@@ -431,6 +439,8 @@ nnoremap gu :Ag! '\b<C-R><C-W>\b'<cr>
 
 " find in files
 nnoremap <D-F> :Ag! -i<SPACE>
+nnoremap <leader>F :Ag! -i<SPACE>
+nnoremap gfir :Ag! -G '\.rb' -i<SPACE>
 
 " Fugitive short-cuts
 nnoremap <S-CR> :Gstatus<CR>
@@ -441,6 +451,7 @@ nnoremap <leader>gd :Gdiff<CR>
 nnoremap <leader>gr :Gread<CR>
 nnoremap <leader>gw :Gwrite<CR>
 nnoremap <leader>gp :Git push<CR>
+nnoremap <leader>grb :!git pull --rebase<CR>
 
 " GitV configuration
 let g:Gitv_WipeAllOnClose = 1
@@ -514,3 +525,12 @@ let g:gist_update_on_write = 2 " Only :w! updates a gist.
 
 " investigate.vim
 let g:investigate_use_dash=1
+
+" toggle quickfix/location list
+let g:toggle_list_no_mappings=1
+nnoremap tqf :call ToggleQuickfixList()<CR>
+nnoremap tll :call ToggleLocationList()<CR>
+
+" expand/shrink selection
+map + <Plug>(expand_region_expand)
+map - <Plug>(expand_region_shrink)
