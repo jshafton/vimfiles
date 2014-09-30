@@ -1,5 +1,5 @@
 if has("gui_macvim")
-  set guifont=Inconsolata\ for\ Powerline:h12
+  set guifont=Ubuntu\ Mono\ derivative\ Powerline:h12
 
   " unbind annoying MacVim keybindings
   macmenu &File.Save key=<nop>
@@ -28,8 +28,6 @@ if has("gui_macvim")
   map! <D-7> <C-O>:tabn 7<CR>
   map! <D-8> <C-O>:tabn 8<CR>
   map! <D-9> <C-O>:tabn 9<CR>
-else
-  set guifont=Consolas
 endif
 
 " When the GUI starts, t_vb is reset to its default value.

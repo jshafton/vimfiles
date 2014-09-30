@@ -59,9 +59,6 @@ inoremap JK <Esc>`^
 " use tab for switching back and for between prev buffer
 nnoremap <Tab> <C-^>
 
-" open/close buffer list with enter
-nnoremap <D-CR> :BuffergatorToggle<CR>
-
 " other buffergator config
 let g:buffergator_viewport_split_policy = 'T'   " default buffer window on the top
 let g:buffergator_sort_regime           = 'mru' " sort buffers by most recently used
@@ -139,13 +136,6 @@ let g:ctrlp_match_window_reversed = 0
 let g:ctrlp_max_height            = 15
 let g:ctrlp_dont_split            = 'NERD\|help\|quickfix'
 
-map <D-b> :CtrlPBuffer<CR>
-map <D-\> :CtrlPBufTag<CR>
-map <D-\|> :CtrlPTag<CR>
-map <D-C> :CtrlPChange<CR>
-map <D-l> :CtrlPLine<CR>
-map <D-M> :CtrlPMRUFiles<CR>
-
 let g:ctrlp_buftag_types = {
       \ 'javascript' : '--language-force=js',
       \ 'coffee'     : '--language-force=coffee',
@@ -168,7 +158,7 @@ let g:tagbar_type_coffee = {
 if has("gui_running")
   set t_Co=256 " tell the term has 256 colors
 
-  colorscheme Monokai-Refined
+  colorscheme molokai
 
   if has("gui_gnome")
     set term=gnome-256color
@@ -186,7 +176,7 @@ else
   if $COLORTERM == 'gnome-terminal'
     set term=gnome-256color
   else
-    colorscheme Monokai-Refined
+    colorscheme molokai
   endif
 endif
 
@@ -298,12 +288,6 @@ nnoremap _ :split<CR><C-W><C-J>
 " key mapping for saving file
 nmap <C-s> :w<CR>
 
-" key mapping for textmate-like indentation
-nmap <D-[> <<
-nmap <D-]> >>
-vmap <D-[> <gv
-vmap <D-]> >gv
-
 let ScreenShot = {'Icon':0, 'Credits':0, 'force_background':'#FFFFFF'}
 
 " == DbExt configuration ==
@@ -313,6 +297,7 @@ let g:rails_no_dbext = 1
 let g:dbext_default_type                    = 'PGSQL'
 let g:dbext_default_profile_Local_N360      = 'type=PGSQL:host=localhost:dbname=network360_development'
 let g:dbext_default_profile_Staging_N360    = 'type=PGSQL:host=stagingdb01:dbname=network360:user=jshafton:passwd=xxx'
+let g:dbext_default_profile_AWSStaging_N360 = 'type=PGSQL:host=aws-stagingdb01:dbname=network360:user=jshafton:passwd=xxx'
 let g:dbext_default_profile_Production_N360 = 'type=PGSQL:host=proddb01.arsalon:dbname=network360:user=jshafton:passwd=xxx'
 let g:dbext_default_profile_Triscuit_sqsh   = 'type=SQLSRV:user=jshafton:passwd=@askg:host=triscuit:SQLSRV_bin=sqsh:SQLSRV_cmd_options=:extra=-Striscuit -D Network360 -w 9999999'
 let g:dbext_default_profile_Strenuus5_sqsh  = 'type=SQLSRV:user=jshafton:passwd=@askg:host=strenuus5:SQLSRV_bin=sqsh:SQLSRV_cmd_options=:extra=-Sstrenuus5 -D Network360 -w 9999999'
@@ -355,17 +340,6 @@ function! YRRunAfterMaps()
   nnoremap ∏ :<C-U>YRPaste 'P'<CR>
 endfunction
 
-" == Bubble text (requires unimpaired plugin) ==
-" -- Bubble single lines
-nmap <D-Up> [e
-nmap <D-Down> ]e
-" -- Bubble multiple lines
-vmap <D-Up> [egv
-vmap <D-Down> ]egv
-
-" duplicate selected text
-vnoremap <D-d> y`>p
-
 " transpose words configuration
 nmap gs <Plug>Transposewords
 
@@ -397,11 +371,6 @@ nnoremap <leader>eV :tabnew ~/.vim/vundle.vim<cr>
 " command for saving when you don't have permission
 command! W :execute ':silent w !sudo tee % > /dev/null' | :edit!
 
-" Mac-like save
-map <D-s> :w<CR>
-" save all unsaved buffers
-map <D-S> :wa<CR>
-
 " create directories for new files on write
 function! s:MkNonExDir(file, buf)
   if empty(getbufvar(a:buf, '&buftype')) && a:file!~#'\v^\w+\:\/'
@@ -424,6 +393,7 @@ nnoremap N Nzz
 nnoremap <silent> <leader>? :execute 'vimgrep /'.@/.'/g %'<CR>:copen<CR>
 
 " Sneak configuration
+let g:sneak#use_ic_scs = 1
 let g:sneak#streak = 1
 let g:sneak#f_reset = 1
 let g:sneak#t_reset = 1
@@ -438,7 +408,6 @@ noremap <leader>do :set nodiff fdc=0 \| norm zR<CR><C-W>h:bwipeout<CR>
 nnoremap gu :Ag! '\b<C-R><C-W>\b'<cr>
 
 " find in files
-nnoremap <D-F> :Ag! -i<SPACE>
 nnoremap <leader>F :Ag! -i<SPACE>
 nnoremap gfir :Ag! -G '\.rb' -i<SPACE>
 
@@ -490,11 +459,47 @@ if has("gui_macvim")
 
   " Disable MacVim's default mac-like cmd key bindings
   let g:macvim_skip_cmd_opt_movement = 1
-endif
 
-" Comment lines with cmd+/
-map <d-/> :TComment<cr>
-vmap <d-/> :TComment<cr>gv
+  " Comment lines with cmd+/
+  map <d-/> :TComment<cr>
+  vmap <d-/> :TComment<cr>gv
+
+  " open/close buffer list with enter
+  nnoremap <D-CR> :BuffergatorToggle<CR>
+
+  " ctrl-p shortcuts for OSX GUI
+  map <D-b> :CtrlPBuffer<CR>
+  map <D-\> :CtrlPBufTag<CR>
+  map <D-\|> :CtrlPTag<CR>
+  map <D-C> :CtrlPChange<CR>
+  map <D-l> :CtrlPLine %<CR>
+  map <D-M> :CtrlPMRUFiles<CR>
+
+  " key mapping for textmate-like indentation
+  nmap <D-[> <<
+  nmap <D-]> >>
+  vmap <D-[> <gv
+  vmap <D-]> >gv
+
+  " == Bubble text (requires unimpaired plugin) ==
+  " -- Bubble single lines
+  nmap <D-Up> [e
+  nmap <D-Down> ]e
+  " -- Bubble multiple lines
+  vmap <D-Up> [egv
+  vmap <D-Down> ]egv
+
+  " duplicate selected text
+  vnoremap <D-d> y`>p
+
+  " Mac-like save
+  map <D-s> :w<CR>
+  " save all unsaved buffers
+  map <D-S> :wa<CR>
+
+  " find in files
+  nnoremap <D-F> :Ag! -i<SPACE>
+endif
 
 " Comment to the right
 nmap gcr :TCommentRight<CR>
@@ -515,13 +520,14 @@ vmap <Leader>aw :EasyAlign -// {'ig': []}<Left><Left><Left><Left><Left><Left><Le
 " Put ; to good use! <-- have to wait for vim sneak to get updated
 " https://github.com/justinmk/vim-sneak/issues/41
 " https://github.com/justinmk/vim-sneak/issues/52
-nnoremap ; :
+" nnoremap ; :
 
 " Gist configuration
-let g:gist_detect_filetype = 1
-let g:gist_show_privates   = 1
-let g:gist_post_private    = 1
-let g:gist_update_on_write = 2 " Only :w! updates a gist.
+let g:gist_detect_filetype         = 1
+let g:gist_show_privates           = 1
+let g:gist_post_private            = 1
+let g:gist_update_on_write         = 2 " Only :w! updates a gist.
+let g:gist_open_browser_after_post = 1
 
 " investigate.vim
 let g:investigate_use_dash=1
@@ -531,6 +537,18 @@ let g:toggle_list_no_mappings=1
 nnoremap tqf :call ToggleQuickfixList()<CR>
 nnoremap tll :call ToggleLocationList()<CR>
 
-" expand/shrink selection
-map + <Plug>(expand_region_expand)
-map - <Plug>(expand_region_shrink)
+" notes configuration
+let g:notes_directories = ['~/Dropbox/Notes']
+let g:notes_title_sync = 'rename_file'
+let g:notes_suffix = '.md'
+
+" vimwiki configuration
+let wiki = {}
+let wiki.path = '~/Dropbox/VimWiki/'
+let wiki.nested_syntaxes = {'python': 'python', 'sh': 'sh', 'ruby': 'ruby', 'scala': 'scala', 'pg': 'pgsql'}
+let g:vimwiki_list = [wiki]
+
+" conque-shell configuration
+let g:ConqueTerm_ReadUnfocused = 1
+let g:ConqueTerm_InsertOnEnter = 0
+let g:ConqueTerm_CWInsert = 1
