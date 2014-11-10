@@ -56,13 +56,16 @@ set timeout timeoutlen=500 ttimeoutlen=100
 inoremap jk <Esc>`^
 inoremap JK <Esc>`^
 
-" use tab for switching back and for between prev buffer
-nnoremap <Tab> <C-^>
+" use tab for switching back and for between tabs
+nnoremap <Tab> :tabnext<CR>
 
 " other buffergator config
 let g:buffergator_viewport_split_policy = 'T'   " default buffer window on the top
 let g:buffergator_sort_regime           = 'mru' " sort buffers by most recently used
 let g:buffergator_split_size            = 5
+let g:buffergator_suppress_keymaps      = 1
+
+nnoremap gb :BuffergatorToggle<CR>
 
 " close other buffers
 nnoremap <leader>co :BufOnly!<CR>
@@ -130,11 +133,18 @@ set hidden
 " CtrlP configuration
 let g:ctrlp_extensions            = ['tag', 'buffertag', 'quickfix', 'line', 'changes']
 let g:ctrlp_user_command          = ['.git/', 'cd %s && git ls-files --exclude-standard -co']
-let g:ctrlp_map                   = '<D-p>'
+let g:ctrlp_map                   = '<C-p>'
 let g:ctrlp_match_window_bottom   = 0
 let g:ctrlp_match_window_reversed = 0
 let g:ctrlp_max_height            = 15
 let g:ctrlp_dont_split            = 'NERD\|help\|quickfix'
+
+nnoremap <leader>p :CtrlP<CR>
+nnoremap <leader>t :CtrlPBufTag<CR>
+
+nnoremap ∫ :CtrlPBuffer<CR> " alt-b
+nnoremap « :CtrlPBufTag<CR> " alt-|
+nnoremap ¬ :CtrlPLine %<CR> " alt-l
 
 let g:ctrlp_buftag_types = {
       \ 'javascript' : '--language-force=js',
@@ -155,11 +165,20 @@ let g:tagbar_type_coffee = {
     \ ]
 \ }
 
+" sweet statusline indicators
+let g:airline_powerline_fonts                      = 1
+let g:airline#extensions#tabline#enabled           = 1
+let g:airline#extensions#tabline#tab_min_count     = 2
+let g:airline#extensions#tabline#tab_nr_type       = 1 " tab number
+let g:airline#extensions#tabline#show_close_button = 0
+let g:airline#extensions#tabline#show_buffers      = 0
+let g:airline_theme                                = 'hybrid'
+
+set t_Co=256 " tell the term has 256 colors
+set enc=utf-8
+colorscheme molokai
+
 if has("gui_running")
-  set t_Co=256 " tell the term has 256 colors
-
-  colorscheme molokai
-
   if has("gui_gnome")
     set term=gnome-256color
     set guifont=Monospace\ Bold\ 10
@@ -167,7 +186,6 @@ if has("gui_running")
 
   if has("gui_win32") || has("gui_win32s")
     set guifont=Consolas:h12
-    set enc=utf-8
   endif
 else
   " dont load csapprox if there is no gui support - silences an annoying warning
@@ -175,13 +193,12 @@ else
 
   if $COLORTERM == 'gnome-terminal'
     set term=gnome-256color
-  else
-    colorscheme molokai
   endif
-endif
 
-" show/hide NERDtre
-silent! nmap <silent> <leader>p :NERDTreeFind<CR>
+  " Switch cursor shape correctly in tmux > iterm2 > osx
+  let &t_SI = "\<Esc>Ptmux;\<Esc>\<Esc>]50;CursorShape=1\x7\<Esc>\\"
+  let &t_EI = "\<Esc>Ptmux;\<Esc>\<Esc>]50;CursorShape=0\x7\<Esc>\\"
+endif
 
 " map Q to something useful
 nnoremap Q @@
@@ -275,18 +292,27 @@ let g:BufKillFunctionSelectingValidBuffersToDisplay = 'auto'
 " easy buffer wipe
 nnoremap <C-b> :BW!<cr>
 
-" easy window focus (closes all others)
-nnoremap <Leader>f <C-W>o
-
 " close all open buffers
 nnoremap <Leader>bwa ::BW!<CR>:bufdo BW!<CR>
+
+" easy window focus (closes all others)
+nnoremap <Leader>f <C-W>o
 
 " easy splits
 nnoremap <bar> :vsplit<CR><C-W><C-L>
 nnoremap _ :split<CR><C-W><C-J>
 
+" tabs
+nnoremap † :tabnew<CR> " alt-s
+nnoremap ¡ 1gt         " alt-1
+nnoremap ™ 2gt         " alt-2
+nnoremap £ 3gt         " alt-3
+nnoremap ¢ 4gt         " alt-4
+nnoremap ∞ 5gt         " alt-5
+
 " key mapping for saving file
-nmap <C-s> :w<CR>
+noremap <leader>s :w<CR>
+noremap ß :w<CR> " alt-s
 
 let ScreenShot = {'Icon':0, 'Credits':0, 'force_background':'#FFFFFF'}
 
@@ -329,7 +355,7 @@ function! YRRunAfterMaps()
   nnoremap Y :<C-U>YRYankCount 'y$'<CR>
 
   " in visual mode Y selects to clipboard
-  xnoremap Y "+y
+  xnoremap Y "*y
 
   " Paste intelligently by default
   nnoremap p :<C-U>YRPaste 'p'<CR>v`]=`]
@@ -346,6 +372,12 @@ nmap gs <Plug>Transposewords
 " visually select the text that was last edited/pasted
 nmap gV `[v`]
 
+" textmate-like indentation
+nnoremap ≤ <<
+nnoremap ≥ >>
+vmap ≤ <gv
+vmap ≥ >gv
+
 " shortcut for selecting the last selection
 nnoremap <Leader>v gv
 
@@ -355,9 +387,16 @@ cnoremap %% <C-R>=expand('%:h').'/'<cr>
 " copy current file path to the system clipboard
 nmap <leader>cfp :let @* = expand("%")<CR>
 
-" == YankRing mapping
-nnoremap <Leader>yr :YRShow<CR>
-nnoremap <Leader>yrs :YRSearch<space>
+" == YankRing
+let g:yankring_max_history = 1000
+let g:yankring_replace_n_pkey = '¯'
+let g:yankring_replace_n_nkey = '˘'
+
+" duplicate selected text
+vnoremap ∂ y`>p " alt-d
+
+nnoremap gyr :YRShow<CR>
+nnoremap gy/ :YRSearch<space>
 
 " == Highlight current line for graphical VIM <-- THIS SLOWED THINGS DOWN!
 " set cul
@@ -388,6 +427,7 @@ augroup END
 " always focus search terms
 nnoremap n nzz
 nnoremap N Nzz
+nnoremap * *zz
 
 " open a Quickfix window for the last search.
 nnoremap <silent> <leader>? :execute 'vimgrep /'.@/.'/g %'<CR>:copen<CR>
@@ -412,15 +452,17 @@ nnoremap <leader>F :Ag! -i<SPACE>
 nnoremap gfir :Ag! -G '\.rb' -i<SPACE>
 
 " Fugitive short-cuts
-nnoremap <S-CR> :Gstatus<CR>
 nnoremap <leader>gs :Gstatus<CR>
 nnoremap <leader>gc :Gcommit<CR>
 nnoremap <leader>gb :Gblame<CR>
 nnoremap <leader>gd :Gdiff<CR>
 nnoremap <leader>gr :Gread<CR>
 nnoremap <leader>gw :Gwrite<CR>
-nnoremap <leader>gp :Git push<CR>
-nnoremap <leader>grb :!git pull --rebase<CR>
+nnoremap <leader>gl :silent! Glog<CR>:bot copen<CR>
+nnoremap <leader>gp :Dispatch! git push<CR>
+nnoremap <leader>grb :Dispatch! git pull --rebase<CR>
+nnoremap <leader>ga :Dispatch! git add .<CR> " adds everything to the index
+nnoremap <leader>grh :Dispatch! git reset .<CR> " git reset head -- unstages everything
 
 " GitV configuration
 let g:Gitv_WipeAllOnClose = 1
@@ -454,9 +496,6 @@ let g:mta_filetypes = {
       \}
 
 if has("gui_macvim")
-  " sweet statusline indicators
-  let g:airline_powerline_fonts = 1
-
   " Disable MacVim's default mac-like cmd key bindings
   let g:macvim_skip_cmd_opt_movement = 1
 
@@ -465,21 +504,21 @@ if has("gui_macvim")
   vmap <d-/> :TComment<cr>gv
 
   " open/close buffer list with enter
-  nnoremap <D-CR> :BuffergatorToggle<CR>
+  " nnoremap <D-CR> :BuffergatorToggle<CR>
 
   " ctrl-p shortcuts for OSX GUI
-  map <D-b> :CtrlPBuffer<CR>
-  map <D-\> :CtrlPBufTag<CR>
-  map <D-\|> :CtrlPTag<CR>
-  map <D-C> :CtrlPChange<CR>
-  map <D-l> :CtrlPLine %<CR>
-  map <D-M> :CtrlPMRUFiles<CR>
+  " map <D-b> :CtrlPBuffer<CR>
+  " map <D-\> :CtrlPBufTag<CR>
+  " map <D-\|> :CtrlPTag<CR>
+  " map <D-C> :CtrlPChange<CR>
+  " map <D-l> :CtrlPLine %<CR>
+  " map <D-M> :CtrlPMRUFiles<CR>
 
   " key mapping for textmate-like indentation
-  nmap <D-[> <<
-  nmap <D-]> >>
-  vmap <D-[> <gv
-  vmap <D-]> >gv
+  " nmap <D-[> <<
+  " nmap <D-]> >>
+  " vmap <D-[> <gv
+  " vmap <D-]> >gv
 
   " == Bubble text (requires unimpaired plugin) ==
   " -- Bubble single lines

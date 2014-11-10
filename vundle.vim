@@ -73,7 +73,6 @@ Plugin 'sjl/gundo.vim.git'
 
 " Quick intra-buffer navigation
 Plugin 'justinmk/vim-sneak.git'
-Plugin 'spiiph/vim-space.git'
 
 " Tag navigation / display
 Plugin 'majutsushi/tagbar'
@@ -133,6 +132,11 @@ Plugin 'tpope/vim-obsession.git'
 
 " Vim window management
 Plugin 'milkypostman/vim-togglelist.git'
+Plugin 'christoomey/vim-tmux-navigator'
+Plugin 'roman/golden-ratio'
+
+" Async command execution
+Plugin 'tpope/vim-dispatch'
 
 " Mac-only bundles
 let os=substitute(system('uname'), '\n', '', '')
