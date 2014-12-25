@@ -10,14 +10,14 @@ filetype off
 set nocompatible
 
 " Load all bundles
-runtime vundle.vim
+runtime vim-plug.vim
 
 " Reprocess this file if it's saved
 if has("autocmd")
   autocmd! bufwritepost vimrc source $MYVIMRC
 endif
 if has("autocmd")
-  autocmd! bufwritepost vundle.vim source ~/.vim/vundle.vim | BundleInstall
+  autocmd! bufwritepost vim-plug.vim source ~/.vim/vim-plug.vim | PlugInstall
 endif
 
 " Disable backup and swap files - more trouble than they're worth
@@ -129,6 +129,9 @@ set ttymouse=xterm2
 
 " hide buffers when not displayed
 set hidden
+
+" Allow netrw to remove non-empty local directories
+let g:netrw_localrmdir='rm -r'
 
 " CtrlP configuration
 let g:ctrlp_extensions            = ['tag', 'buffertag', 'quickfix', 'line', 'changes']
@@ -320,14 +323,15 @@ let ScreenShot = {'Icon':0, 'Credits':0, 'force_background':'#FFFFFF'}
 let g:rails_no_dbext = 1
 
 " -- profiles
-let g:dbext_default_type                    = 'PGSQL'
-let g:dbext_default_profile_Local_N360      = 'type=PGSQL:host=localhost:dbname=network360_development'
-let g:dbext_default_profile_Staging_N360    = 'type=PGSQL:host=stagingdb01:dbname=network360:user=jshafton:passwd=xxx'
-let g:dbext_default_profile_AWSStaging_N360 = 'type=PGSQL:host=aws-stagingdb01:dbname=network360:user=jshafton:passwd=xxx'
-let g:dbext_default_profile_Production_N360 = 'type=PGSQL:host=proddb01.arsalon:dbname=network360:user=jshafton:passwd=xxx'
-let g:dbext_default_profile_Triscuit_sqsh   = 'type=SQLSRV:user=jshafton:passwd=@askg:host=triscuit:SQLSRV_bin=sqsh:SQLSRV_cmd_options=:extra=-Striscuit -D Network360 -w 9999999'
-let g:dbext_default_profile_Strenuus5_sqsh  = 'type=SQLSRV:user=jshafton:passwd=@askg:host=strenuus5:SQLSRV_bin=sqsh:SQLSRV_cmd_options=:extra=-Sstrenuus5 -D Network360 -w 9999999'
-let g:dbext_default_profile                 = 'Local_N360'
+let g:dbext_default_type                     = 'PGSQL'
+let g:dbext_default_profile_Local_N360       = 'type=PGSQL:host=localhost:dbname=network360_development'
+let g:dbext_default_profile_Staging_N360     = 'type=PGSQL:host=stagingdb01:dbname=network360:user=jshafton:passwd=xxx'
+let g:dbext_default_profile_AWSStaging_N360  = 'type=PGSQL:host=aws-stagingdb01:dbname=network360:user=jshafton:passwd=xxx'
+let g:dbext_default_profile_Production_N360  = 'type=PGSQL:host=proddb01.arsalon:dbname=network360:user=jshafton:passwd=xxx'
+let g:dbext_default_profile_Production2_N360 = 'type=PGSQL:host=proddb02.arsalon:dbname=network360:user=jshafton:passwd=xxx'
+let g:dbext_default_profile_Triscuit_sqsh    = 'type=SQLSRV:user=jshafton:passwd=@askg:host=triscuit:SQLSRV_bin=sqsh:SQLSRV_cmd_options=:extra=-Striscuit -D Network360 -w 9999999'
+let g:dbext_default_profile_Strenuus5_sqsh   = 'type=SQLSRV:user=jshafton:passwd=@askg:host=strenuus5:SQLSRV_bin=sqsh:SQLSRV_cmd_options=:extra=-Sstrenuus5 -D Network360 -w 9999999'
+let g:dbext_default_profile                  = 'Local_N360'
 
 " -- results buffer
 let g:dbext_default_buffer_lines          = 20
@@ -402,10 +406,13 @@ nnoremap gy/ :YRSearch<space>
 " set cul
 "hi CursorLine term=none cterm=none ctermbg=3
 
+" Cursorline highlighting
+let g:conoline_auto_enable = 1
+
 " edit this file!
 nnoremap <leader>ev :tabnew ~/.vim/vimrc<cr>
 " edit bundles
-nnoremap <leader>eV :tabnew ~/.vim/vundle.vim<cr>
+nnoremap <leader>eV :tabnew ~/.vim/vim-plug.vim<cr>
 
 " command for saving when you don't have permission
 command! W :execute ':silent w !sudo tee % > /dev/null' | :edit!
