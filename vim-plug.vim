@@ -149,7 +149,9 @@ if os == 'Darwin' || os == 'Mac'
   Plug 'vimwiki/vimwiki'
 
   " awesome (but complicated) tab completion
-  Plug 'Valloric/YouCompleteMe', { 'do': './install.sh' }
+  if v:version < 703
+    Plug 'Valloric/YouCompleteMe', { 'do': './install.sh' }
+  endif
 
   " Look up stuff in Dash / the internets
   Plug 'Keithbsmiley/investigate.vim'
