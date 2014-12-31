@@ -370,6 +370,10 @@ function! YRRunAfterMaps()
   nnoremap ∏ :<C-U>YRPaste 'P'<CR>
 endfunction
 
+" use CTRL-v to paste in insert mode
+set pastetoggle=<F10>
+inoremap <C-v> <F10><C-r>+<F10>
+
 " transpose words configuration
 nmap gs <Plug>Transposewords
 

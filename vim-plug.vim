@@ -169,6 +169,9 @@ if os == 'Darwin' || os == 'Mac'
 
   " run a shell in a Vim buffer
   Plug 'lrvick/Conque-Shell'
+
+  " Edit plist files
+  Plug 'hunner/vim-plist'
 endif
 
 call plug#end()
