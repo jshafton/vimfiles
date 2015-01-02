@@ -161,17 +161,11 @@ if os == 'Darwin' || os == 'Mac'
   " Upload stuff to gisthub.com
   Plug 'mattn/gist-vim'
 
-  " Share registers across Vim instances
-  Plug 'ardagnir/united-front'
-
   " ui enhancements
   Plug 'bling/vim-airline'
 
   " run a shell in a Vim buffer
   Plug 'lrvick/Conque-Shell'
-
-  " Edit plist files
-  Plug 'hunner/vim-plist'
 endif
 
 call plug#end()
