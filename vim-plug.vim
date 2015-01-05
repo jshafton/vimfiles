@@ -17,7 +17,8 @@ Plug 'idanarye/vim-merginal'
 " Buffer/file browsing
 Plug 'kien/ctrlp.vim'
 Plug 'jeetsukumaran/vim-buffergator'
-Plug 'tpope/vim-vinegar'
+Plug 'dhruvasagar/vim-vinegar'
+Plug 'scrooloose/nerdtree'
 Plug 'duff/vim-bufonly'
 Plug 'bufkill.vim'
 
@@ -26,6 +27,7 @@ Plug 'sheerun/vim-polyglot'
 Plug 'elixir-lang/vim-elixir'
 Plug 'dpwright/vim-tup'
 Plug 'leafo/moonscript-vim'
+Plug 'moll/vim-node'
 
 " UI enhancements
 Plug 'vim-scripts/quickfixsigns'
@@ -99,8 +101,6 @@ Plug 'kana/vim-textobj-line'
 Plug 'kana/vim-textobj-indent'
 " a_, i_
 Plug 'lucapette/vim-textobj-underscore'
-" expand selection
-Plug 'terryma/vim-expand-region'
 " looser searching for text objects
 Plug 'paradigm/TextObjectify'
 

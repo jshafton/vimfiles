@@ -154,6 +154,10 @@ let g:ctrlp_buftag_types = {
       \ 'coffee'     : '--language-force=coffee',
       \ }
 
+" NERDTree
+nnoremap gnt :NERDTreeToggle<CR>
+nnoremap gnf :NERDTreeFind<CR>
+
 " TagBar configuration
 map <F9> :TagbarToggle<CR>
 let g:tagbar_type_coffee = {
@@ -374,7 +378,7 @@ endfunction
 
 " use CTRL-v to paste in insert mode
 set pastetoggle=<F10>
-inoremap <C-v> <F10><C-r>+<F10>
+inoremap <C-v> <F10><C-r>*<F10>
 
 " transpose words configuration
 nmap gs <Plug>Transposewords
