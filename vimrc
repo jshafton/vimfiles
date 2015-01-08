@@ -476,10 +476,10 @@ nnoremap <leader>gd :Gdiff<CR>
 nnoremap <leader>gr :Gread<CR>
 nnoremap <leader>gw :Gwrite<CR>
 nnoremap <leader>gl :silent! Glog<CR>:bot copen<CR>
-nnoremap <leader>gp :Dispatch! git push<CR>
-nnoremap <leader>grb :Dispatch! git pull --rebase<CR>
-nnoremap <leader>ga :Dispatch! git add .<CR> " adds everything to the index
-nnoremap <leader>grh :Dispatch! git reset .<CR> " git reset head -- unstages everything
+nnoremap <leader>gp :! git push<CR>
+nnoremap <leader>grb :! git pull --rebase<CR>
+nnoremap <leader>ga :! git add .<CR> " adds everything to the index
+nnoremap <leader>grh :! git reset .<CR> " git reset head -- unstages everything
 
 " GitV configuration
 let g:Gitv_WipeAllOnClose = 1
