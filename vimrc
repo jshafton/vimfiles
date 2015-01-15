@@ -158,8 +158,13 @@ let g:ctrlp_buftag_types = {
 nnoremap gnt :NERDTreeToggle<CR>
 nnoremap gnf :NERDTreeFind<CR>
 
+" Disable default Ctrl-j and Ctrl-k mappings for these
+" commands since they're used for window switching
+let g:NERDTreeMapJumpNextSibling = ''
+let g:NERDTreeMapJumpPrevSibling = ''
+
 " TagBar configuration
-map <F9> :TagbarToggle<CR>
+map gtb :TagbarToggle<CR>
 let g:tagbar_type_coffee = {
     \ 'ctagstype' : 'coffee',
     \ 'kinds'     : [
