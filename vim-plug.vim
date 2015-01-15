@@ -27,7 +27,7 @@ Plug 'sheerun/vim-polyglot'
 Plug 'elixir-lang/vim-elixir'
 Plug 'dpwright/vim-tup'
 Plug 'leafo/moonscript-vim'
-Plug 'moll/vim-node'
+Plug 'jshafton/vim-node'
 
 " UI enhancements
 Plug 'vim-scripts/quickfixsigns'

@@ -613,3 +613,6 @@ let g:vimwiki_list = [wiki]
 let g:ConqueTerm_ReadUnfocused = 1
 let g:ConqueTerm_InsertOnEnter = 0
 let g:ConqueTerm_CWInsert = 1
+
+" include coffeescript in vim-node
+let g:node#includeCoffee = 1

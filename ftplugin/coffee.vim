@@ -17,7 +17,3 @@ let coffee_compile_vert = 1
 nnoremap <buffer> <leader>cw :CoffeeWatch<CR>
 nnoremap <buffer> <leader>cc :CoffeeCompile<CR>
 vnoremap <buffer> <leader>cc :CoffeeCompile<CR>
-
-" Make sure gf is looking at coffeescript files
-" This is useful for node.js 'require' statements
-set suffixesadd+=.coffee
