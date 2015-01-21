@@ -45,6 +45,7 @@ set lazyredraw  " don't redraw during complex operations
 set relativenumber
 set number
 let mapleader = ","
+let g:maplocalleader = '\'
 
 " show whitespace with a hotkey
 set listchars=tab:>-,trail:·,eol:$
