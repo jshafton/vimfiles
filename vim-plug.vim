@@ -28,6 +28,7 @@ Plug 'elixir-lang/vim-elixir'
 Plug 'dpwright/vim-tup'
 Plug 'leafo/moonscript-vim'
 Plug 'jshafton/vim-node'
+Plug 'dsawardekar/portkey'
 
 " UI enhancements
 Plug 'vim-scripts/quickfixsigns'
@@ -149,7 +150,7 @@ if os == 'Darwin' || os == 'Mac'
   Plug 'vimwiki/vimwiki'
 
   " awesome (but complicated) tab completion
-  if v:version < 703
+  if v:version > 703
     Plug 'Valloric/YouCompleteMe', { 'do': './install.sh' }
   endif
 
