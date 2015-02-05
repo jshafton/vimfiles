@@ -170,3 +170,11 @@ if os == 'Darwin' || os == 'Mac'
 endif
 
 call plug#end()
+
+let s:pluggedTracker = resolve(expand("~/.vim-plug-first-run"))
+if !filereadable(s:pluggedTracker)
+  echo "Installing Plugins for first time, please ignore key map error messages"
+  echo ""
+  :PlugInstall
+  :call system('touch ' . s:pluggedTracker)
+endif
