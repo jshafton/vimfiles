@@ -15,7 +15,7 @@ Plug 'gregsexton/gitv'
 Plug 'idanarye/vim-merginal'
 
 " Buffer/file browsing
-Plug 'kien/ctrlp.vim'
+Plug 'ctrlpvim/ctrlp.vim'
 Plug 'jeetsukumaran/vim-buffergator'
 Plug 'dhruvasagar/vim-vinegar'
 Plug 'scrooloose/nerdtree'
@@ -24,11 +24,15 @@ Plug 'bufkill.vim'
 
 " Language pack bundles
 Plug 'sheerun/vim-polyglot'
+Plug 'mattn/emmet-vim'
 Plug 'elixir-lang/vim-elixir'
 Plug 'dpwright/vim-tup'
 Plug 'leafo/moonscript-vim'
 Plug 'jshafton/vim-node'
 Plug 'dsawardekar/portkey'
+Plug 'robbles/logstash.vim'
+Plug 'Glench/Vim-Jinja2-Syntax'
+Plug 'gabrielelana/vim-markdown'
 
 " UI enhancements
 Plug 'vim-scripts/quickfixsigns'
@@ -47,6 +51,7 @@ Plug 'transpose-words'
 Plug 'ReplaceWithRegister'
 Plug 'tommcdo/vim-exchange'
 Plug 'sk1418/Join'
+Plug 'junegunn/rainbow_parentheses.vim'
 
 " Better matching with %
 Plug 'matchit.zip'
@@ -62,6 +67,7 @@ Plug 'timcharper/textile.vim'
 " General ruby
 Plug 'tpope/vim-bundler'
 Plug 'tpope/vim-rbenv'
+Plug 'ngmy/vim-rubocop'
 
 " Web development
 Plug 'tpope/vim-rails'
@@ -78,13 +84,15 @@ Plug 'Valloric/MatchTagAlways'
 Plug 'sjl/gundo.vim'
 
 " Quick intra-buffer navigation
-Plug 'justinmk/vim-sneak'
+Plug 'Lokaltog/vim-easymotion'
+Plug 'haya14busa/vim-easyoperator-phrase'
+Plug 'haya14busa/vim-easyoperator-line'
 
 " Tag navigation / display
 Plug 'majutsushi/tagbar'
 
 " Awesome paste history
-Plug 'vim-scripts/YankRing.vim'
+Plug 'maxbrunsfeld/vim-yankstack'
 
 " Text selection
 Plug 'kana/vim-textobj-user'
@@ -111,6 +119,7 @@ Plug 'bkad/CamelCaseMotion'
 " Code searching
 Plug 'mileszs/ack.vim'
 Plug 'rking/ag.vim'
+Plug 'gabesoft/vim-ags'
 Plug 'AutoTag'
 Plug 'tpope/vim-abolish'
 Plug 'osyo-manga/vim-over'
@@ -120,7 +129,9 @@ Plug 'dbext.vim'
 Plug 'exu/pgsql.vim'
 
 " DevOps
-Plug 'chase/vim-ansible-yaml'
+" Plug 'chase/vim-ansible-yaml'
+Plug 'pearofducks/ansible-vim'
+Plug 'sclo/haproxy.vim'
 
 " Windows shit
 Plug 'PProvost/vim-ps1'
@@ -151,7 +162,7 @@ if os == 'Darwin' || os == 'Mac'
 
   " awesome (but complicated) tab completion
   if v:version > 703
-    Plug 'Valloric/YouCompleteMe', { 'do': './install.sh' }
+    Plug 'Valloric/YouCompleteMe', { 'do': './install.py' }
   endif
 
   " Look up stuff in Dash / the internets
@@ -163,10 +174,18 @@ if os == 'Darwin' || os == 'Mac'
   Plug 'mattn/gist-vim'
 
   " ui enhancements
-  Plug 'bling/vim-airline'
+  Plug 'vim-airline/vim-airline'
+  Plug 'vim-airline/vim-airline-themes'
 
   " run a shell in a Vim buffer
   Plug 'lrvick/Conque-Shell'
+
+  " edit OSX plist files
+  Plug 'darfink/vim-plist'
+endif
+
+if has('nvim')
+  Plug 'NLKNguyen/papercolor-theme'
 endif
 
 call plug#end()

@@ -1,4 +1,10 @@
-﻿" avoiding annoying CSApprox warning message
+﻿" neovim compatibility
+if has('nvim')
+  let $NVIM_TUI_ENABLE_TRUE_COLOR=1
+  let $NVIM_TUI_ENABLE_CURSOR_SHAPE=1
+endif
+
+" avoiding annoying CSApprox warning message
 let g:CSApprox_verbose_level = 0
 
 " necessary on some Linux distros
@@ -14,7 +20,7 @@ runtime vim-plug.vim
 
 " Reprocess this file if it's saved
 if has("autocmd")
-  autocmd! bufwritepost vimrc source $MYVIMRC
+  autocmd! bufwritepost vimrc source $MYVIMRC | AirlineRefresh | AirlineToggle | AirlineToggle
 endif
 if has("autocmd")
   autocmd! bufwritepost vim-plug.vim source ~/.vim/vim-plug.vim | PlugInstall
@@ -57,8 +63,18 @@ set timeout timeoutlen=500 ttimeoutlen=100
 inoremap jk <Esc>`^
 inoremap JK <Esc>`^
 
+" same deal for neovim terminal mode
+if has('nvim')
+  tnoremap <Esc> <C-\><C-n>
+  tnoremap jk <C-\><C-n>
+end
+
 " use tab for switching back and for between tabs
 nnoremap <Tab> :tabnext<CR>
+
+" adjust tab positions
+nnoremap “ :tabmove -1<CR>
+nnoremap ‘ :tabmove +1<CR>
 
 " other buffergator config
 let g:buffergator_viewport_split_policy = 'T'   " default buffer window on the top
@@ -126,13 +142,17 @@ syntax on
 
 " some stuff to get the mouse going in term
 set mouse=a
-set ttymouse=xterm2
+if !has('nvim')
+  set ttymouse=xterm2
+endif
 
 " hide buffers when not displayed
 set hidden
 
 " Allow netrw to remove non-empty local directories
 let g:netrw_localrmdir='rm -r'
+" Ignore netrw for Ctrl-^
+let g:netrw_altfile = 1
 
 " CtrlP configuration
 let g:ctrlp_extensions            = ['tag', 'buffertag', 'quickfix', 'line', 'changes']
@@ -185,11 +205,17 @@ let g:airline#extensions#tabline#tab_min_count     = 2
 let g:airline#extensions#tabline#tab_nr_type       = 1 " tab number
 let g:airline#extensions#tabline#show_close_button = 0
 let g:airline#extensions#tabline#show_buffers      = 0
-let g:airline_theme                                = 'hybrid'
+let g:airline_theme                                = 'hybridline'
 
 set t_Co=256 " tell the term has 256 colors
 set enc=utf-8
-colorscheme molokai
+
+if has('nvim')
+  colorscheme Papercolor
+  set background=dark
+else
+  colorscheme molokai
+endif
 
 if has("gui_running")
   if has("gui_gnome")
@@ -298,6 +324,17 @@ map <C-j> <C-w>j
 map <C-k> <C-w>k
 map <C-l> <C-w>l
 
+" neovim is a dick about this thanks to libterm or whatever
+if has('nvim')
+  nmap <BS> <C-w>h
+
+  " map window navigation in terminal mode
+  tnoremap <C-h> <C-\><C-n><C-w>h
+  tnoremap <C-j> <C-\><C-n><C-w>j
+  tnoremap <C-k> <C-\><C-n><C-w>k
+  tnoremap <C-l> <C-\><C-n><C-w>l
+endif
+
 " easy window quit
 nnoremap <Leader>q :q<CR>
 
@@ -305,7 +342,7 @@ nnoremap <Leader>q :q<CR>
 let g:BufKillFunctionSelectingValidBuffersToDisplay = 'auto'
 
 " easy buffer wipe
-nnoremap <C-b> :BW!<cr>
+nnoremap <C-x> :BW!<cr>
 
 " close all open buffers
 nnoremap <Leader>bwa ::BW!<CR>:bufdo BW!<CR>
@@ -338,12 +375,23 @@ let g:rails_no_dbext = 1
 let g:dbext_default_type                     = 'PGSQL'
 let g:dbext_default_profile_Local_N360       = 'type=PGSQL:host=localhost:dbname=network360_development'
 let g:dbext_default_profile_Staging_N360     = 'type=PGSQL:host=stagingdb01:dbname=network360:user=jshafton:passwd=xxx'
-let g:dbext_default_profile_AWSStaging_N360  = 'type=PGSQL:host=aws-stagingdb01:dbname=network360:user=jshafton:passwd=xxx'
-let g:dbext_default_profile_Production_N360  = 'type=PGSQL:host=proddb01.arsalon:dbname=network360:user=jshafton:passwd=xxx'
-let g:dbext_default_profile_Production2_N360 = 'type=PGSQL:host=proddb02.arsalon:dbname=network360:user=jshafton:passwd=xxx'
+let g:dbext_default_profile_Production_N360  = 'type=PGSQL:host=proddb02.arsalon:dbname=network360:user=jshafton:passwd=xxx'
+
+let g:dbext_default_profile_Local_Nexus         = 'type=PGSQL:host=192.168.33.20:dbname=provider_nexus:user=jshafton:passwd=xxx'
+let g:dbext_default_profile_Local_Nexus_Test    = 'type=PGSQL:host=192.168.33.20:dbname=provider_nexus_test:user=jshafton:passwd=xxx'
+let g:dbext_default_profile_Staging_Nexus_01    = 'type=PGSQL:host=db-01.providernexus.staging:dbname=provider_nexus:user=jshafton:passwd=xxx'
+let g:dbext_default_profile_Staging_Nexus_02    = 'type=PGSQL:host=db-02.providernexus.staging:dbname=provider_nexus:user=jshafton:passwd=xxx'
+let g:dbext_default_profile_Staging_Nexus_03    = 'type=PGSQL:host=db-03.providernexus.staging:dbname=provider_nexus:user=jshafton:passwd=xxx'
+let g:dbext_default_profile_Cinderella_Nexus_01 = 'type=PGSQL:host=db-01.providernexus.cinderella:dbname=provider_nexus:user=jshafton:passwd=xxx'
+let g:dbext_default_profile_Cinderella_Nexus_02 = 'type=PGSQL:host=db-02.providernexus.cinderella:dbname=provider_nexus:user=jshafton:passwd=xxx'
+let g:dbext_default_profile_Cinderella_Nexus_03 = 'type=PGSQL:host=db-03.providernexus.cinderella:dbname=provider_nexus:user=jshafton:passwd=xxx'
+let g:dbext_default_profile_Production_Nexus_01 = 'type=PGSQL:host=db-01.providernexus.production:dbname=provider_nexus:user=jshafton:passwd=xxx'
+let g:dbext_default_profile_Production_Nexus_02 = 'type=PGSQL:host=db-02.providernexus.production:dbname=provider_nexus:user=jshafton:passwd=xxx'
+let g:dbext_default_profile_Production_Nexus_03 = 'type=PGSQL:host=db-03.providernexus.production:dbname=provider_nexus:user=jshafton:passwd=xxx'
+
 let g:dbext_default_profile_Triscuit_sqsh    = 'type=SQLSRV:user=jshafton:passwd=@askg:host=triscuit:SQLSRV_bin=sqsh:SQLSRV_cmd_options=:extra=-Striscuit -D Network360 -w 9999999'
 let g:dbext_default_profile_Strenuus5_sqsh   = 'type=SQLSRV:user=jshafton:passwd=@askg:host=strenuus5:SQLSRV_bin=sqsh:SQLSRV_cmd_options=:extra=-Sstrenuus5 -D Network360 -w 9999999'
-let g:dbext_default_profile                  = 'Local_N360'
+let g:dbext_default_profile                  = 'Local_Nexus'
 
 " -- results buffer
 let g:dbext_default_buffer_lines          = 20
@@ -382,6 +430,38 @@ function! YRRunAfterMaps()
   nnoremap ∏ :<C-U>YRPaste 'P'<CR>
 endfunction
 
+" --------------------------------------------------------------------------------
+" YankStack configuration
+" --------------------------------------------------------------------------------
+let g:yankstack_map_keys = 0
+nmap √ <Plug>yankstack_substitute_older_paste
+nmap ◊ <Plug>yankstack_substitute_newer_paste
+
+nnoremap gyr :Yanks<CR>
+
+" Put all yank-related remaps after this
+call yankstack#setup()
+
+" yank to end of line
+nmap Y y$
+
+" in visual mode Y selects to clipboard
+xnoremap Y "*y
+
+" Option p/P to paste raw
+nnoremap π p
+nnoremap ∏ P
+
+" Paste intelligently by default
+nnoremap p pv`]=`]
+nnoremap P Pv`]=`]
+
+" duplicate selected text
+vnoremap ∂ y`>p " alt-d
+" --------------------------------------------------------------------------------
+" END - YankStack configuration
+" --------------------------------------------------------------------------------
+
 " use CTRL-v to paste in insert mode
 set pastetoggle=<F10>
 inoremap <C-v> <F10><C-r>*<F10>
@@ -412,18 +492,15 @@ let g:yankring_max_history = 1000
 let g:yankring_replace_n_pkey = '¯'
 let g:yankring_replace_n_nkey = '˘'
 
-" duplicate selected text
-vnoremap ∂ y`>p " alt-d
-
-nnoremap gyr :YRShow<CR>
-nnoremap gy/ :YRSearch<space>
+" nnoremap gyr :YRShow<CR>
+" nnoremap gy/ :YRSearch<space>
 
 " == Highlight current line for graphical VIM <-- THIS SLOWED THINGS DOWN!
 " set cul
 "hi CursorLine term=none cterm=none ctermbg=3
 
 " Cursorline highlighting
-let g:conoline_auto_enable = 1
+let g:conoline_auto_enable = 0
 
 " edit this file!
 nnoremap <leader>ev :tabnew ~/.vim/vimrc<cr>
@@ -461,6 +538,36 @@ let g:sneak#streak = 1
 let g:sneak#f_reset = 1
 let g:sneak#t_reset = 1
 
+" --------------------------------------------------------------------------------
+" EasyMotion configuration
+" --------------------------------------------------------------------------------
+let g:EasyMotion_do_mapping = 0 " Disable default mappings
+
+" let g:EasyMotion_leader_key = '<space>'
+" map <space> <Plug>(easymotion-prefix)
+
+" Bi-directional find motion
+nmap s <Plug>(easymotion-s2)
+omap z <Plug>(easymotion-s2)
+
+" Bidirectional & within line 't' motion
+omap t <Plug>(easymotion-tl)
+omap f <Plug>(easymotion-fl)
+
+" Turn on case sensitive feature
+let g:EasyMotion_smartcase = 1
+
+" JK motions: Line motions
+nmap J <Plug>(easymotion-j)
+omap J <Plug>(easymotion-j)
+nmap K <Plug>(easymotion-k)
+omap K <Plug>(easymotion-k)
+" END - EasyMotion configuration
+" --------------------------------------------------------------------------------
+
+" Enable caamel case movement motions
+call camelcasemotion#CreateMotionMappings('<leader>')
+
 " Replace current word in file
 nmap <leader>R :%s/<C-R><C-W>/<C-R><C-W><C-F>vb
 
@@ -468,11 +575,11 @@ nmap <leader>R :%s/<C-R><C-W>/<C-R><C-W><C-F>vb
 noremap <leader>do :set nodiff fdc=0 \| norm zR<CR><C-W>h:bwipeout<CR>
 
 " find current word in project using Ag
-nnoremap gu :Ag! '\b<C-R><C-W>\b'<cr>
+nnoremap gu :Ag '\b<C-R><C-W>\b'<cr>
 
 " find in files
-nnoremap <leader>F :Ag! -i<SPACE>
-nnoremap gfir :Ag! -G '\.rb' -i<SPACE>
+nnoremap <leader>F :Ag -i<SPACE>
+nnoremap gfir :Ag -G '\.rb' -i<SPACE>
 
 " Fugitive short-cuts
 nnoremap <leader>gs :Gstatus<CR>
@@ -617,3 +724,15 @@ let g:ConqueTerm_CWInsert = 1
 
 " include coffeescript in vim-node
 let g:node#includeCoffee = 1
+
+" surround with handlebars {{ }}
+let g:surround_104 = "{{ \r }}"
+
+" turn on rainbow parens for lisps
+augroup rainbow_lisp
+  autocmd!
+  autocmd FileType lisp,clojure,scheme RainbowParentheses
+augroup END
+
+" Disable vim-polyglot markdown in favor of better one
+let g:polyglot_disabled = ['markdown']
