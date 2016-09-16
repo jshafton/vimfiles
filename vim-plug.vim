@@ -16,7 +16,8 @@ Plug 'idanarye/vim-merginal'
 
 " Buffer/file browsing
 Plug 'ctrlpvim/ctrlp.vim'
-Plug 'jeetsukumaran/vim-buffergator'
+Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --bin' }
+Plug 'junegunn/fzf.vim'
 Plug 'dhruvasagar/vim-vinegar'
 Plug 'scrooloose/nerdtree'
 Plug 'duff/vim-bufonly'
@@ -29,7 +30,6 @@ Plug 'elixir-lang/vim-elixir'
 Plug 'dpwright/vim-tup'
 Plug 'leafo/moonscript-vim'
 Plug 'jshafton/vim-node'
-Plug 'dsawardekar/portkey'
 Plug 'robbles/logstash.vim'
 Plug 'Glench/Vim-Jinja2-Syntax'
 Plug 'gabrielelana/vim-markdown'
@@ -38,6 +38,7 @@ Plug 'gabrielelana/vim-markdown'
 Plug 'vim-scripts/quickfixsigns'
 Plug 'nathanaelkane/vim-indent-guides'
 Plug 'miyakogi/conoline.vim'
+Plug 'szw/vim-maximizer'
 
 " General text editing, delimiter pairing
 Plug 'tpope/vim-surround'
@@ -49,6 +50,7 @@ Plug 'Align'
 Plug 'junegunn/vim-easy-align'
 Plug 'transpose-words'
 Plug 'ReplaceWithRegister'
+Plug 'junegunn/vim-peekaboo'
 Plug 'tommcdo/vim-exchange'
 Plug 'sk1418/Join'
 Plug 'junegunn/rainbow_parentheses.vim'
@@ -74,10 +76,6 @@ Plug 'tpope/vim-rails'
 Plug 'hallison/vim-ruby-sinatra'
 
 Plug 'cakebaker/scss-syntax.vim'
-Plug 'groenewege/vim-less'
-Plug 'wavded/vim-stylus'
-Plug 'itspriddle/vim-jquery'
-Plug 'mattn/emmet-vim'
 Plug 'Valloric/MatchTagAlways'
 
 " Badass undo history
@@ -88,11 +86,8 @@ Plug 'Lokaltog/vim-easymotion'
 Plug 'haya14busa/vim-easyoperator-phrase'
 Plug 'haya14busa/vim-easyoperator-line'
 
-" Tag navigation / display
-Plug 'majutsushi/tagbar'
-
-" Awesome paste history
-Plug 'maxbrunsfeld/vim-yankstack'
+" Paste history
+Plug 'bfredl/nvim-miniyank'
 
 " Text selection
 Plug 'kana/vim-textobj-user'
@@ -176,9 +171,6 @@ if os == 'Darwin' || os == 'Mac'
   " ui enhancements
   Plug 'vim-airline/vim-airline'
   Plug 'vim-airline/vim-airline-themes'
-
-  " run a shell in a Vim buffer
-  Plug 'lrvick/Conque-Shell'
 
   " edit OSX plist files
   Plug 'darfink/vim-plist'

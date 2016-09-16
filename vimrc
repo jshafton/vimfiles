@@ -1,6 +1,6 @@
 ﻿" neovim compatibility
 if has('nvim')
-  let $NVIM_TUI_ENABLE_TRUE_COLOR=1
+  set termguicolors
   let $NVIM_TUI_ENABLE_CURSOR_SHAPE=1
 endif
 
@@ -69,20 +69,9 @@ if has('nvim')
   tnoremap jk <C-\><C-n>
 end
 
-" use tab for switching back and for between tabs
-nnoremap <Tab> :tabnext<CR>
-
 " adjust tab positions
 nnoremap “ :tabmove -1<CR>
 nnoremap ‘ :tabmove +1<CR>
-
-" other buffergator config
-let g:buffergator_viewport_split_policy = 'T'   " default buffer window on the top
-let g:buffergator_sort_regime           = 'mru' " sort buffers by most recently used
-let g:buffergator_split_size            = 5
-let g:buffergator_suppress_keymaps      = 1
-
-nnoremap gb :BuffergatorToggle<CR>
 
 " close other buffers
 nnoremap <leader>co :BufOnly!<CR>
@@ -154,26 +143,25 @@ let g:netrw_localrmdir='rm -r'
 " Ignore netrw for Ctrl-^
 let g:netrw_altfile = 1
 
-" CtrlP configuration
-let g:ctrlp_extensions            = ['tag', 'buffertag', 'quickfix', 'line', 'changes']
-let g:ctrlp_user_command          = ['.git/', 'cd %s && git ls-files --exclude-standard -co']
-let g:ctrlp_map                   = '<C-p>'
-let g:ctrlp_match_window_bottom   = 0
-let g:ctrlp_match_window_reversed = 0
-let g:ctrlp_max_height            = 15
-let g:ctrlp_dont_split            = 'NERD\|help\|quickfix'
+nnoremap <C-p> :GitFiles --exclude-standard -co<CR>
+" alt-b
+nnoremap ∫ :Buffers<CR>
+" alt-|
+nnoremap « :BTags<CR>
+" alt-l
+nnoremap ¬ :BLines<CR>
+" alt-L
+nnoremap Ò :Lines<CR>
 
-nnoremap <leader>p :CtrlP<CR>
-nnoremap <leader>t :CtrlPBufTag<CR>
+nnoremap <leader>ht :Helptags<CR>
+nnoremap <space>f :Filetypes<CR>
 
-nnoremap ∫ :CtrlPBuffer<CR> " alt-b
-nnoremap « :CtrlPBufTag<CR> " alt-|
-nnoremap ¬ :CtrlPLine %<CR> " alt-l
+command! -bang -nargs=* Fag call fzf#vim#ag(<q-args>, g:fzf#vim#layout(<bang>0))
+nnoremap <C-f> :Fag<CR>
 
-let g:ctrlp_buftag_types = {
-      \ 'javascript' : '--language-force=js',
-      \ 'coffee'     : '--language-force=coffee',
-      \ }
+" Disable ctrl-p
+let g:loaded_ctrlp = 1
+let g:ctrlp_map = ''
 
 " NERDTree
 nnoremap gnt :NERDTreeToggle<CR>
@@ -207,7 +195,7 @@ let g:airline#extensions#tabline#show_close_button = 0
 let g:airline#extensions#tabline#show_buffers      = 0
 let g:airline_theme                                = 'hybridline'
 
-set t_Co=256 " tell the term has 256 colors
+" set t_Co=256 " tell the term has 256 colors
 set enc=utf-8
 
 if has('nvim')
@@ -348,19 +336,28 @@ nnoremap <C-x> :BW!<cr>
 nnoremap <Leader>bwa ::BW!<CR>:bufdo BW!<CR>
 
 " easy window focus (closes all others)
-nnoremap <Leader>f <C-W>o
+nnoremap <Leader>F <C-W>o
 
 " easy splits
 nnoremap <bar> :vsplit<CR><C-W><C-L>
 nnoremap _ :split<CR><C-W><C-J>
 
 " tabs
-nnoremap † :tabnew<CR> " alt-s
-nnoremap ¡ 1gt         " alt-1
-nnoremap ™ 2gt         " alt-2
-nnoremap £ 3gt         " alt-3
-nnoremap ¢ 4gt         " alt-4
-nnoremap ∞ 5gt         " alt-5
+nnoremap C-t :tabnew<CR>
+nnoremap g1 1gt
+nnoremap g2 2gt
+nnoremap g3 3gt
+nnoremap g4 4gt
+nnoremap g5 5gt
+
+nnoremap J :tabprevious<CR>
+nnoremap K :tabnext<CR>
+
+" Go to last active tab
+let g:lasttab = 1
+au TabLeave * let g:lasttab = tabpagenr()
+nnoremap <silent> <Tab> :exe "tabn ".g:lasttab<cr>
+vnoremap <silent> <Tab> :exe "tabn ".g:lasttab<cr>
 
 " key mapping for saving file
 noremap <leader>s :w<CR>
@@ -377,17 +374,17 @@ let g:dbext_default_profile_Local_N360       = 'type=PGSQL:host=localhost:dbname
 let g:dbext_default_profile_Staging_N360     = 'type=PGSQL:host=stagingdb01:dbname=network360:user=jshafton:passwd=xxx'
 let g:dbext_default_profile_Production_N360  = 'type=PGSQL:host=proddb02.arsalon:dbname=network360:user=jshafton:passwd=xxx'
 
-let g:dbext_default_profile_Local_Nexus         = 'type=PGSQL:host=192.168.33.20:dbname=provider_nexus:user=jshafton:passwd=xxx'
-let g:dbext_default_profile_Local_Nexus_Test    = 'type=PGSQL:host=192.168.33.20:dbname=provider_nexus_test:user=jshafton:passwd=xxx'
-let g:dbext_default_profile_Staging_Nexus_01    = 'type=PGSQL:host=db-01.providernexus.staging:dbname=provider_nexus:user=jshafton:passwd=xxx'
-let g:dbext_default_profile_Staging_Nexus_02    = 'type=PGSQL:host=db-02.providernexus.staging:dbname=provider_nexus:user=jshafton:passwd=xxx'
-let g:dbext_default_profile_Staging_Nexus_03    = 'type=PGSQL:host=db-03.providernexus.staging:dbname=provider_nexus:user=jshafton:passwd=xxx'
-let g:dbext_default_profile_Cinderella_Nexus_01 = 'type=PGSQL:host=db-01.providernexus.cinderella:dbname=provider_nexus:user=jshafton:passwd=xxx'
-let g:dbext_default_profile_Cinderella_Nexus_02 = 'type=PGSQL:host=db-02.providernexus.cinderella:dbname=provider_nexus:user=jshafton:passwd=xxx'
-let g:dbext_default_profile_Cinderella_Nexus_03 = 'type=PGSQL:host=db-03.providernexus.cinderella:dbname=provider_nexus:user=jshafton:passwd=xxx'
-let g:dbext_default_profile_Production_Nexus_01 = 'type=PGSQL:host=db-01.providernexus.production:dbname=provider_nexus:user=jshafton:passwd=xxx'
-let g:dbext_default_profile_Production_Nexus_02 = 'type=PGSQL:host=db-02.providernexus.production:dbname=provider_nexus:user=jshafton:passwd=xxx'
-let g:dbext_default_profile_Production_Nexus_03 = 'type=PGSQL:host=db-03.providernexus.production:dbname=provider_nexus:user=jshafton:passwd=xxx'
+let g:dbext_default_profile_Local_Nexus_core      = 'type=PGSQL:host=localhost:port=15432:dbname=provider_nexus_core:user=developer:passwd=xxx'
+let g:dbext_default_profile_Local_Nexus_search    = 'type=PGSQL:host=localhost:port=25432:dbname=provider_nexus_search:user=developer:passwd=xxx'
+let g:dbext_default_profile_Local_Nexus_Test      = 'type=PGSQL:host=localhost:port=15432:dbname=provider_nexus_test:user=developer:passwd=xxx'
+
+let g:dbext_default_profile_LoadTest_Nexus_Core   = 'type=PGSQL:host=10.1.10.58:dbname=provider_nexus_core:user=jshafton:passwd=xxx'
+let g:dbext_default_profile_LoadTest_Nexus_Search = 'type=PGSQL:host=10.1.10.161:dbname=provider_nexus_search:user=jshafton:passwd=xxx'
+
+let g:dbext_default_profile_Staging_Nexus_search = 'type=PGSQL:host=10.1.10.89:dbname=provider_nexus_search:user=jshafton:passwd=xxx'
+
+let g:dbext_default_profile_Production_Nexus_core   = 'type=PGSQL:host=10.0.10.225:dbname=provider_nexus_core:user=jshafton:passwd=xxx'
+let g:dbext_default_profile_Production_Nexus_search = 'type=PGSQL:host=10.0.10.93:dbname=provider_nexus_search:user=jshafton:passwd=xxx'
 
 let g:dbext_default_profile_Triscuit_sqsh    = 'type=SQLSRV:user=jshafton:passwd=@askg:host=triscuit:SQLSRV_bin=sqsh:SQLSRV_cmd_options=:extra=-Striscuit -D Network360 -w 9999999'
 let g:dbext_default_profile_Strenuus5_sqsh   = 'type=SQLSRV:user=jshafton:passwd=@askg:host=strenuus5:SQLSRV_bin=sqsh:SQLSRV_cmd_options=:extra=-Sstrenuus5 -D Network360 -w 9999999'
@@ -414,33 +411,9 @@ au BufNewFile,BufRead *.hbs.html set ft=handlebars
 " set file type for sneaky Slim files
 au BufNewFile,BufRead *.html.slim set ft=slim
 
-function! YRRunAfterMaps()
-  " make Y consistent with C and D (yank to end of line)
-  nnoremap Y :<C-U>YRYankCount 'y$'<CR>
-
-  " in visual mode Y selects to clipboard
-  xnoremap Y "*y
-
-  " Paste intelligently by default
-  nnoremap p :<C-U>YRPaste 'p'<CR>v`]=`]
-  nnoremap P :<C-U>YRPaste 'P'<CR>v`]=`]
-
-  " Option p/P to paste raw
-  nnoremap π :<C-U>YRPaste 'p'<CR>
-  nnoremap ∏ :<C-U>YRPaste 'P'<CR>
-endfunction
-
-" --------------------------------------------------------------------------------
-" YankStack configuration
-" --------------------------------------------------------------------------------
-let g:yankstack_map_keys = 0
-nmap √ <Plug>yankstack_substitute_older_paste
-nmap ◊ <Plug>yankstack_substitute_newer_paste
-
-nnoremap gyr :Yanks<CR>
-
-" Put all yank-related remaps after this
-call yankstack#setup()
+" Paste intelligently by default
+nnoremap p pv`]=`]
+nnoremap P Pv`]=`]
 
 " yank to end of line
 nmap Y y$
@@ -452,15 +425,8 @@ xnoremap Y "*y
 nnoremap π p
 nnoremap ∏ P
 
-" Paste intelligently by default
-nnoremap p pv`]=`]
-nnoremap P Pv`]=`]
-
 " duplicate selected text
 vnoremap ∂ y`>p " alt-d
-" --------------------------------------------------------------------------------
-" END - YankStack configuration
-" --------------------------------------------------------------------------------
 
 " use CTRL-v to paste in insert mode
 set pastetoggle=<F10>
@@ -528,6 +494,7 @@ augroup END
 nnoremap n nzz
 nnoremap N Nzz
 nnoremap * *zz
+nnoremap g; g;zz
 
 " open a Quickfix window for the last search.
 nnoremap <silent> <leader>? :execute 'vimgrep /'.@/.'/g %'<CR>:copen<CR>
@@ -550,18 +517,8 @@ let g:EasyMotion_do_mapping = 0 " Disable default mappings
 nmap s <Plug>(easymotion-s2)
 omap z <Plug>(easymotion-s2)
 
-" Bidirectional & within line 't' motion
-omap t <Plug>(easymotion-tl)
-omap f <Plug>(easymotion-fl)
-
 " Turn on case sensitive feature
 let g:EasyMotion_smartcase = 1
-
-" JK motions: Line motions
-nmap J <Plug>(easymotion-j)
-omap J <Plug>(easymotion-j)
-nmap K <Plug>(easymotion-k)
-omap K <Plug>(easymotion-k)
 " END - EasyMotion configuration
 " --------------------------------------------------------------------------------
 
@@ -578,7 +535,6 @@ noremap <leader>do :set nodiff fdc=0 \| norm zR<CR><C-W>h:bwipeout<CR>
 nnoremap gu :Ag '\b<C-R><C-W>\b'<cr>
 
 " find in files
-nnoremap <leader>F :Ag -i<SPACE>
 nnoremap gfir :Ag -G '\.rb' -i<SPACE>
 
 " Fugitive short-cuts
@@ -632,23 +588,6 @@ if has("gui_macvim")
   " Comment lines with cmd+/
   map <d-/> :TComment<cr>
   vmap <d-/> :TComment<cr>gv
-
-  " open/close buffer list with enter
-  " nnoremap <D-CR> :BuffergatorToggle<CR>
-
-  " ctrl-p shortcuts for OSX GUI
-  " map <D-b> :CtrlPBuffer<CR>
-  " map <D-\> :CtrlPBufTag<CR>
-  " map <D-\|> :CtrlPTag<CR>
-  " map <D-C> :CtrlPChange<CR>
-  " map <D-l> :CtrlPLine %<CR>
-  " map <D-M> :CtrlPMRUFiles<CR>
-
-  " key mapping for textmate-like indentation
-  " nmap <D-[> <<
-  " nmap <D-]> >>
-  " vmap <D-[> <gv
-  " vmap <D-]> >gv
 
   " == Bubble text (requires unimpaired plugin) ==
   " -- Bubble single lines
@@ -736,3 +675,10 @@ augroup END
 
 " Disable vim-polyglot markdown in favor of better one
 let g:polyglot_disabled = ['markdown']
+
+" vim-maximizer settings
+" szw/vim-maximizer
+
+let g:maximizer_set_default_mapping = 0
+nnoremap <silent><leader>f :MaximizerToggle<CR>
+vnoremap <silent><leader>f :MaximizerToggle<CR>gv
