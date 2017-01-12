@@ -12,7 +12,6 @@ Plug 'godlygeek/csapprox'
 " Git and related
 Plug 'tpope/vim-fugitive'
 Plug 'gregsexton/gitv'
-Plug 'idanarye/vim-merginal'
 
 " Buffer/file browsing
 Plug 'ctrlpvim/ctrlp.vim'
@@ -28,7 +27,6 @@ Plug 'sheerun/vim-polyglot'
 Plug 'mattn/emmet-vim'
 Plug 'elixir-lang/vim-elixir'
 Plug 'dpwright/vim-tup'
-Plug 'leafo/moonscript-vim'
 Plug 'jshafton/vim-node'
 Plug 'robbles/logstash.vim'
 Plug 'Glench/Vim-Jinja2-Syntax'
@@ -73,8 +71,6 @@ Plug 'ngmy/vim-rubocop'
 
 " Web development
 Plug 'tpope/vim-rails'
-Plug 'hallison/vim-ruby-sinatra'
-
 Plug 'cakebaker/scss-syntax.vim'
 Plug 'Valloric/MatchTagAlways'
 
@@ -85,9 +81,6 @@ Plug 'sjl/gundo.vim'
 Plug 'Lokaltog/vim-easymotion'
 Plug 'haya14busa/vim-easyoperator-phrase'
 Plug 'haya14busa/vim-easyoperator-line'
-
-" Paste history
-Plug 'bfredl/nvim-miniyank'
 
 " Text selection
 Plug 'kana/vim-textobj-user'
@@ -144,17 +137,9 @@ Plug 'tpope/vim-obsession'
 Plug 'milkypostman/vim-togglelist'
 Plug 'christoomey/vim-tmux-navigator'
 
-" Async command execution
-Plug 'tpope/vim-dispatch'
-
 " Mac-only bundles
 let os=substitute(system('uname'), '\n', '', '')
 if os == 'Darwin' || os == 'Mac'
-  " note taking
-  Plug 'xolox/vim-misc'
-  Plug 'xolox/vim-notes'
-  Plug 'vimwiki/vimwiki'
-
   " awesome (but complicated) tab completion
   if v:version > 703
     Plug 'Valloric/YouCompleteMe', { 'do': './install.py' }
@@ -178,6 +163,9 @@ endif
 
 if has('nvim')
   Plug 'NLKNguyen/papercolor-theme'
+
+  " Paste history
+  Plug 'bfredl/nvim-miniyank'
 endif
 
 call plug#end()

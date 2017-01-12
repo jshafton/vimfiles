@@ -69,10 +69,6 @@ if has('nvim')
   tnoremap jk <C-\><C-n>
 end
 
-" adjust tab positions
-nnoremap “ :tabmove -1<CR>
-nnoremap ‘ :tabmove +1<CR>
-
 " close other buffers
 nnoremap <leader>co :BufOnly!<CR>
 
@@ -172,20 +168,6 @@ nnoremap gnf :NERDTreeFind<CR>
 let g:NERDTreeMapJumpNextSibling = ''
 let g:NERDTreeMapJumpPrevSibling = ''
 
-" TagBar configuration
-map gtb :TagbarToggle<CR>
-let g:tagbar_type_coffee = {
-    \ 'ctagstype' : 'coffee',
-    \ 'kinds'     : [
-        \ 'c:classes',
-        \ 'm:methods',
-        \ 'f:functions',
-        \ 'v:variables',
-        \ 'f:fields',
-        \ 'f:static fields',
-    \ ]
-\ }
-
 " sweet statusline indicators
 let g:airline_powerline_fonts                      = 1
 let g:airline#extensions#tabline#enabled           = 1
@@ -232,11 +214,6 @@ endif
 " map Q to something useful
 nnoremap Q @@
 vnoremap Q :normal @@<CR>
-
-" bindings for ragtag
-inoremap <M-o> <Esc>o
-inoremap <C-j> <Down>
-let g:ragtag_global_maps = 1
 
 " == Syntastic configuration
 let g:syntastic_mode_map = { 'mode': 'active',
@@ -363,32 +340,23 @@ vnoremap <silent> <Tab> :exe "tabn ".g:lasttab<cr>
 noremap <leader>s :w<CR>
 noremap ß :w<CR> " alt-s
 
-let ScreenShot = {'Icon':0, 'Credits':0, 'force_background':'#FFFFFF'}
-
 " == DbExt configuration ==
 let g:rails_no_dbext = 1
 
 " -- profiles
-let g:dbext_default_type                     = 'PGSQL'
-let g:dbext_default_profile_Local_N360       = 'type=PGSQL:host=localhost:dbname=network360_development'
-let g:dbext_default_profile_Staging_N360     = 'type=PGSQL:host=stagingdb01:dbname=network360:user=jshafton:passwd=xxx'
-let g:dbext_default_profile_Production_N360  = 'type=PGSQL:host=proddb02.arsalon:dbname=network360:user=jshafton:passwd=xxx'
+let g:dbext_default_type                        = 'PGSQL'
+let g:dbext_default_profile_Local_N360          = 'type=PGSQL:host=localhost:dbname=network360_development'
+let g:dbext_default_profile_Staging_N360        = 'type=PGSQL:host=stagingdb01:dbname=network360:user=jshafton:passwd=xxx'
+let g:dbext_default_profile_Production_N360     = 'type=PGSQL:host=proddb02.arsalon:dbname=network360:user=jshafton:passwd=xxx'
 
-let g:dbext_default_profile_Local_Nexus_core      = 'type=PGSQL:host=localhost:port=15432:dbname=provider_nexus_core:user=developer:passwd=xxx'
-let g:dbext_default_profile_Local_Nexus_search    = 'type=PGSQL:host=localhost:port=25432:dbname=provider_nexus_search:user=developer:passwd=xxx'
-let g:dbext_default_profile_Local_Nexus_Test      = 'type=PGSQL:host=localhost:port=15432:dbname=provider_nexus_test:user=developer:passwd=xxx'
+let g:dbext_default_profile_Local_Nexus_core    = 'type=PGSQL:host=localhost:port=15432:dbname=provider_nexus_core:user=developer:passwd=xxx'
+let g:dbext_default_profile_Local_Nexus_search  = 'type=PGSQL:host=localhost:port=25432:dbname=provider_nexus_search:user=developer:passwd=xxx'
+let g:dbext_default_profile_Local_Nexus_Test    = 'type=PGSQL:host=localhost:port=15432:dbname=provider_nexus_test:user=developer:passwd=xxx'
 
-let g:dbext_default_profile_LoadTest_Nexus_Core   = 'type=PGSQL:host=10.1.10.58:dbname=provider_nexus_core:user=jshafton:passwd=xxx'
-let g:dbext_default_profile_LoadTest_Nexus_Search = 'type=PGSQL:host=10.1.10.161:dbname=provider_nexus_search:user=jshafton:passwd=xxx'
+let g:dbext_default_profile_Remote_Nexus_core   = 'type=PGSQL:host=xxx:dbname=provider_nexus_core:user=jshafton:passwd=xxx'
+let g:dbext_default_profile_Remote_Nexus_search = 'type=PGSQL:host=xxx:dbname=provider_nexus_search:user=jshafton:passwd=xxx'
 
-let g:dbext_default_profile_Staging_Nexus_search = 'type=PGSQL:host=10.1.10.89:dbname=provider_nexus_search:user=jshafton:passwd=xxx'
-
-let g:dbext_default_profile_Production_Nexus_core   = 'type=PGSQL:host=10.0.10.225:dbname=provider_nexus_core:user=jshafton:passwd=xxx'
-let g:dbext_default_profile_Production_Nexus_search = 'type=PGSQL:host=10.0.10.93:dbname=provider_nexus_search:user=jshafton:passwd=xxx'
-
-let g:dbext_default_profile_Triscuit_sqsh    = 'type=SQLSRV:user=jshafton:passwd=@askg:host=triscuit:SQLSRV_bin=sqsh:SQLSRV_cmd_options=:extra=-Striscuit -D Network360 -w 9999999'
-let g:dbext_default_profile_Strenuus5_sqsh   = 'type=SQLSRV:user=jshafton:passwd=@askg:host=strenuus5:SQLSRV_bin=sqsh:SQLSRV_cmd_options=:extra=-Sstrenuus5 -D Network360 -w 9999999'
-let g:dbext_default_profile                  = 'Local_Nexus'
+let g:dbext_default_profile                     = 'Local_Nexus'
 
 " -- results buffer
 let g:dbext_default_buffer_lines          = 20
@@ -411,9 +379,18 @@ au BufNewFile,BufRead *.hbs.html set ft=handlebars
 " set file type for sneaky Slim files
 au BufNewFile,BufRead *.html.slim set ft=slim
 
-" Paste intelligently by default
-nnoremap p pv`]=`]
-nnoremap P Pv`]=`]
+if has('nvim')
+  " Paste intelligently by default
+  map p <Plug>(miniyank-autoput)v`]=`]
+  map P <Plug>(miniyank-autoPut)v`]=`]
+
+  " mini-yank for yank history
+  map <leader>n <Plug>(miniyank-cycle)
+else
+  " Paste intelligently by default
+  map p v`]=`]
+  map P v`]=`]
+endif
 
 " yank to end of line
 nmap Y y$
@@ -424,9 +401,6 @@ xnoremap Y "*y
 " Option p/P to paste raw
 nnoremap π p
 nnoremap ∏ P
-
-" duplicate selected text
-vnoremap ∂ y`>p " alt-d
 
 " use CTRL-v to paste in insert mode
 set pastetoggle=<F10>
@@ -452,14 +426,6 @@ cnoremap %% <C-R>=expand('%:h').'/'<cr>
 
 " copy current file path to the system clipboard
 nmap <leader>cfp :let @* = expand("%")<CR>
-
-" == YankRing
-let g:yankring_max_history = 1000
-let g:yankring_replace_n_pkey = '¯'
-let g:yankring_replace_n_nkey = '˘'
-
-" nnoremap gyr :YRShow<CR>
-" nnoremap gy/ :YRSearch<space>
 
 " == Highlight current line for graphical VIM <-- THIS SLOWED THINGS DOWN!
 " set cul
@@ -496,14 +462,12 @@ nnoremap N Nzz
 nnoremap * *zz
 nnoremap g; g;zz
 
+" always focus vertical movement
+nnoremap } }zz
+nnoremap { {zz
+
 " open a Quickfix window for the last search.
 nnoremap <silent> <leader>? :execute 'vimgrep /'.@/.'/g %'<CR>:copen<CR>
-
-" Sneak configuration
-let g:sneak#use_ic_scs = 1
-let g:sneak#streak = 1
-let g:sneak#f_reset = 1
-let g:sneak#t_reset = 1
 
 " --------------------------------------------------------------------------------
 " EasyMotion configuration
@@ -533,9 +497,6 @@ noremap <leader>do :set nodiff fdc=0 \| norm zR<CR><C-W>h:bwipeout<CR>
 
 " find current word in project using Ag
 nnoremap gu :Ag '\b<C-R><C-W>\b'<cr>
-
-" find in files
-nnoremap gfir :Ag -G '\.rb' -i<SPACE>
 
 " Fugitive short-cuts
 nnoremap <leader>gs :Gstatus<CR>
@@ -645,22 +606,6 @@ let g:toggle_list_no_mappings=1
 nnoremap tqf :call ToggleQuickfixList()<CR>
 nnoremap tll :call ToggleLocationList()<CR>
 
-" notes configuration
-let g:notes_directories = ['~/Dropbox/Notes']
-let g:notes_title_sync = 'rename_file'
-let g:notes_suffix = '.md'
-
-" vimwiki configuration
-let wiki = {}
-let wiki.path = '~/Dropbox/VimWiki/'
-let wiki.nested_syntaxes = {'python': 'python', 'sh': 'sh', 'ruby': 'ruby', 'scala': 'scala', 'pg': 'pgsql'}
-let g:vimwiki_list = [wiki]
-
-" conque-shell configuration
-let g:ConqueTerm_ReadUnfocused = 1
-let g:ConqueTerm_InsertOnEnter = 0
-let g:ConqueTerm_CWInsert = 1
-
 " include coffeescript in vim-node
 let g:node#includeCoffee = 1
 
@@ -682,3 +627,16 @@ let g:polyglot_disabled = ['markdown']
 let g:maximizer_set_default_mapping = 0
 nnoremap <silent><leader>f :MaximizerToggle<CR>
 vnoremap <silent><leader>f :MaximizerToggle<CR>gv
+
+" == Bubble text (requires unimpaired plugin) ==
+" -- Bubble single lines (alt-j/alt-k)
+nmap ˚ [e
+nmap ∆ ]e
+" -- Bubble multiple lines
+vmap ˚ [egv
+vmap ∆ ]egv
+
+" duplicate line (alt-d)
+nmap ∂ yyp
+" duplicate text (alt-d)
+vmap ∂ y`>p
