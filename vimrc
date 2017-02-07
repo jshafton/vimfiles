@@ -220,6 +220,8 @@ let g:syntastic_mode_map = { 'mode': 'active',
                             \ 'active_filetypes': ['ruby', 'coffee', 'javascript', 'json'],
                             \ 'passive_filetypes': ['puppet', 'html', 'handlebars'] }
 
+let g:syntastic_javascript_checkers = ['jshint']
+
 let g:syntastic_always_populate_loc_list = 1
 
 " When set to 2 the cursor will jump to the first issue detected, but only if
