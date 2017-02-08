@@ -3,6 +3,11 @@ filetype off                   " required!
 
 " documentation here --
 " https://github.com/junegunn/vim-plug/
+if empty(glob('~/.vim/autoload/plug.vim'))
+  silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
+    \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+  autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
+endif
 
 call plug#begin()
 
@@ -162,15 +167,18 @@ if os == 'Darwin' || os == 'Mac'
 endif
 
 if has('nvim')
+  let s:pluggedTracker = resolve(expand("~/.nvim-plug-first-run"))
+
   Plug 'NLKNguyen/papercolor-theme'
 
   " Paste history
   Plug 'bfredl/nvim-miniyank'
+else
+  let s:pluggedTracker = resolve(expand("~/.vim-plug-first-run"))
 endif
 
 call plug#end()
 
-let s:pluggedTracker = resolve(expand("~/.vim-plug-first-run"))
 if !filereadable(s:pluggedTracker)
   echo "Installing Plugins for first time, please ignore key map error messages"
   echo ""

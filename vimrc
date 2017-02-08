@@ -16,7 +16,7 @@ filetype off
 set nocompatible
 
 " Load all bundles
-runtime vim-plug.vim
+source ~/.vim/vim-plug.vim
 
 " Reprocess this file if it's saved
 if has("autocmd")
