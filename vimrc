@@ -642,3 +642,5 @@ vmap ∆ ]egv
 nmap ∂ yyp
 " duplicate text (alt-d)
 vmap ∂ y`>p
+
+let g:peekaboo_window = 'vertical botright 80new'
