@@ -16,6 +16,7 @@ Plug 'godlygeek/csapprox'
 
 " Git and related
 Plug 'tpope/vim-fugitive'
+Plug 'tpope/vim-rhubarb'
 Plug 'gregsexton/gitv'
 
 " Buffer/file browsing
@@ -36,6 +37,7 @@ Plug 'jshafton/vim-node'
 Plug 'robbles/logstash.vim'
 Plug 'Glench/Vim-Jinja2-Syntax'
 Plug 'gabrielelana/vim-markdown'
+Plug 'b4b4r07/vim-hcl'
 
 " UI enhancements
 Plug 'vim-scripts/quickfixsigns'
@@ -48,7 +50,7 @@ Plug 'tpope/vim-surround'
 Plug 'tpope/vim-unimpaired'
 Plug 'tpope/vim-endwise'
 Plug 'tpope/vim-repeat'
-Plug 'Raimondi/delimitMate'
+Plug 'jiangmiao/auto-pairs'
 Plug 'Align'
 Plug 'junegunn/vim-easy-align'
 Plug 'transpose-words'
@@ -64,7 +66,7 @@ Plug 'ruby-matchit'
 
 " Commenting, auto-completion, general syntax
 Plug 'tComment'
-Plug 'scrooloose/syntastic'
+Plug 'w0rp/ale'
 
 " Mark-down
 Plug 'timcharper/textile.vim'
@@ -124,7 +126,7 @@ Plug 'exu/pgsql.vim'
 " DevOps
 " Plug 'chase/vim-ansible-yaml'
 Plug 'pearofducks/ansible-vim'
-Plug 'sclo/haproxy.vim'
+Plug 'zimbatm/haproxy.vim'
 
 " Windows shit
 Plug 'PProvost/vim-ps1'
@@ -164,6 +166,12 @@ if os == 'Darwin' || os == 'Mac'
 
   " edit OSX plist files
   Plug 'darfink/vim-plist'
+
+  " scratch buffer
+  Plug 'mtth/scratch.vim'
+
+  " spec handling
+  Plug 'geekjuice/vim-spec'
 endif
 
 if has('nvim')

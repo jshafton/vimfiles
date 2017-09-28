@@ -139,6 +139,9 @@ let g:netrw_localrmdir='rm -r'
 " Ignore netrw for Ctrl-^
 let g:netrw_altfile = 1
 
+" fzf history
+let g:fzf_history_dir = '~/.fzf-history'
+
 nnoremap <C-p> :GitFiles --exclude-standard -co<CR>
 " alt-b
 nnoremap ∫ :Buffers<CR>
@@ -152,7 +155,7 @@ nnoremap Ò :Lines<CR>
 nnoremap <leader>ht :Helptags<CR>
 nnoremap <space>f :Filetypes<CR>
 
-command! -bang -nargs=* Fag call fzf#vim#ag(<q-args>, g:fzf#vim#layout(<bang>0))
+command! -bang -nargs=* Fag call fzf#vim#ag(<q-args>)
 nnoremap <C-f> :Fag<CR>
 
 " Disable ctrl-p
@@ -227,6 +230,9 @@ let g:syntastic_always_populate_loc_list = 1
 " When set to 2 the cursor will jump to the first issue detected, but only if
 " this issue is an error. >
 let g:syntastic_auto_jump = 2
+
+let g:ale_set_loclist = 0
+let g:ale_set_quickfix = 1
 
 " key mapping for Gundo
 nnoremap <F5> :GundoToggle<CR>
@@ -347,7 +353,8 @@ let g:rails_no_dbext = 1
 
 " -- profiles
 let g:dbext_default_type                        = 'PGSQL'
-let g:dbext_default_profile_Local_N360          = 'type=PGSQL:host=localhost:dbname=network360_development'
+let g:dbext_default_profile_Local_N360          = 'type=PGSQL:host=localhost:port=55432:dbname=network360:user=developer:passwd=developer'
+let g:dbext_default_profile_Local_N360_Test     = 'type=PGSQL:host=localhost:port=65432:dbname=network360:user=developer:passwd=developer'
 let g:dbext_default_profile_Staging_N360        = 'type=PGSQL:host=stagingdb01:dbname=network360:user=jshafton:passwd=xxx'
 let g:dbext_default_profile_Production_N360     = 'type=PGSQL:host=proddb02.arsalon:dbname=network360:user=jshafton:passwd=xxx'
 
@@ -381,6 +388,16 @@ au BufNewFile,BufRead *.hbs.html set ft=handlebars
 " set file type for sneaky Slim files
 au BufNewFile,BufRead *.html.slim set ft=slim
 
+" set file type for sneaky yaml Jinja files
+au BufNewFile,BufRead *.yaml.j2 setlocal filetype=yaml.jinja2
+
+" set file type for sneaky logstash Jinja files
+au BufNewFile,BufRead */*logstash*.conf.j2 setlocal filetype=logstash.jinja2
+
+" set file type for haproxy files
+au BufNewFile,BufRead */haproxy.cfg*  setlocal filetype=haproxy
+au BufNewFile,BufRead */haproxy_vars* setlocal filetype=haproxy
+
 if has('nvim')
   " Paste intelligently by default
   map p <Plug>(miniyank-autoput)v`]=`]
@@ -409,7 +426,8 @@ set pastetoggle=<F10>
 inoremap <C-v> <F10><C-r>*<F10>
 
 " transpose words configuration
-nmap gs <Plug>Transposewords
+" go-word-switch
+nmap gws <Plug>Transposewords
 
 " visually select the text that was last edited/pasted
 nmap gV `[v`]
@@ -492,23 +510,25 @@ let g:EasyMotion_smartcase = 1
 call camelcasemotion#CreateMotionMappings('<leader>')
 
 " Replace current word in file
-nmap <leader>R :%s/<C-R><C-W>/<C-R><C-W><C-F>vb
+nmap <leader>R :%s/<C-R><C-W>/
 
 " turn off diff formatting
 noremap <leader>do :set nodiff fdc=0 \| norm zR<CR><C-W>h:bwipeout<CR>
 
 " find current word in project using Ag
-nnoremap gu :Ag '\b<C-R><C-W>\b'<cr>
+nnoremap gu :Fag <C-R><C-W><cr>
 
 " Fugitive short-cuts
 nnoremap <leader>gs :Gstatus<CR>
 nnoremap <leader>gc :Gcommit<CR>
+nnoremap <leader>gca :Gcommit --amend<CR>
 nnoremap <leader>gb :Gblame<CR>
 nnoremap <leader>gd :Gdiff<CR>
 nnoremap <leader>gr :Gread<CR>
 nnoremap <leader>gw :Gwrite<CR>
 nnoremap <leader>gl :silent! Glog<CR>:bot copen<CR>
 nnoremap <leader>gp :! git push<CR>
+nnoremap <leader>gpf :! git push --force<CR>
 nnoremap <leader>grb :! git pull --rebase<CR>
 nnoremap <leader>ga :! git add .<CR> " adds everything to the index
 nnoremap <leader>grh :! git reset .<CR> " git reset head -- unstages everything
@@ -570,6 +590,13 @@ if has("gui_macvim")
 
   " find in files
   nnoremap <D-F> :Ag! -i<SPACE>
+endif
+
+let os=substitute(system('uname'), '\n', '', '')
+if os == 'Darwin' || os == 'Mac'
+  let g:scratch_insert_autohide = 0
+  let g:scratch_filetype = 'markdown'
+  let g:scratch_height = '20'
 endif
 
 " Comment to the right
@@ -639,8 +666,8 @@ vmap ˚ [egv
 vmap ∆ ]egv
 
 " duplicate line (alt-d)
-nmap ∂ yyp
+nmap ∂ yyπ
 " duplicate text (alt-d)
-vmap ∂ y`>p
+vmap ∂ y`>π
 
 let g:peekaboo_window = 'vertical botright 80new'
