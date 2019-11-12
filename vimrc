@@ -184,6 +184,13 @@ let g:airline_theme                                = 'hybridline'
 set enc=utf-8
 
 if has('nvim')
+  let g:PaperColor_Theme_Options = {
+        \   'theme': {
+        \     'default': {
+        \       'transparent_background': 0
+        \     }
+        \   }
+        \ }
   colorscheme Papercolor
   set background=dark
 else
@@ -218,21 +225,13 @@ endif
 nnoremap Q @@
 vnoremap Q :normal @@<CR>
 
-" == Syntastic configuration
-let g:syntastic_mode_map = { 'mode': 'active',
-                            \ 'active_filetypes': ['ruby', 'coffee', 'javascript', 'json'],
-                            \ 'passive_filetypes': ['puppet', 'html', 'handlebars'] }
+let g:ale_lint_on_enter = 1
+let g:ale_lint_on_text_changed = 'always'
+let g:ale_completion_enabled = 1
+let g:airline#extensions#ale#enabled = 1
 
-let g:syntastic_javascript_checkers = ['jshint']
-
-let g:syntastic_always_populate_loc_list = 1
-
-" When set to 2 the cursor will jump to the first issue detected, but only if
-" this issue is an error. >
-let g:syntastic_auto_jump = 2
-
-let g:ale_set_loclist = 0
-let g:ale_set_quickfix = 1
+let g:ale_set_loclist = 1
+let g:ale_set_quickfix = 0
 
 " key mapping for Gundo
 nnoremap <F5> :GundoToggle<CR>
@@ -352,20 +351,7 @@ noremap ß :w<CR> " alt-s
 let g:rails_no_dbext = 1
 
 " -- profiles
-let g:dbext_default_type                        = 'PGSQL'
-let g:dbext_default_profile_Local_N360          = 'type=PGSQL:host=localhost:port=55432:dbname=network360:user=developer:passwd=developer'
-let g:dbext_default_profile_Local_N360_Test     = 'type=PGSQL:host=localhost:port=65432:dbname=network360:user=developer:passwd=developer'
-let g:dbext_default_profile_Staging_N360        = 'type=PGSQL:host=stagingdb01:dbname=network360:user=jshafton:passwd=xxx'
-let g:dbext_default_profile_Production_N360     = 'type=PGSQL:host=proddb02.arsalon:dbname=network360:user=jshafton:passwd=xxx'
-
-let g:dbext_default_profile_Local_Nexus_core    = 'type=PGSQL:host=localhost:port=15432:dbname=provider_nexus_core:user=developer:passwd=xxx'
-let g:dbext_default_profile_Local_Nexus_search  = 'type=PGSQL:host=localhost:port=25432:dbname=provider_nexus_search:user=developer:passwd=xxx'
-let g:dbext_default_profile_Local_Nexus_Test    = 'type=PGSQL:host=localhost:port=15432:dbname=provider_nexus_test:user=developer:passwd=xxx'
-
-let g:dbext_default_profile_Remote_Nexus_core   = 'type=PGSQL:host=xxx:dbname=provider_nexus_core:user=jshafton:passwd=xxx'
-let g:dbext_default_profile_Remote_Nexus_search = 'type=PGSQL:host=xxx:dbname=provider_nexus_search:user=jshafton:passwd=xxx'
-
-let g:dbext_default_profile                     = 'Local_Nexus'
+let g:dbext_default_type = 'PGSQL'
 
 " -- results buffer
 let g:dbext_default_buffer_lines          = 20
@@ -597,6 +583,9 @@ if os == 'Darwin' || os == 'Mac'
   let g:scratch_insert_autohide = 0
   let g:scratch_filetype = 'markdown'
   let g:scratch_height = '20'
+
+  let g:python_host_prog = '~/.pyenv/versions/neovim2/bin/python'
+  let g:python3_host_prog = '~/.pyenv/versions/neovim3/bin/python'
 endif
 
 " Comment to the right
