@@ -307,6 +307,10 @@ if has('nvim')
   tnoremap <C-l> <C-\><C-n><C-w>l
 endif
 
+" easy save
+nnoremap S :w<CR>
+noremap  ß :w<CR> " alt-s
+
 " easy window quit
 nnoremap <Leader>q :q<CR>
 
@@ -346,10 +350,6 @@ let g:lasttab = 1
 au TabLeave * let g:lasttab = tabpagenr()
 nnoremap <silent> <Tab> :exe "tabn ".g:lasttab<cr>
 vnoremap <silent> <Tab> :exe "tabn ".g:lasttab<cr>
-
-" key mapping for saving file
-noremap <leader>s :w<CR>
-noremap ß :w<CR> " alt-s
 
 " == DbExt configuration ==
 let g:rails_no_dbext = 1
