@@ -310,6 +310,10 @@ endif
 " easy window quit
 nnoremap <Leader>q :q<CR>
 
+" full quit
+nnoremap <C-q> :qall!<CR>
+nnoremap X :qall!<CR>
+
 " buffkill configuration
 let g:BufKillFunctionSelectingValidBuffersToDisplay = 'auto'
 
