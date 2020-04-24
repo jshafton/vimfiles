@@ -230,8 +230,12 @@ else
     set term=gnome-256color
   endif
 
-  let ayucolor='dark'
-  colorscheme ayu
+  if has('nvim')
+    let ayucolor='dark'
+    colorscheme ayu
+  else
+    colorscheme jellybeans
+  endif
 
   " Switch cursor shape correctly in tmux > iterm2 > osx
   if $TMUX != ''
