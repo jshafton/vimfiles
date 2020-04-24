@@ -1,7 +1,14 @@
 ﻿" neovim compatibility
-if has('nvim')
-  set termguicolors
+if (has("nvim"))
+  "For Neovim 0.1.3 and 0.1.4 < https://github.com/neovim/neovim/pull/2198 >
+  let $NVIM_TUI_ENABLE_TRUE_COLOR=1
   let $NVIM_TUI_ENABLE_CURSOR_SHAPE=1
+endif
+"For Neovim > 0.1.5 and Vim > patch 7.4.1799 < https://github.com/vim/vim/commit/61be73bb0f965a895bfb064ea3e55476ac175162 >
+"Based on Vim patch 7.4.1770 (`guicolors` option) < https://github.com/vim/vim/commit/8a633e3427b47286869aa4b96f2bfc1fe65b25cd >
+" < https://github.com/neovim/neovim/wiki/Following-HEAD#20160511 >
+if (has("termguicolors"))
+  set termguicolors
 endif
 
 " avoiding annoying CSApprox warning message
@@ -65,7 +72,6 @@ inoremap JK <Esc>`^
 
 " same deal for neovim terminal mode
 if has('nvim')
-  tnoremap <Esc> <C-\><C-n>
   tnoremap jk <C-\><C-n>
 end
 
@@ -142,7 +148,18 @@ let g:netrw_altfile = 1
 " fzf history
 let g:fzf_history_dir = '~/.fzf-history'
 
-nnoremap <C-p> :GitFiles --exclude-standard -co<CR>
+" after tmux 3.2 is released re-enable this branching logic
+" if exists('$TMUX')
+"   let g:fzf_layout = { 'tmux': '-p90%,60%' }
+" else
+" let g:fzf_layout = { 'window': { 'width': 0.9, 'height': 0.6 } }
+" endif
+" load fzf in a popup window
+let g:fzf_layout = { 'window': { 'width': 0.9, 'height': 0.6 } }
+
+" Use :GFiles when inside a git directory, otherwise :Files
+nnoremap <expr> <C-p> (len(system('git rev-parse')) ? ':Files' : ':GFiles')."\<cr>"
+
 " alt-b
 nnoremap ∫ :Buffers<CR>
 " alt-|
@@ -156,6 +173,7 @@ nnoremap <leader>ht :Helptags<CR>
 nnoremap <space>f :Filetypes<CR>
 
 command! -bang -nargs=* Fag call fzf#vim#ag(<q-args>)
+command! -bang -nargs=* FFag call fzf#vim#ag(<q-args>, {'options': '--delimiter : --nth 4..'}, <bang>0)
 nnoremap <C-f> :Fag<CR>
 
 " Disable ctrl-p
@@ -378,28 +396,9 @@ au BufNewFile,BufRead *.hbs.html set ft=handlebars
 " set file type for sneaky Slim files
 au BufNewFile,BufRead *.html.slim set ft=slim
 
-" set file type for sneaky yaml Jinja files
-au BufNewFile,BufRead *.yaml.j2 setlocal filetype=yaml.jinja2
-
-" set file type for sneaky logstash Jinja files
-au BufNewFile,BufRead */*logstash*.conf.j2 setlocal filetype=logstash.jinja2
-
-" set file type for haproxy files
-au BufNewFile,BufRead */haproxy.cfg*  setlocal filetype=haproxy
-au BufNewFile,BufRead */haproxy_vars* setlocal filetype=haproxy
-
-if has('nvim')
-  " Paste intelligently by default
-  map p <Plug>(miniyank-autoput)v`]=`]
-  map P <Plug>(miniyank-autoPut)v`]=`]
-
-  " mini-yank for yank history
-  map <leader>n <Plug>(miniyank-cycle)
-else
-  " Paste intelligently by default
-  map p v`]=`]
-  map P v`]=`]
-endif
+" Paste intelligently by default
+map p pv`]=`]
+map P Pv`]=`]
 
 " yank to end of line
 nmap Y y$
@@ -509,16 +508,16 @@ noremap <leader>do :set nodiff fdc=0 \| norm zR<CR><C-W>h:bwipeout<CR>
 nnoremap gu :Fag <C-R><C-W><cr>
 
 " Fugitive short-cuts
-nnoremap <leader>gs :Gstatus<CR>
-nnoremap <leader>gc :Gcommit<CR>
-nnoremap <leader>gca :Gcommit --amend<CR>
-nnoremap <leader>gb :Gblame<CR>
-nnoremap <leader>gd :Gdiff<CR>
+nnoremap <leader>gs :Git<CR>
+nnoremap <leader>gc :Git commit<CR>
+nnoremap <leader>gca :Git commit --amend<CR>
+nnoremap <leader>gb :Git blame<CR>
+nnoremap <leader>gd :Gdiffsplit<CR>
 nnoremap <leader>gr :Gread<CR>
 nnoremap <leader>gw :Gwrite<CR>
-nnoremap <leader>gl :silent! Glog<CR>:bot copen<CR>
-nnoremap <leader>gp :! git push<CR>
-nnoremap <leader>gpf :! git push --force<CR>
+nnoremap <leader>gl :Commits<CR>
+nnoremap <leader>gp :Gpush<CR>
+nnoremap <leader>gpf :Gpush --force<CR>
 nnoremap <leader>grb :! git pull --rebase<CR>
 nnoremap <leader>ga :! git add .<CR> " adds everything to the index
 nnoremap <leader>grh :! git reset .<CR> " git reset head -- unstages everything
@@ -664,3 +663,22 @@ nmap ∂ yyπ
 vmap ∂ y`>π
 
 let g:peekaboo_window = 'vertical botright 80new'
+
+" == Ansible syntax tweaks ==
+let g:ansible_unindent_after_newline = 1
+let g:ansible_yamlKeyName = 'yamlKey'
+" let g:ansible_attribute_highlight = 'ab'
+let g:ansible_name_highlight = 'b'
+" let g:ansible_extra_keywords_highlight = 1
+
+let g:ansible_template_syntaxes = {
+      \ '*.rb.j2': 'ruby',
+      \ '*.conf.j2': 'conf',
+      \ '*.haproxy.*.j2': 'haproxy',
+      \ '*.logstash.*.j2': 'logstash',
+      \ '*.json.j2': 'json',
+      \ '*.sh.j2': 'sh',
+      \ '*.ya?ml.j2': 'yaml'
+      \ }
+
+" == End Ansible syntax tweaks ==

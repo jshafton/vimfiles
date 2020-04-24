@@ -124,7 +124,8 @@ Plug 'vim-scripts/dbext.vim'
 Plug 'exu/pgsql.vim'
 
 " DevOps
-" Plug 'chase/vim-ansible-yaml'
+Plug 'pearofducks/ansible-vim'
+Plug 'stephpy/vim-yaml'
 Plug 'pearofducks/ansible-vim'
 Plug 'zimbatm/haproxy.vim'
 
@@ -147,10 +148,8 @@ Plug 'christoomey/vim-tmux-navigator'
 " Mac-only bundles
 let os=substitute(system('uname'), '\n', '', '')
 if os == 'Darwin' || os == 'Mac'
-  " awesome (but complicated) tab completion
-  if v:version > 703
-    Plug 'Valloric/YouCompleteMe', { 'do': './install.py' }
-  endif
+  " completion
+  Plug 'neoclide/coc.nvim', {'branch': 'release'}
 
   " Look up stuff in Dash / the internets
   Plug 'Keithbsmiley/investigate.vim'
