@@ -388,6 +388,31 @@ let g:dbext_default_always_prompt_for_variables = -1 " never prompt for variable
 autocmd FileType sql set omnifunc=sqlcomplete#Complete
 autocmd FileType pgsql set omnifunc=sqlcomplete#Complete
 
+" == coc config ==
+" TODO: how to make this conditional only if defined?
+
+" -- completion --
+inoremap <silent><expr> <TAB>
+      \ pumvisible() ? "\<C-n>" :
+      \ <SID>check_back_space() ? "\<TAB>" :
+      \ coc#refresh()
+inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
+
+function! s:check_back_space() abort
+  let col = col('.') - 1
+  return !col || getline('.')[col - 1]  =~# '\s'
+endfunction
+
+" -- extensions --
+
+let g:coc_global_extensions = [ 'coc-yank' ]
+
+nnoremap <silent> <space>y :<C-u>CocList -A --normal yank<cr>
+
+let g:airline#extensions#coc#enabled = 1
+
+" == end coc config ==
+
 " set file type for Postgres for SQL files
 au BufNewFile,BufRead *.sql set ft=pgsql
 
