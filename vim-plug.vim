@@ -114,7 +114,6 @@ Plug 'bkad/CamelCaseMotion'
 " Code searching
 Plug 'mileszs/ack.vim'
 Plug 'rking/ag.vim'
-Plug 'gabesoft/vim-ags'
 Plug 'vim-scripts/AutoTag'
 Plug 'tpope/vim-abolish'
 Plug 'osyo-manga/vim-over'
