@@ -179,10 +179,7 @@ endif
 if has('nvim')
   let s:pluggedTracker = resolve(expand("~/.nvim-plug-first-run"))
 
-  Plug 'NLKNguyen/papercolor-theme'
-
-  " Paste history
-  Plug 'bfredl/nvim-miniyank'
+  Plug 'ayu-theme/ayu-vim'
 else
   let s:pluggedTracker = resolve(expand("~/.vim-plug-first-run"))
 endif

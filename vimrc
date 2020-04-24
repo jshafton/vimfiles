@@ -213,20 +213,6 @@ let g:airline_theme                                = 'hybridline'
 " set t_Co=256 " tell the term has 256 colors
 set enc=utf-8
 
-if has('nvim')
-  let g:PaperColor_Theme_Options = {
-        \   'theme': {
-        \     'default': {
-        \       'transparent_background': 0
-        \     }
-        \   }
-        \ }
-  colorscheme Papercolor
-  set background=dark
-else
-  colorscheme molokai
-endif
-
 if has("gui_running")
   if has("gui_gnome")
     set term=gnome-256color
@@ -243,6 +229,9 @@ else
   if $COLORTERM == 'gnome-terminal'
     set term=gnome-256color
   endif
+
+  let ayucolor='dark'
+  colorscheme ayu
 
   " Switch cursor shape correctly in tmux > iterm2 > osx
   if $TMUX != ''
