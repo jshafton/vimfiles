@@ -559,6 +559,7 @@ nnoremap <leader>gw :Gwrite<CR>
 nnoremap <leader>gl :Commits<CR>
 nnoremap <leader>gp :Gpush<CR>
 nnoremap <leader>gpf :Gpush --force<CR>
+nnoremap <leader>gpsu :! git push -u origin $(git rev-parse --abbrev-ref HEAD)<CR>
 nnoremap <leader>grb :! git pull --rebase<CR>
 nnoremap <leader>ga :! git add .<CR> " adds everything to the index
 nnoremap <leader>grh :! git reset .<CR> " git reset head -- unstages everything
