@@ -168,6 +168,18 @@ nnoremap « :BTags<CR>
 nnoremap ¬ :BLines<CR>
 " alt-L
 nnoremap Ò :Lines<CR>
+" alt-H
+nnoremap ˙ :History<CR>
+" alt-C
+nnoremap ç :Commands<CR>
+
+" Better command history
+command! CmdHist call fzf#vim#command_history()
+nnoremap q: :CmdHist<CR>
+
+" Better search history
+command! QHist call fzf#vim#search_history()
+nnoremap q/ :QHist<CR>
 
 nnoremap <leader>ht :Helptags<CR>
 nnoremap <space>f :Filetypes<CR>
