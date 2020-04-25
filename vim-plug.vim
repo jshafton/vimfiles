@@ -112,8 +112,6 @@ Plug 'paradigm/TextObjectify'
 Plug 'bkad/CamelCaseMotion'
 
 " Code searching
-Plug 'mileszs/ack.vim'
-Plug 'rking/ag.vim'
 Plug 'vim-scripts/AutoTag'
 Plug 'tpope/vim-abolish'
 Plug 'osyo-manga/vim-over'
@@ -125,7 +123,6 @@ Plug 'exu/pgsql.vim'
 " DevOps
 Plug 'pearofducks/ansible-vim'
 Plug 'stephpy/vim-yaml'
-Plug 'pearofducks/ansible-vim'
 Plug 'zimbatm/haproxy.vim'
 
 " Windows shit

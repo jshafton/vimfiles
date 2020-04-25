@@ -195,9 +195,9 @@ nnoremap q/ :QHist<CR>
 nnoremap <leader>ht :Helptags<CR>
 nnoremap <space>f :Filetypes<CR>
 
-command! -bang -nargs=* Fag call fzf#vim#ag(<q-args>)
-command! -bang -nargs=* FFag call fzf#vim#ag(<q-args>, {'options': '--delimiter : --nth 4..'}, <bang>0)
-nnoremap <C-f> :Fag<CR>
+" file contents only (no filenames) search
+command! -bang -nargs=* Fag call fzf#vim#ag(<q-args>, {'options': '--delimiter : --nth 4..'}, <bang>0)
+nnoremap <C-f> :Ag<CR>
 
 " Disable ctrl-p
 let g:loaded_ctrlp = 1
@@ -546,7 +546,7 @@ nmap <leader>R :%s/<C-R><C-W>/
 noremap <leader>do :set nodiff fdc=0 \| norm zR<CR><C-W>h:bwipeout<CR>
 
 " find current word in project using Ag
-nnoremap gu :Fag <C-R><C-W><cr>
+nnoremap gu :Ag <C-R><C-W><cr>
 
 " Fugitive short-cuts
 nnoremap <leader>gs :Git<CR>
