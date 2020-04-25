@@ -20,7 +20,6 @@ Plug 'tpope/vim-rhubarb'
 Plug 'gregsexton/gitv'
 
 " Buffer/file browsing
-Plug 'ctrlpvim/ctrlp.vim'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --bin' }
 Plug 'junegunn/fzf.vim'
 Plug 'dhruvasagar/vim-vinegar'

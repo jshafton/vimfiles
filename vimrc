@@ -199,10 +199,6 @@ nnoremap <space>f :Filetypes<CR>
 command! -bang -nargs=* Fag call fzf#vim#ag(<q-args>, {'options': '--delimiter : --nth 4..'}, <bang>0)
 nnoremap <C-f> :Ag<CR>
 
-" Disable ctrl-p
-let g:loaded_ctrlp = 1
-let g:ctrlp_map = ''
-
 " NERDTree
 nnoremap gnt :NERDTreeToggle<CR>
 nnoremap gnf :NERDTreeFind<CR>
