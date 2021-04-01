@@ -25,7 +25,7 @@ Plug 'junegunn/fzf.vim'
 Plug 'dhruvasagar/vim-vinegar'
 Plug 'scrooloose/nerdtree'
 Plug 'duff/vim-bufonly'
-Plug 'vim-scripts/bufkill.vim'
+Plug 'qpkorr/vim-bufkill'
 
 " Language pack bundles
 Plug 'sheerun/vim-polyglot'
