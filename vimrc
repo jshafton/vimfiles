@@ -33,6 +33,10 @@ filetype off
 " This must be first, because it changes other options as a side effect.
 set nocompatible
 
+" Disable vim-polyglot markdown in favor of better one
+" NOTE: must be defined prior to loading vim-polyglot
+let g:polyglot_disabled = ['markdown']
+
 " Load all bundles
 source ~/.vim/vim-plug.vim
 
@@ -181,8 +185,8 @@ nnoremap ¬ :BLines<CR>
 nnoremap Ò :Lines<CR>
 " alt-H
 nnoremap ˙ :History<CR>
-" alt-C
-nnoremap ç :Commands<CR>
+" alt-C 'changes'
+nnoremap ç :GFiles?<CR>
 
 " Better command history
 command! CmdHist call fzf#vim#command_history()
@@ -349,7 +353,7 @@ nnoremap <C-q> :qall!<CR>
 nnoremap X :qall!<CR>
 
 " buffkill configuration
-let g:BufKillFunctionSelectingValidBuffersToDisplay = 'auto'
+" let g:BufKillFunctionSelectingValidBuffersToDisplay = 'auto'
 
 " easy buffer wipe
 nnoremap <C-x> :BW!<cr>
@@ -552,13 +556,17 @@ nnoremap <leader>gb :Git blame<CR>
 nnoremap <leader>gd :Gdiffsplit<CR>
 nnoremap <leader>gr :Gread<CR>
 nnoremap <leader>gw :Gwrite<CR>
-nnoremap <leader>gl :Commits<CR>
-nnoremap <leader>gp :Gpush<CR>
-nnoremap <leader>gpf :Gpush --force<CR>
+nnoremap <leader>gl :BCommits<CR>
+nnoremap <leader>gL :Commits<CR>
+nnoremap <leader>gp :Git push<CR>
+nnoremap <leader>gpf :Git push --force<CR>
 nnoremap <leader>gpsu :! git push -u origin $(git rev-parse --abbrev-ref HEAD)<CR>
 nnoremap <leader>grb :! git pull --rebase<CR>
 nnoremap <leader>ga :! git add .<CR> " adds everything to the index
 nnoremap <leader>grh :! git reset .<CR> " git reset head -- unstages everything
+
+" mnemonic -- git 'pull request' to finish up a PR
+nnoremap <leader>gpr :! git push -u origin $(git rev-parse --abbrev-ref HEAD) && hub pull-request --no-edit -o<CR>
 
 " GitV configuration
 let g:Gitv_WipeAllOnClose = 1
@@ -677,9 +685,6 @@ augroup rainbow_lisp
   autocmd FileType lisp,clojure,scheme RainbowParentheses
 augroup END
 
-" Disable vim-polyglot markdown in favor of better one
-let g:polyglot_disabled = ['markdown']
-
 " vim-maximizer settings
 " szw/vim-maximizer
 
@@ -720,3 +725,6 @@ let g:ansible_template_syntaxes = {
       \ }
 
 " == End Ansible syntax tweaks ==
+
+" 'count word' - count nr of occurrences of word under cursor
+nnoremap <leader>cw :%s/<c-r><c-w>//n<cr>
