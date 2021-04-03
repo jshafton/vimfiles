@@ -13,6 +13,12 @@ call plug#begin()
 
 " Colors
 Plug 'godlygeek/csapprox'
+Plug 'joshdick/onedark.vim'
+Plug 'drewtempelmeyer/palenight.vim'
+Plug 'dracula/vim', { 'as': 'dracula' }
+Plug 'mhartington/oceanic-next'
+Plug 'sonph/onehalf', { 'rtp': 'vim' }
+Plug 'NLKNguyen/papercolor-theme'
 
 " Git and related
 Plug 'tpope/vim-fugitive'

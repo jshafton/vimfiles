@@ -226,6 +226,11 @@ let g:airline_theme                                = 'hybridline'
 " set t_Co=256 " tell the term has 256 colors
 set enc=utf-8
 
+" settings for vimr app
+if has("gui_vimr")
+  colorscheme ayu
+endif
+
 if has("gui_running")
   if has("gui_gnome")
     set term=gnome-256color
