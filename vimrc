@@ -200,8 +200,10 @@ nnoremap <leader>ht :Helptags<CR>
 nnoremap <space>f :Filetypes<CR>
 
 " file contents only (no filenames) search
-command! -bang -nargs=* Fag call fzf#vim#ag(<q-args>, {'options': '--delimiter : --nth 4..'}, <bang>0)
-nnoremap <C-f> :Ag<CR>
+command! -bang -nargs=* Fag call fzf#vim#ag(<q-args>, fzf#vim#with_preview({'options': '--delimiter : --nth 4..' }), <bang>0)
+nnoremap <C-f> :Fag<CR>
+" ctrl-alt-f - include file names in search
+nnoremap <C-ƒ> :Ag<CR>
 
 " NERDTree
 nnoremap gnt :NERDTreeToggle<CR>
