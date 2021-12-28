@@ -2,7 +2,9 @@
 if (has("nvim"))
   "For Neovim 0.1.3 and 0.1.4 < https://github.com/neovim/neovim/pull/2198 >
   let $NVIM_TUI_ENABLE_TRUE_COLOR=1
-  let $NVIM_TUI_ENABLE_CURSOR_SHAPE=1
+  set guicursor=n-v-c:block,i-ci-ve:ver25,r-cr:hor20,o:hor50
+        \,a:blinkwait700-blinkoff400-blinkon250-Cursor/lCursor
+        \,sm:block-blinkwait175-blinkoff150-blinkon175
 endif
 
 "For Neovim > 0.1.5 and Vim > patch 7.4.1799 < https://github.com/vim/vim/commit/61be73bb0f965a895bfb064ea3e55476ac175162 >
@@ -33,9 +35,58 @@ filetype off
 " This must be first, because it changes other options as a side effect.
 set nocompatible
 
+" Faster update times for git gutter and others
+set updatetime=100
+
+if (has("nvim"))
+  let g:gitgutter_preview_win_floating = v:true
+endif
+
+" == Highlight current line for graphical VIM <-- THIS SLOWED THINGS DOWN!
+" set cul
+" hi CursorLine term=none cterm=none ctermbg=3
+
+" Cursorline highlighting
+let g:conoline_auto_enable = 1
+
 " Disable vim-polyglot markdown in favor of better one
 " NOTE: must be defined prior to loading vim-polyglot
 let g:polyglot_disabled = ['markdown']
+
+" sweet statusline indicators
+let g:airline_powerline_fonts                      = 1
+let g:airline#extensions#tabline#enabled           = 1
+let g:airline#extensions#tabline#show_splits       = 0
+let g:airline#extensions#tabline#tab_min_count     = 2
+let g:airline#extensions#tabline#tab_nr_type       = 1 " tab number
+let g:airline#extensions#tabline#show_close_button = 0
+let g:airline#extensions#tabline#show_buffers      = 0
+let g:airline#extensions#fzf#enabled               = 1
+let g:airline_theme                                = 'dracula'
+
+" ale linter settings
+let g:ale_lint_on_enter = 1
+let g:ale_lint_on_text_changed = 'always'
+let g:ale_completion_enabled = 1
+let g:airline#extensions#ale#enabled = 1
+
+let g:ale_set_loclist = 1
+let g:ale_set_quickfix = 0
+
+" Disable default Ctrl-j and Ctrl-k mappings for these
+" commands since they're used for window switching
+let g:NERDTreeMapJumpNextSibling = ''
+let g:NERDTreeMapJumpPrevSibling = ''
+
+" Gist configuration
+let g:gist_detect_filetype         = 1
+let g:gist_show_privates           = 1
+let g:gist_post_private            = 1
+let g:gist_update_on_write         = 2 " Only :w! updates a gist.
+let g:gist_open_browser_after_post = 1
+
+" investigate.vim
+let g:investigate_use_dash=1
 
 " Load all bundles
 source ~/.vim/vim-plug.vim
@@ -187,6 +238,8 @@ nnoremap Ò :Lines<CR>
 nnoremap ˙ :History<CR>
 " alt-C 'changes'
 nnoremap ç :GFiles?<CR>
+" Go to open tab
+nnoremap t/ :Windows<CR>
 
 " Better command history
 command! CmdHist call fzf#vim#command_history()
@@ -201,27 +254,13 @@ nnoremap <space>f :Filetypes<CR>
 
 " file contents only (no filenames) search
 command! -bang -nargs=* Fag call fzf#vim#ag(<q-args>, fzf#vim#with_preview({'options': '--delimiter : --nth 4..' }), <bang>0)
-nnoremap <C-f> :Fag<CR>
-" ctrl-alt-f - include file names in search
-nnoremap <C-ƒ> :Ag<CR>
+nnoremap <C-f> :Ag<CR>
+" alt-f - don't include file names in search
+nnoremap ƒ :Fag<CR>
 
 " NERDTree
 nnoremap gnt :NERDTreeToggle<CR>
 nnoremap gnf :NERDTreeFind<CR>
-
-" Disable default Ctrl-j and Ctrl-k mappings for these
-" commands since they're used for window switching
-let g:NERDTreeMapJumpNextSibling = ''
-let g:NERDTreeMapJumpPrevSibling = ''
-
-" sweet statusline indicators
-let g:airline_powerline_fonts                      = 1
-let g:airline#extensions#tabline#enabled           = 1
-let g:airline#extensions#tabline#tab_min_count     = 2
-let g:airline#extensions#tabline#tab_nr_type       = 1 " tab number
-let g:airline#extensions#tabline#show_close_button = 0
-let g:airline#extensions#tabline#show_buffers      = 0
-let g:airline_theme                                = 'hybridline'
 
 " set t_Co=256 " tell the term has 256 colors
 set enc=utf-8
@@ -249,8 +288,17 @@ else
   endif
 
   if has('nvim')
-    let ayucolor='dark'
-    colorscheme ayu
+    let g:sonokai_style                     = 'default' " atlantis,andromeda,maia
+    let g:sonokai_enable_italic             = 1
+    let g:sonokai_disable_italic_comment    = 0
+    let g:sonokai_transparent_background    = 1
+    let g:sonokai_menu_selection_background = 'green'
+    let g:sonokai_diagnostic_text_highlight = 1
+    let g:sonokai_diagnostic_line_highlight = 1
+    let g:sonokai_diagnostic_virtual_text   = 'colored'
+    let g:sonokai_current_word              = 'underline'
+
+    colorscheme sonokai
   else
     colorscheme darkspectrum
   endif
@@ -265,14 +313,6 @@ endif
 " map Q to something useful
 nnoremap Q @@
 vnoremap Q :normal @@<CR>
-
-let g:ale_lint_on_enter = 1
-let g:ale_lint_on_text_changed = 'always'
-let g:ale_completion_enabled = 1
-let g:airline#extensions#ale#enabled = 1
-
-let g:ale_set_loclist = 1
-let g:ale_set_quickfix = 0
 
 " key mapping for Gundo
 nnoremap <F5> :GundoToggle<CR>
@@ -427,9 +467,18 @@ endfunction
 
 " -- extensions --
 
-let g:coc_global_extensions = [ 'coc-yank' ]
+let g:coc_global_extensions = [ 'coc-yank', 'coc-highlight' ]
 
-nnoremap <silent> <space>y :<C-u>CocList -A --normal yank<cr>
+let g:coc_filetype_map = {
+      \ 'yaml.ansible': 'yaml',
+      \ }
+
+let g:coc_fzf_preview = ''
+let g:coc_fzf_opts = []
+
+nnoremap <silent> <space>y :<C-u>CocFzfList yank<cr>
+
+autocmd CursorHold * silent call CocActionAsync('highlight')
 
 let g:airline#extensions#coc#enabled = 1
 
@@ -484,13 +533,6 @@ cnoremap %% <C-R>=expand('%:h').'/'<cr>
 " copy current file path to the system clipboard
 nmap <leader>cfp :let @* = expand("%")<CR>
 
-" == Highlight current line for graphical VIM <-- THIS SLOWED THINGS DOWN!
-" set cul
-"hi CursorLine term=none cterm=none ctermbg=3
-
-" Cursorline highlighting
-let g:conoline_auto_enable = 0
-
 " edit this file!
 nnoremap <leader>ev :tabnew ~/.vim/vimrc<cr>
 " edit bundles
@@ -543,7 +585,7 @@ let g:EasyMotion_smartcase = 1
 " END - EasyMotion configuration
 " --------------------------------------------------------------------------------
 
-" Enable caamel case movement motions
+" Enable camel case movement motions
 call camelcasemotion#CreateMotionMappings('<leader>')
 
 " Replace current word in file
@@ -562,6 +604,7 @@ nnoremap <leader>gca :Git commit --amend<CR>
 nnoremap <leader>gb :Git blame<CR>
 nnoremap <leader>gd :Gdiffsplit<CR>
 nnoremap <leader>gr :Gread<CR>
+nnoremap <leader>grm :Gread master:%<CR> " checkout this file from master
 nnoremap <leader>gw :Gwrite<CR>
 nnoremap <leader>gl :BCommits<CR>
 nnoremap <leader>gL :Commits<CR>
@@ -574,6 +617,12 @@ nnoremap <leader>grh :! git reset .<CR> " git reset head -- unstages everything
 
 " mnemonic -- git 'pull request' to finish up a PR
 nnoremap <leader>gpr :! git push -u origin $(git rev-parse --abbrev-ref HEAD) && hub pull-request --no-edit -o<CR>
+
+" Git messenger configuration
+let g:git_messenger_no_default_mappings = v:true
+let g:git_messenger_include_diff        = "curent"
+let g:git_messenger_always_into_popup   = v:true
+nnoremap <space>g :<C-u>GitMessenger<CR>
 
 " GitV configuration
 let g:Gitv_WipeAllOnClose = 1
@@ -590,9 +639,6 @@ vnoremap . :normal .<CR>
 
 " use the @q macro over a visual range
 vnoremap @q :normal @q<CR>
-
-" enable matching
-runtime macros/matchit.vim
 
 " format json
 nnoremap <leader>jpp :%!python -m json.tool<CR>
@@ -646,9 +692,8 @@ endif
 
 " Comment to the right
 nmap gcr :TCommentRight<CR>
-
 " Inline comment selection
-vmap gci :TCommentInline<CR>
+vmap gcl :TCommentInline<CR>
 
 " Persistent undo
 set undofile
@@ -664,16 +709,6 @@ vmap <Leader>aw :EasyAlign -// {'ig': []}<Left><Left><Left><Left><Left><Left><Le
 " https://github.com/justinmk/vim-sneak/issues/41
 " https://github.com/justinmk/vim-sneak/issues/52
 " nnoremap ; :
-
-" Gist configuration
-let g:gist_detect_filetype         = 1
-let g:gist_show_privates           = 1
-let g:gist_post_private            = 1
-let g:gist_update_on_write         = 2 " Only :w! updates a gist.
-let g:gist_open_browser_after_post = 1
-
-" investigate.vim
-let g:investigate_use_dash=1
 
 " toggle quickfix/location list
 let g:toggle_list_no_mappings=1

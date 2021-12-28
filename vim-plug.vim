@@ -13,17 +13,16 @@ call plug#begin()
 
 " Colors
 Plug 'godlygeek/csapprox'
-Plug 'joshdick/onedark.vim'
-Plug 'drewtempelmeyer/palenight.vim'
 Plug 'dracula/vim', { 'as': 'dracula' }
-Plug 'mhartington/oceanic-next'
-Plug 'sonph/onehalf', { 'rtp': 'vim' }
-Plug 'NLKNguyen/papercolor-theme'
+Plug 'sainnhe/sonokai'
 
 " Git and related
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-rhubarb'
 Plug 'gregsexton/gitv'
+Plug 'rhysd/git-messenger.vim'
+Plug 'airblade/vim-gitgutter'
+
 
 " Buffer/file browsing
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --bin' }
@@ -45,7 +44,6 @@ Plug 'gabrielelana/vim-markdown'
 Plug 'b4b4r07/vim-hcl'
 
 " UI enhancements
-Plug 'vim-scripts/quickfixsigns'
 Plug 'nathanaelkane/vim-indent-guides'
 Plug 'miyakogi/conoline.vim'
 Plug 'szw/vim-maximizer'
@@ -66,8 +64,7 @@ Plug 'sk1418/Join'
 Plug 'junegunn/rainbow_parentheses.vim'
 
 " Better matching with %
-Plug 'vim-scripts/matchit.zip'
-Plug 'vim-scripts/ruby-matchit'
+Plug 'andymass/vim-matchup'
 
 " Commenting, auto-completion, general syntax
 Plug 'vim-scripts/tComment'
@@ -151,6 +148,7 @@ let os=substitute(system('uname'), '\n', '', '')
 if os == 'Darwin' || os == 'Mac'
   " completion
   Plug 'neoclide/coc.nvim', {'branch': 'release'}
+  Plug 'antoinemadec/coc-fzf'
 
   " Look up stuff in Dash / the internets
   Plug 'Keithbsmiley/investigate.vim'
@@ -190,6 +188,7 @@ call plug#end()
 if !filereadable(s:pluggedTracker)
   echo "Installing Plugins for first time, please ignore key map error messages"
   echo ""
+
   :PlugInstall
   :call system('touch ' . s:pluggedTracker)
 endif
