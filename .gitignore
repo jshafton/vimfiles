@@ -20,3 +20,5 @@ bundle/
 !bundle/vundle/
 plugged/
 .undo/*
+plugin/
+pack/
