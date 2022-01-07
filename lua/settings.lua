@@ -54,11 +54,9 @@ opt.lazyredraw = true     -- faster scrolling
 opt.synmaxcol = 240       -- max column for syntax highlight
 
 -----------------------------------------------------------
--- Colorscheme
+-- Colors
 -----------------------------------------------------------
 opt.termguicolors = true      -- enable 24-bit RGB colors
-opt.background = 'dark'
-cmd [[colorscheme sonokai]]
 
 -----------------------------------------------------------
 -- Tabs, indent
