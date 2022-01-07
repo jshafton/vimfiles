@@ -12,13 +12,13 @@ local opt = vim.opt         		-- global/buffer/windows-scoped options
 -----------------------------------------------------------
 -- General
 -----------------------------------------------------------
-g.mapleader = ','             -- change leader to a comma
-opt.mouse = 'a'               -- enable mouse support
-opt.clipboard = ''            -- copy/paste to system clipboard
-opt.backup = false            -- don't save backup files
-opt.swapfile = false          -- don't use swapfile
-opt.undofile = true           -- keep track of undo history
-opt.undodir = '~/.vim/.undo'  -- keep undo files in a specific user dir
+g.mapleader = ','                   -- change leader to a comma
+opt.mouse = 'a'                     -- enable mouse support
+opt.clipboard = ''                  -- copy/paste to system clipboard
+opt.backup = false                  -- don't save backup files
+opt.swapfile = false                -- don't use swapfile
+opt.undofile = true                 -- keep track of undo history
+cmd [[set undodir=~/.vim/.undo]]    -- keep undo files in a specific user dir
 
 -----------------------------------------------------------
 -- Neovim UI
@@ -35,6 +35,7 @@ opt.smartcase = true          -- ignore lowercase for the whole pattern
 opt.linebreak = true          -- wrap on word boundary
 opt.wrap = false              -- don't wrap by default
 opt.list = false              -- don't show list chars
+opt.gdefault = true           -- default to /g global subst (rather than first instance)
 
 -- -- highlight on yank
 exec([[
@@ -56,6 +57,7 @@ opt.synmaxcol = 240       -- max column for syntax highlight
 -- Colorscheme
 -----------------------------------------------------------
 opt.termguicolors = true      -- enable 24-bit RGB colors
+opt.background = 'dark'
 cmd [[colorscheme sonokai]]
 
 -----------------------------------------------------------

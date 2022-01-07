@@ -95,6 +95,7 @@ map('n', '<leader>cfp', '<cmd>let @* = expand("%")<CR>', default_opts)
 map('n', 'n',  'nzz', default_opts)
 map('n', 'N',  'Nzz', default_opts)
 map('n', '*',  '*zz', default_opts)
+map('n', '#',  '*zz', default_opts)
 map('n', 'g;', 'g;zz', default_opts)
 map('n', '}',  '}zz', default_opts)
 map('n', '{',  '{zz', default_opts)
@@ -104,25 +105,36 @@ map('v', '.', '<cmd>normal .<CR>', default_opts)
 -- use the @q macro over a visual range
 map('v', '@q', '<cmd>normal @q<CR>', default_opts)
 
+-- map Q to something useful
+map('n', 'Q', '@@', default_opts)
+map('v', 'Q', ':normal @@<CR>', default_opts)
+
 -- easy window focus (closes all others)
 map('n', '<Leader>F', '<C-W>o', default_opts)
+
+-- replace current word in file
+map('n', '<Leader>R', ':%s/<C-R><C-W>/', { silent = false })
 
 -----------------------------------------------------------
 -- Plugin shortcuts:
 -----------------------------------------------------------
 
 -- vim-maximizer
+-----------------------------------------------------------
 map('n', '<leader>f', '<cmd>MaximizerToggle<CR>', default_opts)
 map('v', '<leader>f', '<cmd>MaximizerToggle<CR>gv', default_opts)
 
 -- nvim-tree
+-----------------------------------------------------------
 map('n', 'gnt', '<cmd>NvimTreeToggle<CR>', default_opts)
 map('n', 'gnf', '<cmd>NvimTreeFindFile<CR>', default_opts)
 
 -- rnvimr
+-----------------------------------------------------------
 map('n', '-', '<cmd>RnvimrToggle<CR>', default_opts)
 
 -- nvim-telescope
+-----------------------------------------------------------
 map('n', '<C-p>', '<cmd>Telescope git_files<CR>', default_opts)
 map('n', '∫',     '<cmd>Telescope buffers<CR>', default_opts) -- alt-b
 map('n', '∑',     '<cmd>Telescope tele_tabby list<CR>', default_opts) -- alt-w "window"
@@ -136,6 +148,7 @@ map('n', 'µ',     '<cmd>Telescope keymaps<CR>', default_opts) -- alt-m "maps"
 map('n', '˙',     '<cmd>Telescope help_tags<CR>', default_opts) -- alt-h "help tags"
 
 -- git/fugitive
+-----------------------------------------------------------
 map('n', '<leader>gs',   '<cmd>Git<CR>', default_opts)
 map('n', '<leader>gc',   '<cmd>Git commit<CR>', default_opts)
 map('n', '<leader>gca',  '<cmd>Git commit --amend<CR>', default_opts)
@@ -158,18 +171,45 @@ map('n', '<leader>gy',   '<cmd>lua require("gitlinker").get_buf_range_url("n")<C
 map('v', '<leader>gy',   '<cmd>lua require("gitlinker").get_buf_range_url("v")<CR><ESC>', { silent = false })  -- copy github link
 
 -- toggleterm
+-----------------------------------------------------------
 map('n', '<leader>gz', '<cmd>lua _lazygit_toggle()<CR>', default_opts)
 
 -- unimpared
+-----------------------------------------------------------
 map('n', '<C-[>', 'yoh', { silent = true }) -- toggle highlight
-
--- tcomment
-map('n', '÷', 'gcc', { silent = true }) -- toggle comment
-map('v', '÷', 'gcc', { silent = true }) -- toggle comment
+-- bubble single lines (alt-j/alt-k)
+map('n', '˚', '[e', { silent = true })
+map('n', '∆', ']e', { silent = true })
+-- bubble multiple lines
+map('v', '˚', '[egv', { silent = true })
+map('v', '∆', ']egv', { silent = true })
+-- center focus after moving TODO: not working for some reason
+local unimpaired_ops = { "c", "n" }
+for _, a in ipairs(unimpaired_ops) do
+  map('n', '[' .. a, '[' .. a .. 'zz', { noremap = false, silent = false })
+  map('n', ']' .. a, ']' .. a .. 'zz', { noremap = false, silent = false })
+end
 
 -- tabby
+-----------------------------------------------------------
 map('n', '<leader>tr', ':TabRename ', { silent = false })
 
 -- easy-align
+-----------------------------------------------------------
 map('n', 'ga',      '<Plug>(EasyAlign)', { silent = false })
 map('v', '<Enter>', '<Plug>(LiveEasyAlign)', { silent = false })
+
+-- open-browser
+-----------------------------------------------------------
+map('n', 'gx', '<Plug>(openbrowser-open)', { silent = false })
+map('v', 'gx', '<Plug>(openbrowser-open)', { silent = false })
+
+-- hop
+-----------------------------------------------------------
+map('n', 's', "<cmd>HopChar1<CR>", {})
+map('v', 'z', "<cmd>HopChar1<CR>", {})
+-- set up hop actions for operators
+local actions = { "d", "c", "<", ">", "y" }
+for _, a in ipairs(actions) do
+    map('', a .. 'z', a .. "<cmd>lua require'hop'.hint_char1()<cr>", {})
+end

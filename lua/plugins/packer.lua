@@ -23,7 +23,7 @@ cmd([[
 ]])
 
 -- Add packages
-return packer.startup(function()
+return packer.startup({function()
   use 'wbthomason/packer.nvim' -- packer can manage itself
 
   -- Colors
@@ -58,6 +58,16 @@ return packer.startup(function()
       require('neoclip').setup()
     end
   }
+  use {
+    'phaazon/hop.nvim',
+    branch = 'v1', -- optional but strongly recommended
+    config = function()
+      -- you can configure Hop the way you like here; see :h hop-config
+      require'hop'.setup {
+        char2_fallback_key = '<CR>'
+      }
+    end
+  }
 
   -- UI enhancements
   use 'szw/vim-maximizer'
@@ -76,9 +86,11 @@ return packer.startup(function()
   use 'tpope/vim-endwise'
   use 'tpope/vim-repeat'
   use 'vim-scripts/ReplaceWithRegister'
+  use 'windwp/nvim-autopairs'
+  use 'axelf4/vim-strip-trailing-whitespace'
 
   -- commenting, auto-completion, general syntax
-  use 'vim-scripts/tComment'
+  use 'numToStr/Comment.nvim'
 
   -- Text selection
   use 'kana/vim-textobj-user'
@@ -122,7 +134,47 @@ return packer.startup(function()
     config = function() require('nvim-gps').setup() end
   }
 
+  -- Completion
+  use { 'ms-jpq/coq_nvim', branch = 'coq', run = ':COQdeps' }
+  -- use { 'hrsh7th/nvim-cmp' }
+  -- use { 'hrsh7th/cmp-nvim-lsp',  requires = 'hrsh7th/nvim-cmp' }
+  -- use { 'hrsh7th/cmp-buffer',    requires = 'hrsh7th/nvim-cmp' }
+  -- use { 'hrsh7th/cmp-path',      requires = 'hrsh7th/nvim-cmp' }
+  -- use { 'hrsh7th/cmp-cmdline',   requires = 'hrsh7th/nvim-cmp' }
+
   -- Formatting
   use { 'lukas-reineke/indent-blankline.nvim' }
   use { 'junegunn/vim-easy-align' }
-end)
+  use { 'tpope/vim-abolish' }
+
+  -- Coding, syntax highlighting
+  use { 'pearofducks/ansible-vim',
+    setup = function()
+      vim.g.ansible_unindent_after_newline = 1
+      vim.g.ansible_yamlKeyName = 'yamlKey'
+      vim.g.ansible_attribute_highlight = "ab"
+      vim.g.ansible_name_highlight = 'd'
+      vim.g.ansible_extra_keywords_highlight = 1
+      vim.g.ansible_extra_keywords_highlight_group = 'Structure'
+      vim.g.ansible_normal_keywords_highlight = 'Structure'
+      vim.g.ansible_loop_keywords_highlight = 'Constant'
+      -- vim.g.ansible_template_syntaxes = { '*.rb.j2' = 'ruby' }
+      vim.g.ansible_ftdetect_filename_regex = '(configure_|defaults|vars|files|templates|handlers|meta).*\\.ya?ml$'
+    end
+  }
+
+  -- open links in browser
+  use 'tyru/open-browser.vim'
+
+  -- random shell helper commands
+  use 'tpope/vim-eunuch'
+
+  -- window management
+  use 'christoomey/vim-tmux-navigator'
+end,
+config = {
+  display = {
+    open_fn = require('packer.util').float,
+  }
+}
+})
