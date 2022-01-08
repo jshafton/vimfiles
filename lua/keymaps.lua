@@ -209,7 +209,12 @@ map('v', 'gx', '<Plug>(openbrowser-open)', { silent = false })
 map('n', 's', "<cmd>HopChar1<CR>", {})
 map('v', 'z', "<cmd>HopChar1<CR>", {})
 -- set up hop actions for operators
-local actions = { "d", "c", "<", ">", "y" }
+local actions = { "c", "<", ">", "y" }
 for _, a in ipairs(actions) do
     map('', a .. 'z', a .. "<cmd>lua require'hop'.hint_char1()<cr>", {})
 end
+
+
+-- camelcasemotion
+-----------------------------------------------------------
+cmd [[ call camelcasemotion#CreateMotionMappings('<leader>') ]]
