@@ -133,13 +133,38 @@ return packer.startup({function()
 
   -- LSP / tree-sitter
   use { 'nvim-treesitter/nvim-treesitter', run = ':TSUpdate' }
-  use { 'neovim/nvim-lspconfig' }
+  use { 'neovim/nvim-lspconfig' } -- TODO: not working, no diagnostics
+  use {
+    'jose-elias-alvarez/null-ls.nvim',
+    requires = 'nvim-lua/plenary.nvim',
+    config = function()
+      -- TODO: move this to separate file, add appropriate checks
+      require('null-ls').setup {
+        sources = {
+          require("null-ls").builtins.diagnostics.shellcheck
+        }
+      }
+    end
+  }
   use { 'p00f/nvim-ts-rainbow' }
   use {
     'SmiteshP/nvim-gps',
     requires = 'nvim-treesitter/nvim-treesitter',
     config = function() require('nvim-gps').setup() end
   }
+  use {
+    "folke/trouble.nvim",
+    requires = "kyazdani42/nvim-web-devicons",
+    config = function()
+      -- TODO: move this to separate file, configure
+      require("trouble").setup {
+        -- your configuration comes here
+        -- or leave it empty to use the default settings
+        -- refer to the configuration section below
+      }
+    end
+  }
+  use 'folke/lsp-colors.nvim'
 
   -- Completion
   use { 'ms-jpq/coq_nvim', branch = 'coq', run = ':COQdeps' }

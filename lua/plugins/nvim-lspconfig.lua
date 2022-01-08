@@ -10,3 +10,5 @@ map('n', '<space>h', '<cmd>lua vim.lsp.buf.hover()<CR>', default_opts)
 map('n', '<space>m', '<cmd>lua vim.lsp.buf.rename()<CR>', default_opts)
 map('n', '<space>r', '<cmd>lua vim.lsp.buf.references()<CR>', default_opts)
 map('n', '<space>s', '<cmd>lua vim.lsp.buf.document_symbol()<CR>', default_opts)
+
+require('lspconfig').bashls.setup{}
