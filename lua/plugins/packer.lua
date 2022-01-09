@@ -11,9 +11,6 @@
 
 
 local cmd = vim.cmd
-cmd [[packadd packer.nvim]]
-
-local packer = require 'packer'
 
 cmd([[
   augroup packer_user_config
@@ -30,7 +27,7 @@ if fn.empty(fn.glob(install_path)) > 0 then
 end
 
 -- Add packages
-return packer.startup({function()
+return require('packer').startup({function()
   use 'wbthomason/packer.nvim' -- packer can manage itself
 
   -- Colors
