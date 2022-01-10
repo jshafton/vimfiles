@@ -133,15 +133,7 @@ return require('packer').startup({function()
   use { 'neovim/nvim-lspconfig' } -- TODO: not working, no diagnostics
   use {
     'jose-elias-alvarez/null-ls.nvim',
-    requires = 'nvim-lua/plenary.nvim',
-    config = function()
-      -- TODO: move this to separate file, add appropriate checks
-      require('null-ls').setup {
-        sources = {
-          require("null-ls").builtins.diagnostics.shellcheck
-        }
-      }
-    end
+    requires = 'nvim-lua/plenary.nvim'
   }
   use { 'p00f/nvim-ts-rainbow' }
   use {
