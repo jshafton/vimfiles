@@ -173,6 +173,7 @@ map('v', '<leader>gy',   '<cmd>lua require("gitlinker").get_buf_range_url("v")<C
 -- toggleterm
 -----------------------------------------------------------
 map('n', '<leader>gz', '<cmd>lua _lazygit_toggle()<CR>', default_opts)
+map('n', '\\', '<cmd>lua _lazygit_toggle()<CR>', default_opts)
 
 -- unimpared
 -----------------------------------------------------------
