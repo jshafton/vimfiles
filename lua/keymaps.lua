@@ -63,8 +63,8 @@ map('', 'p', 'pv`]=`]', { noremap = false })
 map('', 'P', 'Pv`]=`]', { noremap = false })
 
 -- option p/P to paste raw
-map('n', 'π', 'p', default_opts)
-map('n', '∏', 'P', default_opts)
+map('n', 'π', 'p', { noremap = false })
+map('n', '∏', 'P', { noremap = false })
 
 -- yank to end of line
 map('n', 'Y', 'y$', { noremap = false })
@@ -114,6 +114,11 @@ map('n', '<Leader>F', '<C-W>o', default_opts)
 
 -- replace current word in file
 map('n', '<Leader>R', ':%s/<C-R><C-W>/', { silent = false })
+
+-- duplicate line (alt-d)
+map('n', '∂', 'yyπ', { noremap = false, silent = false })
+-- duplicate text (alt-d)
+map('v', '∂', 'y`>π', { noremap = false, silent = false })
 
 -----------------------------------------------------------
 -- Plugin shortcuts:
@@ -203,6 +208,7 @@ map('v', '<Enter>', '<Plug>(LiveEasyAlign)', { silent = false })
 -----------------------------------------------------------
 map('n', 'gx', '<Plug>(openbrowser-open)', { silent = false })
 map('v', 'gx', '<Plug>(openbrowser-open)', { silent = false })
+map('v', 'gs', '<Plug>(openbrowser-smart-search)', { silent = false })
 
 -- hop
 -----------------------------------------------------------
@@ -213,7 +219,6 @@ local actions = { "c", "<", ">", "y" }
 for _, a in ipairs(actions) do
     map('', a .. 'z', a .. "<cmd>lua require'hop'.hint_char1()<cr>", {})
 end
-
 
 -- camelcasemotion
 -----------------------------------------------------------
