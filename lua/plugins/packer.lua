@@ -96,24 +96,16 @@ return require('packer').startup({function()
   -- commenting, auto-completion, general syntax
   use 'numToStr/Comment.nvim'
 
-  -- Text selection
-  use 'kana/vim-textobj-user'
   -- ar, ir
   use 'nelstrom/vim-textobj-rubyblock'
-  -- aa, ia
-  use 'vim-scripts/argtextobj.vim'
   -- ae, ie
-  use 'kana/vim-textobj-entire'
+  use { 'kana/vim-textobj-entire', requires = 'kana/vim-textobj-user' }
   -- a/, i/, a?, i?
-  use 'kana/vim-textobj-lastpat'
-  -- al, il
-  use 'kana/vim-textobj-line'
+  use { 'kana/vim-textobj-lastpat', requires = 'kana/vim-textobj-user' }
   -- ai, ii, aI, iI
-  use 'kana/vim-textobj-indent'
-  -- a_, i_
-  use 'lucapette/vim-textobj-underscore'
-  -- looser searching for text objects
-  use 'paradigm/TextObjectify'
+  use { 'kana/vim-textobj-indent', requires = 'kana/vim-textobj-user' }
+  -- https://github.com/wellle/targets.vim/blob/master/cheatsheet.md
+  use 'wellle/targets.vim'
 
   -- Movement through camel case and snake case words
   use 'bkad/CamelCaseMotion'
