@@ -138,23 +138,30 @@ map('n', 'gnf', '<cmd>NvimTreeFindFile<CR>', default_opts)
 -----------------------------------------------------------
 map('n', '-', '<cmd>RnvimrToggle<CR>', default_opts)
 
--- nvim-telescope
+-- fzf-lua
 -----------------------------------------------------------
-map('n', '<C-p>', '<cmd>Telescope git_files<CR>', default_opts)
-map('n', '∫',     '<cmd>Telescope buffers<CR>', default_opts) -- alt-b
-map('n', '∑',     '<cmd>Telescope tele_tabby list<CR>', default_opts) -- alt-w "window"
-map('n', '¬',     '<cmd>Telescope current_buffer_fuzzy_find<CR>', default_opts) -- alt-l
-map('n', '<C-f>', '<cmd>Telescope live_grep<CR>', default_opts)
-map('n', 'ø',     '<cmd>Telescope oldfiles<CR>', default_opts) -- alt-o "old files"
-map('n', '√',     '<cmd>Telescope neoclip<CR>', default_opts) -- alt-v for paste
-map('n', 'ç',     '<cmd>lua require("plugins/nvim-telescope-functions").git_bcommits()<CR>', default_opts) -- alt-c "changes"
-map('n', 'Ç',     '<cmd>Telescope commands<CR>', default_opts) -- alt-shift-c "commands"
-map('n', 'µ',     '<cmd>Telescope keymaps<CR>', default_opts) -- alt-m "maps"
-map('n', '˙',     '<cmd>Telescope help_tags<CR>', default_opts) -- alt-h "help tags"
+map('n', '<C-p>',      '<cmd>FzfLua files<CR>', default_opts)
+map('n', '∫',          '<cmd>FzfLua buffers<CR>', default_opts) -- alt-b
+map('n', '∑',          '<cmd>FzfLua tabs<CR>', default_opts) -- alt-w "window"
+map('n', '¬',          '<cmd>FzfLua blines<CR>', default_opts) -- alt-l
+map('n', '<C-f>',      '<cmd>FzfLua grep_project<CR>', default_opts)
+map('n', 'ø',          '<cmd>FzfLua oldfiles<CR>', default_opts) -- alt-o "old files"
+map('n', '√',          '<cmd>lua require("neoclip.fzf")()<CR>', default_opts) -- alt-v for paste
+map('n', 'Ç',          '<cmd>FzfLua git_bcommits<CR>', default_opts) -- alt-shift-c "changes"
+map('n', 'ç',          '<cmd>FzfLua commands<CR>', default_opts) -- alt-c "commands"
+map('n', 'µ',          '<cmd>FzfLua keymaps<CR>', default_opts) -- alt-m "maps"
+map('n', '˙',          '<cmd>FzfLua help_tags<CR>', default_opts) -- alt-h "help tags"
+map('n', '<space>r',   '<cmd>FzfLua grep_cword<CR>', default_opts) -- "references"
+map('n', 'ƒ',          '<cmd>FzfLua filetypes<CR>', default_opts) -- alt-f "file types"
+map('n', '<leader>gs', '<cmd>FzfLua git_status<CR>', default_opts)
+map('n', '<space>a',   '<cmd>FzfLua lsp_code_actions<CR>', default_opts)
+map('n', '<space>d',   '<cmd>FzfLua lsp_definitions<CR>', default_opts)
+map('n', '<space>R',   '<cmd>FzfLua lsp_referencess<CR>', default_opts)
+map('n', '<space>s',   '<cmd>FzfLua lsp_document_symbols<CR>', default_opts)
 
 -- git/fugitive
 -----------------------------------------------------------
-map('n', '<leader>gs',   '<cmd>Git<CR>', default_opts)
+-- map('n', '<leader>gs',   '<cmd>Git<CR>', default_opts)
 map('n', '<leader>gc',   '<cmd>Git commit<CR>', default_opts)
 map('n', '<leader>gca',  '<cmd>Git commit --amend<CR>', default_opts)
 map('n', '<leader>gb',   '<cmd>Git blame<CR>', default_opts)
@@ -175,9 +182,21 @@ map('n', '<space>g',     '<cmd>GitMessenger<CR>', default_opts)
 map('n', '<leader>gy',   '<cmd>lua require("gitlinker").get_buf_range_url("n")<CR>', { silent = false })       -- copy github link
 map('v', '<leader>gy',   '<cmd>lua require("gitlinker").get_buf_range_url("v")<CR><ESC>', { silent = false })  -- copy github link
 
+-- LSP
+-----------------------------------------------------------
+map('n', '<space>,', '<cmd>lua vim.diagnostic.goto_prev()<CR>', default_opts)
+map('n', '<space>;', '<cmd>lua vim.diagnostic.goto_next()<CR>', default_opts)
+map('n', '<space>f', '<cmd>lua vim.lsp.buf.formatting()<CR>', default_opts)
+map('n', '<space>h', '<cmd>lua vim.lsp.buf.hover()<CR>', default_opts)
+map('n', '<space>m', '<cmd>lua vim.lsp.buf.rename()<CR>', default_opts)
+
+-- Trouble
+-----------------------------------------------------------
+map('n', '†', '<cmd>TroubleToggle<CR>', default_opts)
+
 -- toggleterm
 -----------------------------------------------------------
-map('n', '<leader>gz', '<cmd>lua _lazygit_toggle()<CR>', default_opts)
+map('n', '<leader>gz', '<cmd>lua _LazyGit_toggle()<CR>', default_opts)
 
 -- unimpared
 -----------------------------------------------------------
@@ -189,11 +208,11 @@ map('n', '∆', ']e', { silent = true })
 map('v', '˚', '[egv', { silent = true })
 map('v', '∆', ']egv', { silent = true })
 -- center focus after moving TODO: not working for some reason
-local unimpaired_ops = { "c", "n" }
-for _, a in ipairs(unimpaired_ops) do
-  map('n', '[' .. a, '[' .. a .. 'zz', { noremap = false, silent = false })
-  map('n', ']' .. a, ']' .. a .. 'zz', { noremap = false, silent = false })
-end
+-- local unimpaired_ops = { "c", "n" }
+-- for _, a in ipairs(unimpaired_ops) do
+--   map('n', '[' .. a, '[' .. a .. 'zz', { noremap = false, silent = false })
+--   map('n', ']' .. a, ']' .. a .. 'zz', { noremap = false, silent = false })
+-- end
 
 -- tabby
 -----------------------------------------------------------
@@ -212,13 +231,11 @@ map('v', 'gs', '<Plug>(openbrowser-smart-search)', { silent = false })
 
 -- hop
 -----------------------------------------------------------
-map('n', 's', "<cmd>HopChar1<CR>", {})
-map('v', 'z', "<cmd>HopChar1<CR>", {})
--- set up hop actions for operators
-local actions = { "c", "<", ">", "y" }
-for _, a in ipairs(actions) do
-    map('', a .. 'z', a .. "<cmd>lua require'hop'.hint_char1()<cr>", {})
-end
+map('n', 's',  "<cmd>HopChar2<CR>", {})
+map('v', 'z',  "<cmd>HopChar2<CR>", {})
+map('o', 'z',  "<cmd>HopChar2<CR>", {})
+map('n', 'gl', "<cmd>HopLine<CR>", {}) -- "Goto Line"
+map('n', 'gw', "<cmd>HopWord<CR>", {}) -- "Goto Word"
 
 -- camelcasemotion
 -----------------------------------------------------------

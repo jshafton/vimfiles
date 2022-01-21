@@ -1,14 +1,46 @@
-local map = vim.api.nvim_set_keymap
-local default_opts = { noremap = true, silent = true }
+local runtime_path = vim.split(package.path, ';')
+table.insert(runtime_path, "lua/?.lua")
+table.insert(runtime_path, "lua/?/init.lua")
 
-map('n', '<space>,', '<cmd>lua vim.lsp.diagnostic.goto_prev()<CR>', default_opts)
-map('n', '<space>;', '<cmd>lua vim.lsp.diagnostic.goto_next()<CR>', default_opts)
-map('n', '<space>a', '<cmd>lua vim.lsp.buf.code_action()<CR>', default_opts)
-map('n', '<space>d', '<cmd>lua vim.lsp.buf.definition()<CR>', default_opts)
-map('n', '<space>f', '<cmd>lua vim.lsp.buf.formatting()<CR>', default_opts)
-map('n', '<space>h', '<cmd>lua vim.lsp.buf.hover()<CR>', default_opts)
-map('n', '<space>m', '<cmd>lua vim.lsp.buf.rename()<CR>', default_opts)
-map('n', '<space>r', '<cmd>lua vim.lsp.buf.references()<CR>', default_opts)
-map('n', '<space>s', '<cmd>lua vim.lsp.buf.document_symbol()<CR>', default_opts)
+require('lspconfig').sumneko_lua.setup {
+  settings = {
+    Lua = {
+      runtime = {
+        -- Tell the language server which version of Lua you're using (most likely LuaJIT in the case of Neovim)
+        version = 'LuaJIT',
+        -- Setup your lua path
+        path = runtime_path,
+      },
+      diagnostics = {
+        -- Get the language server to recognize the `vim` global
+        globals = {'vim','use'},
+      },
+      workspace = {
+        -- Make the server aware of Neovim runtime files
+        library = vim.api.nvim_get_runtime_file("", true),
+        ignoreDir = {
+          '.undo',
+          '.git'
+        },
+        useGitIgnore = true
+      },
+      -- Do not send telemetry data containing a randomized but unique identifier
+      telemetry = {
+        enable = false,
+      },
+    },
+  },
+}
 
+require('lspconfig').tsserver.setup{}
 require('lspconfig').bashls.setup{}
+-- TODO: only do this for non-ansible files
+require('lspconfig').yamlls.setup{}
+require('lspconfig').dockerls.setup{}
+-- TODO: can this work for ansible 1.9.6?
+-- require('lspconfig').ansiblels.setup{}
+require'lspconfig'.solargraph.setup {
+  flags = {
+    debounce_text_changes = 150,
+  }
+}

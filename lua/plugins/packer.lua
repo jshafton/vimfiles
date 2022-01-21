@@ -22,6 +22,8 @@ cmd([[
 -- Boostrap: install packer if not installed
 local fn = vim.fn
 local install_path = fn.stdpath('data')..'/site/pack/packer/start/packer.nvim'
+local packer_bootstrap
+
 if fn.empty(fn.glob(install_path)) > 0 then
   packer_bootstrap = fn.system({'git', 'clone', '--depth', '1', 'https://github.com/wbthomason/packer.nvim', install_path})
 end
@@ -31,7 +33,6 @@ return require('packer').startup({function()
   use 'wbthomason/packer.nvim' -- packer can manage itself
 
   -- Colors
-  use 'godlygeek/csapprox'
   use 'sainnhe/sonokai'
 
   -- Buffer / file browsing
@@ -45,18 +46,15 @@ return require('packer').startup({function()
   }
   use { 'kevinhwang91/rnvimr' }
 
-  -- Telescope / finding
-  use {
-    'nvim-telescope/telescope.nvim',
-    requires = { {'nvim-lua/plenary.nvim'}, {'BurntSushi/ripgrep'} }
+  use { 'ibhagwan/fzf-lua',
+    -- optional for icon support
+    requires = { 'kyazdani42/nvim-web-devicons' }
   }
-  use {'nvim-telescope/telescope-fzf-native.nvim', run = 'make' }
-  use {'TC72/telescope-tele-tabby.nvim' }
   use {
     "AckslD/nvim-neoclip.lua",
     requires = {
-      -- {'tami5/sqlite.lua', module = 'sqlite'},
-      {'nvim-telescope/telescope.nvim'}
+      {'tami5/sqlite.lua', module = 'sqlite'},
+      {'ibhagwan/fzf-lua'}
     },
     config = function()
       require('neoclip').setup()
@@ -92,16 +90,15 @@ return require('packer').startup({function()
   use 'vim-scripts/ReplaceWithRegister'
   use 'windwp/nvim-autopairs'
   use 'axelf4/vim-strip-trailing-whitespace'
+  use 'dhruvasagar/vim-table-mode'
 
   -- commenting, auto-completion, general syntax
   use 'numToStr/Comment.nvim'
 
   -- ar, ir
-  use 'nelstrom/vim-textobj-rubyblock'
+  use { 'nelstrom/vim-textobj-rubyblock', ft = { 'ruby' } }
   -- ae, ie
   use { 'kana/vim-textobj-entire', requires = 'kana/vim-textobj-user' }
-  -- a/, i/, a?, i?
-  use { 'kana/vim-textobj-lastpat', requires = 'kana/vim-textobj-user' }
   -- ai, ii, aI, iI
   use { 'kana/vim-textobj-indent', requires = 'kana/vim-textobj-user' }
   -- https://github.com/wellle/targets.vim/blob/master/cheatsheet.md
@@ -122,7 +119,7 @@ return require('packer').startup({function()
 
   -- LSP / tree-sitter
   use { 'nvim-treesitter/nvim-treesitter', run = ':TSUpdate' }
-  use { 'neovim/nvim-lspconfig' } -- TODO: not working, no diagnostics
+  use { 'neovim/nvim-lspconfig' }
   use {
     'jose-elias-alvarez/null-ls.nvim',
     requires = 'nvim-lua/plenary.nvim'
@@ -135,20 +132,13 @@ return require('packer').startup({function()
   }
   use {
     "folke/trouble.nvim",
-    requires = "kyazdani42/nvim-web-devicons",
-    config = function()
-      -- TODO: move this to separate file, configure
-      require("trouble").setup {
-        -- your configuration comes here
-        -- or leave it empty to use the default settings
-        -- refer to the configuration section below
-      }
-    end
+    requires = "kyazdani42/nvim-web-devicons"
   }
   use 'folke/lsp-colors.nvim'
 
   -- Completion
   use { 'ms-jpq/coq_nvim', branch = 'coq', run = ':COQdeps' }
+  use { 'ms-jpq/coq.artifacts', branch = 'artifacts' }
   -- use { 'hrsh7th/nvim-cmp' }
   -- use { 'hrsh7th/cmp-nvim-lsp',  requires = 'hrsh7th/nvim-cmp' }
   -- use { 'hrsh7th/cmp-buffer',    requires = 'hrsh7th/nvim-cmp' }
@@ -156,25 +146,20 @@ return require('packer').startup({function()
   -- use { 'hrsh7th/cmp-cmdline',   requires = 'hrsh7th/nvim-cmp' }
 
   -- Formatting
-  use { 'lukas-reineke/indent-blankline.nvim' }
-  use { 'junegunn/vim-easy-align' }
-  use { 'tpope/vim-abolish' }
+  use 'lukas-reineke/indent-blankline.nvim'
+  use 'junegunn/vim-easy-align'
+  use 'tpope/vim-abolish'
 
-  -- Coding, syntax highlighting
-  use { 'pearofducks/ansible-vim',
-    setup = function()
-      vim.g.ansible_unindent_after_newline = 1
-      vim.g.ansible_yamlKeyName = 'yamlKey'
-      vim.g.ansible_attribute_highlight = "ab"
-      vim.g.ansible_name_highlight = 'd'
-      vim.g.ansible_extra_keywords_highlight = 1
-      vim.g.ansible_extra_keywords_highlight_group = 'Structure'
-      vim.g.ansible_normal_keywords_highlight = 'Structure'
-      vim.g.ansible_loop_keywords_highlight = 'Constant'
-      -- vim.g.ansible_template_syntaxes = { '*.rb.j2' = 'ruby' }
-      vim.g.ansible_ftdetect_filename_regex = '(configure_|defaults|vars|files|templates|handlers|meta).*\\.ya?ml$'
-    end
-  }
+  -- Specific languages
+  use 'robbles/logstash.vim'
+  use 'stephpy/vim-yaml'
+  use 'pearofducks/ansible-vim'
+  use 'zimbatm/haproxy.vim'
+  use 'darfink/vim-plist'
+  use 'kchmck/vim-coffee-script'
+
+  -- Look up stuff in Dash / the internets
+  use 'Keithbsmiley/investigate.vim'
 
   -- open links in browser
   use 'tyru/open-browser.vim'

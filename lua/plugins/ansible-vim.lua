@@ -44,7 +44,7 @@ vim.g.ansible_name_highlight = 'd'
 -- until, retries, delay.
 --
 -- Note: This option is enabled when set, and disabled when not set.
-vim.g.ansible_extra_keywords_highlight = 1
+vim.g.ansible_extra_keywords_highlight = true
 
 -- Accepts any syntax group name from :help E669 - e.g. Comment, Constant, Identifier
 --
@@ -60,7 +60,7 @@ vim.g.ansible_extra_keywords_highlight_group = 'Structure'
 -- import_tasks when changed_when failed_when block rescue always notify listen
 -- register action local_action post_tasks pre_tasks tasks handlers roles
 -- collections.
-vim.g.ansible_normal_keywords_highlight = 'Structure'
+vim.g.ansible_normal_keywords_highlight = 'Statement'
 
 -- Accepts any syntax group-name from :help E669 - e.g. Comment, Constant, Identifier
 --
@@ -68,7 +68,7 @@ vim.g.ansible_normal_keywords_highlight = 'Structure'
 --
 -- This option changes the highlight of all with_.+, loop, loop_control, until,
 -- retries and delay keywords.
-vim.g.ansible_loop_keywords_highlight = 'Constant'
+vim.g.ansible_loop_keywords_highlight = 'Statement'
 
 -- Accepts a dictionary in the form of 'regex-for-file': 'filetype'.
 --
@@ -77,11 +77,19 @@ vim.g.ansible_loop_keywords_highlight = 'Constant'
 --     automatically appended
 --
 -- All files ending in *.j2 that aren't matched will simply get the jinja2 filetype.
--- vim.g.ansible_template_syntaxes = { '*.rb.j2' = 'ruby' }
+vim.g.ansible_template_syntaxes = {
+  ["*.rb.j2"]         = "ruby",
+  ['*.conf.j2']       = 'conf',
+  ['*.haproxy.*.j2']  = 'haproxy',
+  ['*.logstash.*.j2'] = 'logstash',
+  ['*.json.j2']       = 'json',
+  ['*.sh.j2']         = 'sh',
+  ['*.ya?ml.j2']      = 'yaml'
+}
 
 -- Accepts a regex string that is used to match the filename to determine if
 -- the file should use the Ansible filetype
 --
 -- Can be used to avoid clashes with other files that are named the same - e.g.
 -- main.yaml used in github workflows by removing main from the regex
-vim.g.ansible_ftdetect_filename_regex = '\v(configure_|defaults|vars|files|templates|handlers|meta).*\\.ya?ml$'
+vim.g.ansible_ftdetect_filename_regex = [[\v(configure_|defaults|vars|files|templates|handlers|meta).*\.ya?ml$]]
