@@ -7,7 +7,7 @@ require('Comment').setup(
     ---Whether the cursor should stay at its position
     ---NOTE: This only affects NORMAL mode mappings and doesn't work with dot-repeat
     ---@type boolean
-    sticky = true,
+    sticky = false,
 
     ---Lines to be ignored while comment/uncomment.
     ---Could be a regex string or a function that returns a regex string.
@@ -67,4 +67,11 @@ require('Comment').setup(
     ---@type fun(ctx: Ctx)
     post_hook = nil,
   }
+)
+
+vim.api.nvim_set_keymap(
+  'x',
+  '÷',
+  '<esc><CMD>lua require("Comment.api").toggle_linewise_op(vim.fn.visualmode())<CR>',
+  { noremap = true, silent = true }
 )
