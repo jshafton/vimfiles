@@ -171,6 +171,9 @@ return require('packer').startup({function()
   -- window management
   use 'christoomey/vim-tmux-navigator'
 
+  -- match parens and other pairs
+  use { 'andymass/vim-matchup', after = 'nvim-treesitter' }
+
   -- Bootstrap: Automatically set up your configuration after cloning
   -- packer.nvim Put this at the end after all plugins
   if packer_bootstrap then

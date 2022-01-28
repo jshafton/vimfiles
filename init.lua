@@ -27,3 +27,4 @@ require('plugins/ansible-vim') -- TODO: not working
 require('plugins/nvim-autopairs')
 require('plugins/neoclip')
 require('plugins/investigate')
+require('plugins/matchup')
