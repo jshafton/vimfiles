@@ -90,7 +90,7 @@ return require('packer').startup({function()
   use 'vim-scripts/ReplaceWithRegister'
   use 'windwp/nvim-autopairs'
   use 'axelf4/vim-strip-trailing-whitespace'
-  use 'dhruvasagar/vim-table-mode'
+  use { 'dhruvasagar/vim-table-mode', ft = { 'markdown' } }
 
   -- commenting, auto-completion, general syntax
   use 'numToStr/Comment.nvim'
