@@ -43,14 +43,15 @@ local cmp_config = {
     format = function(entry, vim_item)
       vim_item.kind = (cmp_kinds[vim_item.kind] or '') .. vim_item.kind
       vim_item.menu = ({
-        nvim_lsp = '[Lsp]',
-        luasnip = '[Snp]',
-        buffer = '[Buf]',
+        nvim_lsp = '[LSP]',
+        luasnip  = '[Snip]',
+        buffer   = '[Buf]',
         nvim_lua = '[Lua]',
-        path = '[Pth]',
-        calc = '[Clc]',
-        emoji = '[Emj]',
-        rg = '[Rg]',
+        path     = '[Path]',
+        calc     = '[Clc]',
+        emoji    = '[Emj]',
+        rg       = '[Rg]',
+        tmux     = '[Tmux]'
       })[entry.source.name]
 
       return vim_item
@@ -78,7 +79,12 @@ local cmp_config = {
     },
     ["<Tab>"]   = cmp.mapping(function(fallback)
       if cmp.visible() then
-        cmp.select_next_item()
+        local entry = cmp.get_selected_entry()
+        if not entry then
+          cmp.select_next_item({ behavior = cmp.SelectBehavior.Select })
+        else
+          cmp.confirm()
+        end
       elseif luasnip.expand_or_jumpable() then
         luasnip.expand_or_jump()
       elseif has_words_before() then
@@ -86,6 +92,15 @@ local cmp_config = {
       else
         fallback()
       end
+      -- if cmp.visible() then
+      --   cmp.select_next_item()
+      -- elseif luasnip.expand_or_jumpable() then
+      --   luasnip.expand_or_jump()
+      -- elseif has_words_before() then
+      --   cmp.complete()
+      -- else
+      --   fallback()
+      -- end
     end, { "i", "s" }),
     ["<S-Tab>"] = cmp.mapping(function(fallback)
       if cmp.visible() then
@@ -102,16 +117,23 @@ local cmp_config = {
     { name = 'nvim_lsp' },
     { name = 'path'     },
     { name = 'buffer',
-        option = {
-          get_bufnrs = function()
-            local bufs = {}
-            for _, win in ipairs(vim.api.nvim_list_wins()) do
-              bufs[vim.api.nvim_win_get_buf(win)] = true
-            end
-            return vim.tbl_keys(bufs)
+      option = {
+        get_bufnrs = function()
+          local bufs = {}
+          for _, win in ipairs(vim.api.nvim_list_wins()) do
+            bufs[vim.api.nvim_win_get_buf(win)] = true
           end
-        }
-      },
+          return vim.tbl_keys(bufs)
+        end
+      }
+    },
+    { name = 'tmux',
+      option = {
+        all_panes = true,
+        label = '[tmux]',
+        trigger_characters_ft = { markdown = { } }
+      }
+    },
     { name = 'luasnip' },
   },
 }
