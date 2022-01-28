@@ -136,14 +136,20 @@ return require('packer').startup({function()
   }
   use 'folke/lsp-colors.nvim'
 
+  -- Snippets
+  use { 'L3MON4D3/LuaSnip' }
+
   -- Completion
-  use { 'ms-jpq/coq_nvim', branch = 'coq', run = ':COQdeps' }
-  use { 'ms-jpq/coq.artifacts', branch = 'artifacts' }
-  -- use { 'hrsh7th/nvim-cmp' }
-  -- use { 'hrsh7th/cmp-nvim-lsp',  requires = 'hrsh7th/nvim-cmp' }
-  -- use { 'hrsh7th/cmp-buffer',    requires = 'hrsh7th/nvim-cmp' }
-  -- use { 'hrsh7th/cmp-path',      requires = 'hrsh7th/nvim-cmp' }
-  -- use { 'hrsh7th/cmp-cmdline',   requires = 'hrsh7th/nvim-cmp' }
+  use { 'hrsh7th/nvim-cmp' }
+  use { 'hrsh7th/cmp-nvim-lsp',     requires = 'hrsh7th/nvim-cmp' }
+  use { 'hrsh7th/cmp-buffer',       requires = 'hrsh7th/nvim-cmp' }
+  use { 'hrsh7th/cmp-path',         requires = 'hrsh7th/nvim-cmp' }
+  use { 'hrsh7th/cmp-cmdline',      requires = 'hrsh7th/nvim-cmp' }
+  use { 'saadparwaiz1/cmp_luasnip', requires = { 'L3MON4D3/LuaSnip', 'hrsh7th/nvim-cmp' } }
+  -- Maybe:
+  -- https://github.com/tzachar/cmp-fuzzy-buffer
+  -- https://github.com/tzachar/cmp-fuzzy-path
+  -- https://github.com/andersevenrud/cmp-tmux
 
   -- Formatting
   use 'lukas-reineke/indent-blankline.nvim'

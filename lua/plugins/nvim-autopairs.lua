@@ -1,8 +1,7 @@
 local npairs = require('nvim-autopairs')
-local map = vim.api.nvim_set_keymap
-
--- https://github.com/windwp/nvim-autopairs
--- TODO: haven't done stuff for coq/completion
+-- local map = vim.api.nvim_set_keymap
+--
+-- -- https://github.com/windwp/nvim-autopairs
 npairs.setup({
   disable_filetype = { "TelescopePrompt" , "vim" },
   disable_in_macro = false,  -- disable when recording or executing a macro
@@ -18,32 +17,33 @@ npairs.setup({
   map_cr = false
 })
 
--- these mappings are coq recommended mappings unrelated to nvim-autopairs
-map('i', '<esc>',   [[pumvisible() ? "<c-e><esc>" : "<esc>"]], { expr = true, noremap = true })
-map('i', '<c-c>',   [[pumvisible() ? "<c-e><c-c>" : "<c-c>"]], { expr = true, noremap = true })
-map('i', '<tab>',   [[pumvisible() ? "<c-n>" : "<tab>"]],      { expr = true, noremap = true })
-map('i', '<s-tab>', [[pumvisible() ? "<c-p>" : "<bs>"]],       { expr = true, noremap = true })
-
-_G.MUtils= {}
-
-MUtils.CR = function()
-  if vim.fn.pumvisible() ~= 0 then
-    if vim.fn.complete_info({ 'selected' }).selected ~= -1 then
-      return npairs.esc('<c-y>')
-    else
-      return npairs.esc('<c-e>') .. npairs.autopairs_cr()
-    end
-  else
-    return npairs.autopairs_cr()
-  end
-end
-map('i', '<cr>', 'v:lua.MUtils.CR()', { expr = true, noremap = true })
-
-MUtils.BS = function()
-  if vim.fn.pumvisible() ~= 0 and vim.fn.complete_info({ 'mode' }).mode == 'eval' then
-    return npairs.esc('<c-e>') .. npairs.autopairs_bs()
-  else
-    return npairs.autopairs_bs()
-  end
-end
-map('i', '<bs>', 'v:lua.MUtils.BS()', { expr = true, noremap = true })
+--
+-- -- these mappings are coq recommended mappings unrelated to nvim-autopairs
+-- map('i', '<esc>',   [[pumvisible() ? "<c-e><esc>" : "<esc>"]], { expr = true, noremap = true })
+-- map('i', '<c-c>',   [[pumvisible() ? "<c-e><c-c>" : "<c-c>"]], { expr = true, noremap = true })
+-- map('i', '<tab>',   [[pumvisible() ? "<c-n>" : "<tab>"]],      { expr = true, noremap = true })
+-- map('i', '<s-tab>', [[pumvisible() ? "<c-p>" : "<bs>"]],       { expr = true, noremap = true })
+--
+-- _G.MUtils= {}
+--
+-- MUtils.CR = function()
+--   if vim.fn.pumvisible() ~= 0 then
+--     if vim.fn.complete_info({ 'selected' }).selected ~= -1 then
+--       return npairs.esc('<c-y>')
+--     else
+--       return npairs.esc('<c-e>') .. npairs.autopairs_cr()
+--     end
+--   else
+--     return npairs.autopairs_cr()
+--   end
+-- end
+-- map('i', '<cr>', 'v:lua.MUtils.CR()', { expr = true, noremap = true })
+--
+-- MUtils.BS = function()
+--   if vim.fn.pumvisible() ~= 0 and vim.fn.complete_info({ 'mode' }).mode == 'eval' then
+--     return npairs.esc('<c-e>') .. npairs.autopairs_bs()
+--   else
+--     return npairs.autopairs_bs()
+--   end
+-- end
+-- map('i', '<bs>', 'v:lua.MUtils.BS()', { expr = true, noremap = true })
