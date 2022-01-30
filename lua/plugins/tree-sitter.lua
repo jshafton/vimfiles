@@ -12,7 +12,7 @@ ts.setup {
     disable = { 'yaml', 'ansible' }
   },
   indent = {
-    enable = true,
+    enable = false,
     disable = { 'yaml' }
   }
 }
