@@ -85,6 +85,23 @@ opt.completeopt = 'menuone,noselect'
 -- select one from the menu. Only works in combination with
 -- "menu" or "menuone".
 
+
+cmd [[
+" create directories for new files on write
+function! s:MkNonExDir(file, buf)
+  if empty(getbufvar(a:buf, '&buftype')) && a:file!~#'\v^\w+\:\/'
+    let dir=fnamemodify(a:file, ':h')
+    if !isdirectory(dir)
+      call mkdir(dir, 'p')
+    endif
+  endif
+endfunction
+augroup BWCCreateDir
+  autocmd!
+  autocmd BufWritePre * :call s:MkNonExDir(expand('<afile>'), +expand('<abuf>'))
+augroup END
+]]
+
 -----------------------------------------------------------
 -- Startup
 -----------------------------------------------------------
