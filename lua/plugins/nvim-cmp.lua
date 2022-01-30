@@ -73,10 +73,16 @@ local cmp_config = {
     ['<C-u>']   = cmp.mapping.scroll_docs(-4),
     ['<C-o>']   = cmp.mapping.complete(),
     ['<C-e>']   = cmp.mapping.close(),
-    ['<CR>']    = cmp.mapping.confirm {
-      behavior  = cmp.ConfirmBehavior.Replace,
-      select    = true,
-    },
+    -- ['<CR>']    = cmp.mapping(function(fallback)
+    --   if cmp.visible() then
+    --     cmp.mapping.confirm {
+    --       behavior  = cmp.ConfirmBehavior.Replace,
+    --       select    = true
+    --     }
+    --   else
+    --     fallback()
+    --   end
+    -- end),
     ["<Tab>"]   = cmp.mapping(function(fallback)
       if cmp.visible() then
         local entry = cmp.get_selected_entry()
@@ -153,4 +159,4 @@ cmp.setup.cmdline('/', {
 cmp.setup(cmp_config)
 
 local cmp_autopairs = require('nvim-autopairs.completion.cmp')
-cmp.event:on( 'confirm_done', cmp_autopairs.on_confirm_done({  map_char = { tex = '' } }))
+cmp.event:on('confirm_done', cmp_autopairs.on_confirm_done({ map_char = { tex = '' } }))

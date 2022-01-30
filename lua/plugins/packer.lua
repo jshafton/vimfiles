@@ -85,7 +85,6 @@ return require('packer').startup({function()
   -- general text editing, delimiter pairing
   use 'tpope/vim-surround'
   use 'tpope/vim-unimpaired'
-  use 'tpope/vim-endwise'
   use 'tpope/vim-repeat'
   use 'vim-scripts/ReplaceWithRegister'
   use 'windwp/nvim-autopairs'
