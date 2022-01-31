@@ -1,14 +1,4 @@
-﻿" neovim compatibility
-if (has("nvim"))
-  "For Neovim 0.1.3 and 0.1.4 < https://github.com/neovim/neovim/pull/2198 >
-  let $NVIM_TUI_ENABLE_TRUE_COLOR=1
-  set guicursor=n-v-c:block,i-ci-ve:ver25,r-cr:hor20,o:hor50
-        \,a:blinkwait700-blinkoff400-blinkon250-Cursor/lCursor
-        \,sm:block-blinkwait175-blinkoff150-blinkon175
-endif
-
-"For Neovim > 0.1.5 and Vim > patch 7.4.1799 < https://github.com/vim/vim/commit/61be73bb0f965a895bfb064ea3e55476ac175162 >
-"Based on Vim patch 7.4.1770 (`guicolors` option) < https://github.com/vim/vim/commit/8a633e3427b47286869aa4b96f2bfc1fe65b25cd >
+﻿"Based on Vim patch 7.4.1770 (`guicolors` option) < https://github.com/vim/vim/commit/8a633e3427b47286869aa4b96f2bfc1fe65b25cd >
 " < https://github.com/neovim/neovim/wiki/Following-HEAD#20160511 >
 if (has("termguicolors"))
   " This is only necessary if you use "set termguicolors".
@@ -37,14 +27,6 @@ set nocompatible
 
 " Faster update times for git gutter and others
 set updatetime=100
-
-if (has("nvim"))
-  let g:gitgutter_preview_win_floating = v:true
-endif
-
-" == Highlight current line for graphical VIM <-- THIS SLOWED THINGS DOWN!
-" set cul
-" hi CursorLine term=none cterm=none ctermbg=3
 
 " Cursorline highlighting
 let g:conoline_auto_enable = 1
@@ -77,16 +59,6 @@ let g:ale_set_quickfix = 0
 " commands since they're used for window switching
 let g:NERDTreeMapJumpNextSibling = ''
 let g:NERDTreeMapJumpPrevSibling = ''
-
-" Gist configuration
-let g:gist_detect_filetype         = 1
-let g:gist_show_privates           = 1
-let g:gist_post_private            = 1
-let g:gist_update_on_write         = 2 " Only :w! updates a gist.
-let g:gist_open_browser_after_post = 1
-
-" investigate.vim
-let g:investigate_use_dash=1
 
 " Load all bundles
 source ~/.vim/vim-plug.vim
@@ -135,11 +107,6 @@ set timeout timeoutlen=500 ttimeoutlen=100
 " get out of insert mode w/ shift-enter, or jk
 inoremap jk <Esc>`^
 inoremap JK <Esc>`^
-
-" same deal for neovim terminal mode
-if has('nvim')
-  tnoremap jk <C-\><C-n>
-end
 
 " close other buffers
 nnoremap <leader>co :BufOnly!<CR>
@@ -199,9 +166,6 @@ syntax on
 
 " some stuff to get the mouse going in term
 set mouse=a
-if !has('nvim')
-  set ttymouse=xterm2
-endif
 
 " hide buffers when not displayed
 set hidden
@@ -265,49 +229,19 @@ nnoremap gnf :NERDTreeFind<CR>
 " set t_Co=256 " tell the term has 256 colors
 set enc=utf-8
 
-" settings for vimr app
-if has("gui_vimr")
-  colorscheme ayu
+" dont load csapprox if there is no gui support - silences an annoying warning
+let g:CSApprox_loaded = 1
+
+if $COLORTERM == 'gnome-terminal'
+  set term=gnome-256color
 endif
 
-if has("gui_running")
-  if has("gui_gnome")
-    set term=gnome-256color
-    set guifont=Monospace\ Bold\ 10
-  endif
+colorscheme darkspectrum
 
-  if has("gui_win32") || has("gui_win32s")
-    set guifont=Consolas:h12
-  endif
-else
-  " dont load csapprox if there is no gui support - silences an annoying warning
-  let g:CSApprox_loaded = 1
-
-  if $COLORTERM == 'gnome-terminal'
-    set term=gnome-256color
-  endif
-
-  if has('nvim')
-    let g:sonokai_style                     = 'default' " atlantis,andromeda,maia
-    let g:sonokai_enable_italic             = 1
-    let g:sonokai_disable_italic_comment    = 0
-    let g:sonokai_transparent_background    = 1
-    let g:sonokai_menu_selection_background = 'green'
-    let g:sonokai_diagnostic_text_highlight = 1
-    let g:sonokai_diagnostic_line_highlight = 1
-    let g:sonokai_diagnostic_virtual_text   = 'colored'
-    let g:sonokai_current_word              = 'underline'
-
-    colorscheme sonokai
-  else
-    colorscheme darkspectrum
-  endif
-
-  " Switch cursor shape correctly in tmux > iterm2 > osx
-  if $TMUX != ''
-    let &t_SI = "\<Esc>Ptmux;\<Esc>\<Esc>]50;CursorShape=1\x7\<Esc>\\"
-    let &t_EI = "\<Esc>Ptmux;\<Esc>\<Esc>]50;CursorShape=0\x7\<Esc>\\"
-  endif
+" Switch cursor shape correctly in tmux > iterm2 > osx
+if $TMUX != ''
+  let &t_SI = "\<Esc>Ptmux;\<Esc>\<Esc>]50;CursorShape=1\x7\<Esc>\\"
+  let &t_EI = "\<Esc>Ptmux;\<Esc>\<Esc>]50;CursorShape=0\x7\<Esc>\\"
 endif
 
 " map Q to something useful
@@ -377,17 +311,6 @@ map <C-j> <C-w>j
 map <C-k> <C-w>k
 map <C-l> <C-w>l
 
-" neovim is a dick about this thanks to libterm or whatever
-if has('nvim')
-  nmap <BS> <C-w>h
-
-  " map window navigation in terminal mode
-  tnoremap <C-h> <C-\><C-n><C-w>h
-  tnoremap <C-j> <C-\><C-n><C-w>j
-  tnoremap <C-k> <C-\><C-n><C-w>k
-  tnoremap <C-l> <C-\><C-n><C-w>l
-endif
-
 " easy save
 nnoremap S :w<CR>
 noremap  ß :w<CR> " alt-s
@@ -431,58 +354,6 @@ let g:lasttab = 1
 au TabLeave * let g:lasttab = tabpagenr()
 nnoremap <silent> <Tab> :exe "tabn ".g:lasttab<cr>
 vnoremap <silent> <Tab> :exe "tabn ".g:lasttab<cr>
-
-" == DbExt configuration ==
-let g:rails_no_dbext = 1
-
-" -- profiles
-let g:dbext_default_type = 'PGSQL'
-
-" -- results buffer
-let g:dbext_default_buffer_lines          = 20
-let g:dbext_default_use_sep_result_buffer = 1
-let g:dbext_display_command_line          = 1
-
-" -- misc config
-let g:dbext_default_always_prompt_for_variables = -1 " never prompt for variables
-
-" set up autocompletion for SQL
-autocmd FileType sql set omnifunc=sqlcomplete#Complete
-autocmd FileType pgsql set omnifunc=sqlcomplete#Complete
-
-" == coc config ==
-" TODO: how to make this conditional only if defined?
-
-" -- completion --
-inoremap <silent><expr> <TAB>
-      \ pumvisible() ? "\<C-n>" :
-      \ <SID>check_back_space() ? "\<TAB>" :
-      \ coc#refresh()
-inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
-
-function! s:check_back_space() abort
-  let col = col('.') - 1
-  return !col || getline('.')[col - 1]  =~# '\s'
-endfunction
-
-" -- extensions --
-
-let g:coc_global_extensions = [ 'coc-yank', 'coc-highlight' ]
-
-let g:coc_filetype_map = {
-      \ 'yaml.ansible': 'yaml',
-      \ }
-
-let g:coc_fzf_preview = ''
-let g:coc_fzf_opts = []
-
-nnoremap <silent> <space>y :<C-u>CocFzfList yank<cr>
-
-autocmd CursorHold * silent call CocActionAsync('highlight')
-
-let g:airline#extensions#coc#enabled = 1
-
-" == end coc config ==
 
 " set file type for Postgres for SQL files
 au BufNewFile,BufRead *.sql set ft=pgsql
@@ -631,9 +502,6 @@ nmap <leader>gv :Gitv --all<cr>
 nmap <leader>gV :Gitv! --all<cr>
 vmap <leader>gV :Gitv! --all<cr>
 
-" DelimitMate config
-let delimitMate_expand_cr = 1
-
 " use . to repeat last command over a visual range
 vnoremap . :normal .<CR>
 
@@ -651,44 +519,6 @@ let g:mta_filetypes = {
       \ 'xml' : 1,
       \ 'jinja' : 1,
       \}
-
-if has("gui_macvim")
-  " Disable MacVim's default mac-like cmd key bindings
-  let g:macvim_skip_cmd_opt_movement = 1
-
-  " Comment lines with cmd+/
-  map <d-/> :TComment<cr>
-  vmap <d-/> :TComment<cr>gv
-
-  " == Bubble text (requires unimpaired plugin) ==
-  " -- Bubble single lines
-  nmap <D-Up> [e
-  nmap <D-Down> ]e
-  " -- Bubble multiple lines
-  vmap <D-Up> [egv
-  vmap <D-Down> ]egv
-
-  " duplicate selected text
-  vnoremap <D-d> y`>p
-
-  " Mac-like save
-  map <D-s> :w<CR>
-  " save all unsaved buffers
-  map <D-S> :wa<CR>
-
-  " find in files
-  nnoremap <D-F> :Ag! -i<SPACE>
-endif
-
-let os=substitute(system('uname'), '\n', '', '')
-if os == 'Darwin' || os == 'Mac'
-  let g:scratch_insert_autohide = 0
-  let g:scratch_filetype = 'markdown'
-  let g:scratch_height = '20'
-
-  let g:python_host_prog = '~/.pyenv/versions/neovim2/bin/python'
-  let g:python3_host_prog = '~/.pyenv/versions/neovim3/bin/python'
-endif
 
 " Comment to the right
 nmap gcr :TCommentRight<CR>
@@ -746,8 +576,6 @@ vmap ∆ ]egv
 nmap ∂ yyπ
 " duplicate text (alt-d)
 vmap ∂ y`>π
-
-let g:peekaboo_window = 'vertical botright 80new'
 
 " == Ansible syntax tweaks ==
 let g:ansible_unindent_after_newline = 1
