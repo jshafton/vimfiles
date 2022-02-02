@@ -92,4 +92,4 @@ vim.g.ansible_template_syntaxes = {
 --
 -- Can be used to avoid clashes with other files that are named the same - e.g.
 -- main.yaml used in github workflows by removing main from the regex
-vim.g.ansible_ftdetect_filename_regex = [[\v(configure_|defaults|vars|files|templates|handlers|meta).*\.ya?ml$]]
+vim.g.ansible_ftdetect_filename_regex = [[\v(configure_|defaults|vars|files|templates|handlers|meta|launch).*\.ya?ml$]]
