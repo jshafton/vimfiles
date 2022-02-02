@@ -39,8 +39,16 @@ require('lspconfig').yamlls.setup{}
 require('lspconfig').dockerls.setup{}
 -- TODO: can this work for ansible 1.9.6?
 -- require('lspconfig').ansiblels.setup{}
-require'lspconfig'.solargraph.setup {
+require('lspconfig').solargraph.setup {
   flags = {
     debounce_text_changes = 150,
+  }
+}
+require('lspconfig').jedi_language_server.setup{}
+require('lspconfig').denols.setup {
+  init_options = {
+    enable = true,
+    lint = true,
+    unstable = false
   }
 }
