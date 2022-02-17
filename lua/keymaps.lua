@@ -239,3 +239,7 @@ map('n', 'gw', "<cmd>HopWord<CR>", {}) -- "Goto Word"
 -- camelcasemotion
 -----------------------------------------------------------
 cmd [[ call camelcasemotion#CreateMotionMappings('<leader>') ]]
+
+-- surround
+-----------------------------------------------------------
+vim.g.surround_104 = "{{ \r }}" -- h - surround with handlebars {{ }}
