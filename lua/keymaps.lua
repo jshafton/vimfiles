@@ -142,10 +142,12 @@ map('n', '<leader>gz', '<cmd>FloatermNew --height=0.8 --width=0.8 lazygit<CR>', 
 -- fzf-lua
 -----------------------------------------------------------
 map('n', '<C-p>',      '<cmd>FzfLua files<CR>', default_opts)
+map('n', '®',          '<cmd>FzfLua resume<CR>', default_opts) -- alt-r "resume"
 map('n', '∫',          '<cmd>FzfLua buffers<CR>', default_opts) -- alt-b
 map('n', '∑',          '<cmd>FzfLua tabs<CR>', default_opts) -- alt-w "window"
 map('n', '¬',          '<cmd>FzfLua blines<CR>', default_opts) -- alt-l
-map('n', '<C-f>',      '<cmd>FzfLua grep_project<CR>', default_opts)
+map('n', '<C-f>',      '<cmd>FzfLua grep_project<CR>', default_opts) -- "find"
+map('n', 'ƒ',          '<cmd>lua require("fzf-lua.providers.grep").grep_project({ fzf_opts = { ["--nth"] = "1.." } })<CR>', default_opts) -- alt-f "find" including file path
 map('n', 'ø',          '<cmd>FzfLua oldfiles<CR>', default_opts) -- alt-o "old files"
 map('n', '√',          '<cmd>lua require("neoclip.fzf")()<CR>', default_opts) -- alt-v for paste
 map('n', 'Ç',          '<cmd>FzfLua git_bcommits<CR>', default_opts) -- alt-shift-c "changes"
@@ -153,7 +155,7 @@ map('n', 'ç',          '<cmd>FzfLua commands<CR>', default_opts) -- alt-c "comm
 map('n', 'µ',          '<cmd>FzfLua keymaps<CR>', default_opts) -- alt-m "maps"
 map('n', '˙',          '<cmd>FzfLua help_tags<CR>', default_opts) -- alt-h "help tags"
 map('n', '<space>r',   '<cmd>FzfLua grep_cword<CR>', default_opts) -- "references"
-map('n', 'ƒ',          '<cmd>FzfLua filetypes<CR>', default_opts) -- alt-f "file types"
+map('n', 'Ï',          '<cmd>FzfLua filetypes<CR>', default_opts) -- alt-shift-f "file types"
 map('n', '<leader>gs', '<cmd>FzfLua git_status<CR>', default_opts)
 map('n', '<space>a',   '<cmd>FzfLua lsp_code_actions<CR>', default_opts)
 map('n', '<space>d',   '<cmd>FzfLua lsp_definitions<CR>', default_opts)

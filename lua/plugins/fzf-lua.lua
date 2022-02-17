@@ -1,6 +1,6 @@
--- local actions = require "fzf-lua.actions"
-
 require'fzf-lua'.setup {
+  global_resume = true,
+  global_resume_query = true,
   previewers = {
     git_diff = {
       pager = "delta",
