@@ -112,7 +112,7 @@ return require('packer').startup({function()
   -- git
   use { 'tpope/vim-fugitive' }
   use { 'lewis6991/gitsigns.nvim', requires = 'nvim-lua/plenary.nvim' }
-  use { "akinsho/toggleterm.nvim" }
+  use { 'voldikss/vim-floaterm' }
   use { 'rhysd/git-messenger.vim' }
   use { 'ruifm/gitlinker.nvim', requires = 'nvim-lua/plenary.nvim', }
 

@@ -134,9 +134,10 @@ map('v', '<leader>f', '<cmd>MaximizerToggle<CR>gv', default_opts)
 map('n', 'gnt', '<cmd>NvimTreeToggle<CR>', default_opts)
 map('n', 'gnf', '<cmd>NvimTreeFindFile<CR>', default_opts)
 
--- rnvimr
+-- floaterm
 -----------------------------------------------------------
-map('n', '-', '<cmd>RnvimrToggle<CR>', default_opts)
+map('n', '-',          '<cmd>FloatermNew --height=0.8 --width=0.8 vifm<CR>', default_opts)
+map('n', '<leader>gz', '<cmd>FloatermNew --height=0.8 --width=0.8 lazygit<CR>', default_opts)
 
 -- fzf-lua
 -----------------------------------------------------------
@@ -193,10 +194,6 @@ map('n', '<space>m', '<cmd>lua vim.lsp.buf.rename()<CR>', default_opts)
 -- Trouble
 -----------------------------------------------------------
 map('n', '†', '<cmd>TroubleToggle<CR>', default_opts)
-
--- toggleterm
------------------------------------------------------------
-map('n', '<leader>gz', '<cmd>lua _LazyGit_toggle()<CR>', default_opts)
 
 -- unimpared
 -----------------------------------------------------------
