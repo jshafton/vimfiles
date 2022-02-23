@@ -9,6 +9,12 @@ local g = vim.g         				-- global variables
 local opt = vim.opt         		-- global/buffer/windows-scoped options
 
 -----------------------------------------------------------
+-- Python
+-----------------------------------------------------------
+g.python3_host_prog = '$HOME/neovim3/bin/python'
+g.python_host_prog  = '$HOME/neovim2/bin/python'
+
+-----------------------------------------------------------
 -- General
 -----------------------------------------------------------
 g.mapleader = ','                   -- change leader to a comma
