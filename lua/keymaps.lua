@@ -15,8 +15,8 @@ local cmd = vim.cmd -- execute Vim commands
 map('n', '<F5>', ':source %<CR>', { silent = false })
 
 -- get out of insert mode
-map('i', 'jk', '<Esc>', { noremap = true })
-map('i', 'JK', '<Esc>', { noremap = true })
+-- map('i', 'jk', '<Esc>', { noremap = true })
+-- map('i', 'JK', '<Esc>', { noremap = true })
 
 -- use H to go to begin of line and L to go to end of line
 map('', 'H', '^', default_opts)
