@@ -100,6 +100,7 @@ return require('packer').startup({function()
   use { 'kana/vim-textobj-entire', requires = 'kana/vim-textobj-user' }
   -- ai, ii, aI, iI
   use { 'kana/vim-textobj-indent', requires = 'kana/vim-textobj-user' }
+  use { 'nvim-treesitter/nvim-treesitter-textobjects', requires = 'nvim-treesitter-textobjects' }
   -- https://github.com/wellle/targets.vim/blob/master/cheatsheet.md
   use 'wellle/targets.vim'
 
