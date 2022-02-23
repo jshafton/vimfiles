@@ -63,8 +63,8 @@ map('', 'p', 'pv`]=`]', { noremap = false })
 map('', 'P', 'Pv`]=`]', { noremap = false })
 
 -- option p/P to paste raw
-map('n', 'π', 'p', { noremap = false })
-map('n', '∏', 'P', { noremap = false })
+map('n', 'π', 'p', { noremap = true })
+map('n', '∏', 'P', { noremap = true })
 
 -- yank to end of line
 map('n', 'Y', 'y$', { noremap = false })
