@@ -2,7 +2,11 @@ local runtime_path = vim.split(package.path, ';')
 table.insert(runtime_path, "lua/?.lua")
 table.insert(runtime_path, "lua/?/init.lua")
 
+local capabilities = require('cmp_nvim_lsp')
+  .update_capabilities(vim.lsp.protocol.make_client_capabilities())
+
 require('lspconfig').sumneko_lua.setup {
+  capabilities = capabilities,
   settings = {
     Lua = {
       runtime = {
@@ -10,6 +14,9 @@ require('lspconfig').sumneko_lua.setup {
         version = 'LuaJIT',
         -- Setup your lua path
         path = runtime_path,
+      },
+      completion = {
+        callSnippet = 'Replace',
       },
       diagnostics = {
         -- Get the language server to recognize the `vim` global
@@ -32,20 +39,37 @@ require('lspconfig').sumneko_lua.setup {
   },
 }
 
-require('lspconfig').tsserver.setup{}
-require('lspconfig').bashls.setup{}
+require('lspconfig').tsserver.setup{
+  capabilities = capabilities,
+  settings = {
+    completions = {
+      completeFunctionCalls = true,
+    },
+  },
+}
+require('lspconfig').bashls.setup{
+  capabilities = capabilities
+}
 -- TODO: only do this for non-ansible files
-require('lspconfig').yamlls.setup{}
-require('lspconfig').dockerls.setup{}
+require('lspconfig').yamlls.setup{
+  capabilities = capabilities
+}
+require('lspconfig').dockerls.setup{
+  capabilities = capabilities
+}
 -- TODO: can this work for ansible 1.9.6?
 -- require('lspconfig').ansiblels.setup{}
 require('lspconfig').solargraph.setup {
+  capabilities = capabilities,
   flags = {
     debounce_text_changes = 150,
   }
 }
-require('lspconfig').jedi_language_server.setup{}
+require('lspconfig').jedi_language_server.setup{
+  capabilities = capabilities
+}
 require('lspconfig').denols.setup {
+  capabilities = capabilities,
   init_options = {
     enable = true,
     lint = true,
