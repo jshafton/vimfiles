@@ -36,7 +36,7 @@ local cmp_kinds = {
 
 local cmp_config = {
   completion = {
-    completeopt = 'menu,menuone,noinsert',
+    completeopt = 'menu,menuone,noselect',
   },
 
   formatting = {
@@ -73,24 +73,10 @@ local cmp_config = {
     ['<C-u>']   = cmp.mapping.scroll_docs(-4),
     ['<C-o>']   = cmp.mapping.complete(),
     ['<C-e>']   = cmp.mapping.close(),
-    -- ['<CR>']    = cmp.mapping(function(fallback)
-    --   if cmp.visible() then
-    --     cmp.mapping.confirm {
-    --       behavior  = cmp.ConfirmBehavior.Replace,
-    --       select    = true
-    --     }
-    --   else
-    --     fallback()
-    --   end
-    -- end),
+    ['<CR>']    = cmp.mapping.confirm(),
     ["<Tab>"]   = cmp.mapping(function(fallback)
       if cmp.visible() then
-        local entry = cmp.get_selected_entry()
-        if not entry then
-          cmp.select_next_item({ behavior = cmp.SelectBehavior.Select })
-        else
-          cmp.confirm()
-        end
+        cmp.select_next_item()
       elseif luasnip.expand_or_jumpable() then
         luasnip.expand_or_jump()
       elseif has_words_before() then
@@ -98,15 +84,6 @@ local cmp_config = {
       else
         fallback()
       end
-      -- if cmp.visible() then
-      --   cmp.select_next_item()
-      -- elseif luasnip.expand_or_jumpable() then
-      --   luasnip.expand_or_jump()
-      -- elseif has_words_before() then
-      --   cmp.complete()
-      -- else
-      --   fallback()
-      -- end
     end, { "i", "s" }),
     ["<S-Tab>"] = cmp.mapping(function(fallback)
       if cmp.visible() then
@@ -159,4 +136,4 @@ cmp.setup.cmdline('/', {
 cmp.setup(cmp_config)
 
 local cmp_autopairs = require('nvim-autopairs.completion.cmp')
-cmp.event:on('confirm_done', cmp_autopairs.on_confirm_done({ map_char = { tex = '' } }))
+cmp.event:on('confirm_done', cmp_autopairs.on_confirm_done())
