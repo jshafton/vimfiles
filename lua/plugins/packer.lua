@@ -165,6 +165,7 @@ return require('packer').startup({function()
   use 'darfink/vim-plist'
   use 'kchmck/vim-coffee-script'
   use 'slim-template/vim-slim'
+  use 'hashivim/vim-terraform'
 
   -- Look up stuff in Dash / the internets
   use 'Keithbsmiley/investigate.vim'
