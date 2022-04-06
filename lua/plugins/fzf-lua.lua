@@ -1,6 +1,11 @@
+local fzf_history_dir = vim.fn.expand('~/.local/share/fzf-history')
+
 require'fzf-lua'.setup {
   global_resume = true,
   global_resume_query = true,
+  fzf_opts = {
+    ['--history'] = fzf_history_dir .. '/' .. 'fzf.lua'
+  },
   previewers = {
     git_diff = {
       pager = "delta",
