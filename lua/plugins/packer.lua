@@ -79,7 +79,7 @@ return require('packer').startup({function()
   }
   use {
     "nanozuki/tabby.nvim",
-    config = function() require("tabby").setup() end
+    config = function() require("tabby").setup({}) end
   }
 
   -- general text editing, delimiter pairing
@@ -92,7 +92,12 @@ return require('packer').startup({function()
   use { 'dhruvasagar/vim-table-mode', ft = { 'markdown' } }
 
   -- commenting, auto-completion, general syntax
-  use 'numToStr/Comment.nvim'
+  use {
+    'numToStr/Comment.nvim',
+    config = function()
+      require('Comment').setup()
+    end
+  }
 
   -- ar, ir
   use { 'nelstrom/vim-textobj-rubyblock', ft = { 'ruby' } }
