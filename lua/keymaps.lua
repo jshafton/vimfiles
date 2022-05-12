@@ -197,6 +197,10 @@ map('n', '<space>m', '<cmd>lua vim.lsp.buf.rename()<CR>', default_opts)
 -----------------------------------------------------------
 map('n', '†', '<cmd>TroubleToggle<CR>', default_opts)
 
+-- Toggle diagnostics
+-----------------------------------------------------------
+map('n', 'Î', '<cmd>ToggleDiag<CR>', default_opts) -- alt-shift-d
+
 -- unimpared
 -----------------------------------------------------------
 map('n', '<C-[>', 'yoh', { silent = true }) -- toggle highlight

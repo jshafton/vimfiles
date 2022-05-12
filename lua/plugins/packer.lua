@@ -141,6 +141,10 @@ return require('packer').startup({function()
     requires = "kyazdani42/nvim-web-devicons"
   }
   use 'folke/lsp-colors.nvim'
+  use {
+    'WhoIsSethDaniel/toggle-lsp-diagnostics.nvim',
+    config = function() require'toggle_lsp_diagnostics'.init() end
+  }
 
   -- Snippets
   use { 'L3MON4D3/LuaSnip' }
