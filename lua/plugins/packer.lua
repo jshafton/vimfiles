@@ -69,6 +69,7 @@ return require('packer').startup({function()
       }
     end
   }
+  use 'romainl/vim-cool'
 
   -- UI enhancements
   use 'szw/vim-maximizer'
