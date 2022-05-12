@@ -30,7 +30,6 @@ map('n', '<C-l>', '<C-w>l', default_opts)
 
 -- easy save
 map('n', 'S', '<cmd>w<CR>', default_opts)
-map('n', 'ß', '<cmd>w<CR>', default_opts) -- alt-s
 
 -- easy window quit
 map('n', '<leader>q', '<cmd>q<CR>', default_opts)
@@ -156,15 +155,15 @@ map('n', 'µ',          '<cmd>FzfLua keymaps<CR>', default_opts) -- alt-m "maps"
 map('n', '˙',          '<cmd>FzfLua help_tags<CR>', default_opts) -- alt-h "help tags"
 map('n', '<space>r',   '<cmd>FzfLua grep_cword<CR>', default_opts) -- "references"
 map('n', 'Ï',          '<cmd>FzfLua filetypes<CR>', default_opts) -- alt-shift-f "file types"
-map('n', '<leader>gs', '<cmd>FzfLua git_status<CR>', default_opts)
 map('n', '<space>a',   '<cmd>FzfLua lsp_code_actions<CR>', default_opts)
 map('n', '<space>d',   '<cmd>FzfLua lsp_definitions<CR>', default_opts)
 map('n', '<space>R',   '<cmd>FzfLua lsp_referencess<CR>', default_opts)
 map('n', '<space>s',   '<cmd>FzfLua lsp_document_symbols<CR>', default_opts)
 
+
 -- git/fugitive
 -----------------------------------------------------------
--- map('n', '<leader>gs',   '<cmd>Git<CR>', default_opts)
+map('n', '<leader>gs',   '<cmd>Git<CR>', default_opts)
 map('n', '<leader>gc',   '<cmd>Git commit<CR>', default_opts)
 map('n', '<leader>gca',  '<cmd>Git commit --amend<CR>', default_opts)
 map('n', '<leader>gb',   '<cmd>Git blame<CR>', default_opts)
@@ -195,15 +194,15 @@ map('n', '<space>m', '<cmd>lua vim.lsp.buf.rename()<CR>', default_opts)
 
 -- Trouble
 -----------------------------------------------------------
-map('n', '†', '<cmd>TroubleToggle<CR>', default_opts)
+map('n', '†', '<cmd>TroubleToggle<CR>', default_opts) -- alt-t
 
 -- Toggle diagnostics
 -----------------------------------------------------------
 map('n', 'Î', '<cmd>ToggleDiag<CR>', default_opts) -- alt-shift-d
 
--- unimpared
+-- unimpaired
 -----------------------------------------------------------
-map('n', '<C-[>', 'yoh', { silent = true }) -- toggle highlight
+map('n', '<Esc>', 'yoh', { silent = true }) -- toggle highlight
 -- bubble single lines (alt-j/alt-k)
 map('n', '˚', '[e', { silent = true })
 map('n', '∆', ']e', { silent = true })
