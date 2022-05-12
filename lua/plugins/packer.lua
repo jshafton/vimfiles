@@ -44,7 +44,6 @@ return require('packer').startup({function()
       'kyazdani42/nvim-web-devicons', -- optional, for file icon
     }
   }
-  use { 'kevinhwang91/rnvimr' }
 
   use { 'ibhagwan/fzf-lua',
     -- optional for icon support
