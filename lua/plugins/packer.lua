@@ -188,6 +188,9 @@ return require('packer').startup({function()
   -- match parens and other pairs
   use { 'andymass/vim-matchup', after = 'nvim-treesitter' }
 
+  -- undo tree
+  use 'simnalamburt/vim-mundo'
+
   -- Bootstrap: Automatically set up your configuration after cloning
   -- packer.nvim Put this at the end after all plugins
   if packer_bootstrap then
