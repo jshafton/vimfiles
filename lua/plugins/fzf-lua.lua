@@ -1,10 +1,16 @@
+-- Create fzf history file if not present
 local fzf_history_dir = vim.fn.expand('~/.local/share/fzf-history')
+local fzf_history_file = fzf_history_dir .. '/' .. 'fzf.lua'
+if vim.fn.isdirectory(fzf_history_dir) == 0 then
+  vim.fn.system('mkdir -p ' .. fzf_history_dir)
+  vim.fn.system('touch ' .. fzf_history_file)
+end
 
-require'fzf-lua'.setup {
+require 'fzf-lua'.setup {
   global_resume = true,
   global_resume_query = true,
   fzf_opts = {
-    ['--history'] = fzf_history_dir .. '/' .. 'fzf.lua'
+    ['--history'] = fzf_history_file
   },
   previewers = {
     git_diff = {
