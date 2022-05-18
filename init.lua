@@ -2,9 +2,9 @@
 -- Import Lua modules
 -----------------------------------------------------------
 
+require('plugins/packer')
 require('settings')
 require('keymaps')
-require('plugins/packer')
 require('plugins/sonokai')
 require('plugins/vim-maximizer')
 require('plugins/nvim-tree')

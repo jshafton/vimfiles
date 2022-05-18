@@ -239,10 +239,6 @@ map('o', 'z',  "<cmd>HopChar2<CR>", {})
 map('n', 'gl', "<cmd>HopLine<CR>", {}) -- "Goto Line"
 map('n', 'gw', "<cmd>HopWord<CR>", {}) -- "Goto Word"
 
--- camelcasemotion
------------------------------------------------------------
-cmd [[ call camelcasemotion#CreateMotionMappings('<leader>') ]]
-
 -- surround
 -----------------------------------------------------------
 vim.g.surround_104 = "{{ \r }}" -- h - surround with handlebars {{ }}

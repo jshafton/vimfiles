@@ -22,10 +22,10 @@ cmd([[
 -- Boostrap: install packer if not installed
 local fn = vim.fn
 local install_path = fn.stdpath('data')..'/site/pack/packer/start/packer.nvim'
-local packer_bootstrap
-
+local packer_bootstrap = false
 if fn.empty(fn.glob(install_path)) > 0 then
   packer_bootstrap = fn.system({'git', 'clone', '--depth', '1', 'https://github.com/wbthomason/packer.nvim', install_path})
+  vim.o.runtimepath = vim.fn.stdpath('data') .. '/site/pack/*/start/*,' .. vim.o.runtimepath
 end
 
 -- Add packages
@@ -110,7 +110,12 @@ return require('packer').startup({function()
   use 'wellle/targets.vim'
 
   -- Movement through camel case and snake case words
-  use 'bkad/CamelCaseMotion'
+  use {
+    'bkad/CamelCaseMotion',
+    config = function()
+      vim.cmd [[ call camelcasemotion#CreateMotionMappings('<leader>') ]]
+    end
+  }
 
   -- Session management
   use 'tpope/vim-obsession'
