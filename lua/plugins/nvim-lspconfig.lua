@@ -50,9 +50,16 @@ require('lspconfig').tsserver.setup{
 require('lspconfig').bashls.setup{
   capabilities = capabilities
 }
--- TODO: only do this for non-ansible files
 require('lspconfig').yamlls.setup{
-  capabilities = capabilities
+  capabilities = capabilities,
+  settings = {
+    yaml = {
+      schemas = {
+        ["https://raw.githubusercontent.com/yannh/kubernetes-json-schema/master/v1.22.1-standalone/all.json"] = "k8s**/*",
+        ["https://raw.githubusercontent.com/ansible/schemas/main/f/ansible.json"] = "*ansible**/*"
+      },
+    }
+  }
 }
 require('lspconfig').dockerls.setup{
   capabilities = capabilities
