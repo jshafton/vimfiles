@@ -11,8 +11,8 @@ local opt = vim.opt         		-- global/buffer/windows-scoped options
 -----------------------------------------------------------
 -- Python
 -----------------------------------------------------------
-g.python3_host_prog = '$HOME/neovim3/bin/python'
-g.python_host_prog  = '$HOME/neovim2/bin/python'
+g.python3_host_prog = '$HOME/.asdf/shims/python3'
+g.python_host_prog  = '$HOME/.asdf/shims/python2'
 
 -----------------------------------------------------------
 -- General
