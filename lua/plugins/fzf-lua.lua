@@ -36,7 +36,7 @@ require 'fzf-lua'.setup {
     bcommits = {
       -- This comments out the "rotate-to" functionality that's hard-coded into the bcommits
       -- command, which doesn't work with delta
-      preview = "git show --pretty='%Cred%H%n%Cblue%an%n%Cgreen%s' --color {1} | delta #"
+      preview = "git show --pretty='%Cred%H%n%Cblue%an%n%Cgreen%s' --color {1} | delta"
     }
   }
 }
