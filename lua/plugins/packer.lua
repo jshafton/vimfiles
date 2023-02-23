@@ -194,6 +194,7 @@ return require('packer').startup({function()
   use 'kchmck/vim-coffee-script'
   use 'slim-template/vim-slim'
   use 'hashivim/vim-terraform'
+  use 'towolf/vim-helm'
   use {'scalameta/nvim-metals', requires = { "nvim-lua/plenary.nvim" }}
 
   -- Look up stuff in Dash / the internets
