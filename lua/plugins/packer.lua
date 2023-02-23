@@ -130,10 +130,22 @@ return require('packer').startup({function()
 
   -- LSP / tree-sitter
   use { 'nvim-treesitter/nvim-treesitter', run = ':TSUpdate' }
-  use { 'neovim/nvim-lspconfig' }
+  use {
+    "williamboman/mason.nvim",
+    "williamboman/mason-lspconfig.nvim",
+    "neovim/nvim-lspconfig",
+  }
   use {
     'jose-elias-alvarez/null-ls.nvim',
     requires = 'nvim-lua/plenary.nvim'
+  }
+  use {
+    "glepnir/lspsaga.nvim",
+    branch = "main",
+    config = function()
+      require("lspsaga").setup({})
+    end,
+    requires = { {"nvim-tree/nvim-web-devicons"} }
   }
   use { 'p00f/nvim-ts-rainbow' }
   use {
@@ -150,6 +162,7 @@ return require('packer').startup({function()
     'WhoIsSethDaniel/toggle-lsp-diagnostics.nvim',
     config = function() require'toggle_lsp_diagnostics'.init() end
   }
+  use 'mfussenegger/nvim-lint'
 
   -- Snippets
   use { 'L3MON4D3/LuaSnip' }
@@ -181,6 +194,7 @@ return require('packer').startup({function()
   use 'kchmck/vim-coffee-script'
   use 'slim-template/vim-slim'
   use 'hashivim/vim-terraform'
+  use {'scalameta/nvim-metals', requires = { "nvim-lua/plenary.nvim" }}
 
   -- Look up stuff in Dash / the internets
   use 'Keithbsmiley/investigate.vim'

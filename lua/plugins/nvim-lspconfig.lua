@@ -3,9 +3,12 @@ table.insert(runtime_path, "lua/?.lua")
 table.insert(runtime_path, "lua/?/init.lua")
 
 local capabilities = require('cmp_nvim_lsp')
-  .update_capabilities(vim.lsp.protocol.make_client_capabilities())
+  .default_capabilities(vim.lsp.protocol.make_client_capabilities())
 
-require('lspconfig').sumneko_lua.setup {
+require("mason").setup()
+require("mason-lspconfig").setup()
+
+require('lspconfig').lua_ls.setup {
   capabilities = capabilities,
   settings = {
     Lua = {
@@ -47,9 +50,11 @@ require('lspconfig').tsserver.setup{
     },
   },
 }
+
 require('lspconfig').bashls.setup{
   capabilities = capabilities
 }
+
 require('lspconfig').yamlls.setup{
   capabilities = capabilities,
   settings = {
@@ -59,8 +64,14 @@ require('lspconfig').yamlls.setup{
         ["https://raw.githubusercontent.com/ansible/schemas/main/f/ansible.json"] = "*ansible**/*"
       },
     }
-  }
+  },
+  on_attach = function(_, bufnr)
+    if vim.bo[bufnr].buftype ~= "" or vim.bo[bufnr].filetype == "helm" then
+      vim.diagnostic.disable()
+    end
+  end
 }
+
 require('lspconfig').dockerls.setup{
   capabilities = capabilities
 }
@@ -70,16 +81,24 @@ require('lspconfig').solargraph.setup {
   capabilities = capabilities,
   flags = {
     debounce_text_changes = 150,
+  },
+  init_options = {
+    formatting = true
   }
 }
+
 require('lspconfig').jedi_language_server.setup{
   capabilities = capabilities
 }
-require('lspconfig').denols.setup {
-  capabilities = capabilities,
-  init_options = {
-    enable = true,
-    lint = true,
-    unstable = false
-  }
+-- require('lspconfig').denols.setup {
+--   capabilities = capabilities,
+--   init_options = {
+--     enable = true,
+--     lint = true,
+--     unstable = false
+--   }
+-- }
+
+require('lspconfig').jsonls.setup{
+  capabilities = capabilities
 }

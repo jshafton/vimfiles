@@ -14,6 +14,7 @@ ts.setup {
     "jsonc",
     "lua",
     "make",
+    "markdown",
     "python",
     "regex",
     "scala",

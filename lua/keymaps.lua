@@ -155,11 +155,6 @@ map('n', 'µ',          '<cmd>FzfLua keymaps<CR>', default_opts) -- alt-m "maps"
 map('n', '˙',          '<cmd>FzfLua help_tags<CR>', default_opts) -- alt-h "help tags"
 map('n', '<space>r',   '<cmd>FzfLua grep_cword<CR>', default_opts) -- "references"
 map('n', 'Ï',          '<cmd>FzfLua filetypes<CR>', default_opts) -- alt-shift-f "file types"
-map('n', '<space>a',   '<cmd>FzfLua lsp_code_actions<CR>', default_opts)
-map('n', '<space>d',   '<cmd>FzfLua lsp_definitions<CR>', default_opts)
-map('n', '<space>R',   '<cmd>FzfLua lsp_referencess<CR>', default_opts)
-map('n', '<space>s',   '<cmd>FzfLua lsp_document_symbols<CR>', default_opts)
-
 
 -- git/fugitive
 -----------------------------------------------------------
@@ -186,11 +181,15 @@ map('v', '<leader>gy',   '<cmd>lua require("gitlinker").get_buf_range_url("v")<C
 
 -- LSP
 -----------------------------------------------------------
-map('n', '<space>,', '<cmd>lua vim.diagnostic.goto_prev()<CR>', default_opts)
-map('n', '<space>;', '<cmd>lua vim.diagnostic.goto_next()<CR>', default_opts)
-map('n', '<space>f', '<cmd>lua vim.lsp.buf.formatting()<CR>', default_opts)
-map('n', '<space>h', '<cmd>lua vim.lsp.buf.hover()<CR>', default_opts)
-map('n', '<space>m', '<cmd>lua vim.lsp.buf.rename()<CR>', default_opts)
+map('n', '<space>f', '<cmd>lua vim.lsp.buf.format { async = true }<CR>', default_opts)
+map('n', '<space>,', '<cmd>Lspsaga diagnostic_jump_prev<CR>', default_opts)
+map('n', '<space>;', '<cmd>Lspsaga diagnostic_jump_next<CR>', default_opts)
+map('n', '<space>h', '<cmd>Lspsaga hover_doc<CR>', default_opts)
+map('n', '<space>a', '<cmd>Lspsaga code_action<CR>', default_opts)
+map('n', '<space>d', '<cmd>Lspsaga peek_definition<CR>', default_opts)
+map('n', '<space>R', '<cmd>FzfLua lsp_referencess<CR>', default_opts)
+map('n', '<space>s', '<cmd>Lspsaga outline<CR>', default_opts)
+map('n', '<space>m', '<cmd>Lspsaga rename<CR>', default_opts)
 
 -- Trouble
 -----------------------------------------------------------

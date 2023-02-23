@@ -9,6 +9,11 @@ local g = vim.g         				-- global variables
 local opt = vim.opt         		-- global/buffer/windows-scoped options
 
 -----------------------------------------------------------
+-- Ruby
+-----------------------------------------------------------
+g.ruby_host_prog = '$HOME/.asdf/shims/ruby'
+
+-----------------------------------------------------------
 -- Python
 -----------------------------------------------------------
 g.python3_host_prog = '$HOME/.asdf/shims/python3'
@@ -49,6 +54,17 @@ exec([[
     autocmd TextYankPost * silent! lua vim.highlight.on_yank{higroup="IncSearch", timeout=250}
   augroup end
 ]], false)
+
+-----------------------------------------------------------
+-- Diagnostics
+-----------------------------------------------------------
+vim.diagnostic.config({
+  virtual_text = true,
+  signs = true,
+  underline = true,
+  update_in_insert = false,
+  severity_sort = false,
+})
 
 -----------------------------------------------------------
 -- Memory, CPU
