@@ -185,6 +185,7 @@ map('n', '<space>f', '<cmd>lua vim.lsp.buf.format { async = true }<CR>', default
 map('n', '<space>,', '<cmd>Lspsaga diagnostic_jump_prev<CR>', default_opts)
 map('n', '<space>;', '<cmd>Lspsaga diagnostic_jump_next<CR>', default_opts)
 map('n', '<space>h', '<cmd>Lspsaga hover_doc<CR>', default_opts)
+map('n', '<space>l', '<cmd>Lspsaga show_line_diagnostics<CR>', default_opts)
 map('n', '<space>a', '<cmd>Lspsaga code_action<CR>', default_opts)
 map('n', '<space>d', '<cmd>Lspsaga peek_definition<CR>', default_opts)
 map('n', '<space>R', '<cmd>FzfLua lsp_referencess<CR>', default_opts)
