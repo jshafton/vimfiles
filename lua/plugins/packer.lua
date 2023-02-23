@@ -33,7 +33,7 @@ return require('packer').startup({function()
   use 'wbthomason/packer.nvim' -- packer can manage itself
 
   -- Colors
-  use 'sainnhe/sonokai'
+  use 'EdenEast/nightfox.nvim'
 
   -- Buffer / file browsing
   use 'duff/vim-bufonly'

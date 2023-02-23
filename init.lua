@@ -5,7 +5,6 @@
 require('plugins/packer')
 require('settings')
 require('keymaps')
-require('plugins/sonokai')
 require('plugins/vim-maximizer')
 require('plugins/nvim-tree')
 require('plugins/fzf-lua')
