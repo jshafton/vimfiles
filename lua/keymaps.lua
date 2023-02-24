@@ -130,8 +130,8 @@ map('v', '<leader>f', '<cmd>MaximizerToggle<CR>gv', default_opts)
 
 -- nvim-tree
 -----------------------------------------------------------
-map('n', 'gnt', '<cmd>NvimTreeToggle<CR>', default_opts)
-map('n', 'gnf', '<cmd>NvimTreeFindFile<CR>', default_opts)
+map('n', 'gnt', '<cmd>Neotree toggle<CR>', default_opts)
+map('n', 'gnf', '<cmd>Neotree reveal<CR>', default_opts)
 
 -- floaterm
 -----------------------------------------------------------

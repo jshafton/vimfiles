@@ -38,16 +38,20 @@ return require('packer').startup({function()
   -- Buffer / file browsing
   use 'duff/vim-bufonly'
   use 'qpkorr/vim-bufkill'
+
   use {
-    'kyazdani42/nvim-tree.lua',
+  "nvim-neo-tree/neo-tree.nvim",
+    branch = "v2.x",
     requires = {
-      'kyazdani42/nvim-web-devicons', -- optional, for file icon
+      "nvim-lua/plenary.nvim",
+      "nvim-tree/nvim-web-devicons", -- not strictly required, but recommended
+      "MunifTanjim/nui.nvim",
     }
   }
 
   use { 'ibhagwan/fzf-lua',
     -- optional for icon support
-    requires = { 'kyazdani42/nvim-web-devicons' }
+    requires = { 'nvim-tree/nvim-web-devicons' }
   }
   use {
     "AckslD/nvim-neoclip.lua",
@@ -75,7 +79,7 @@ return require('packer').startup({function()
   use 'szw/vim-maximizer'
   use {
     'nvim-lualine/lualine.nvim',
-    requires = {'kyazdani42/nvim-web-devicons', opt = true}
+    requires = {'nvim-tree/nvim-web-devicons', opt = true}
   }
   use {
     "nanozuki/tabby.nvim",
@@ -155,7 +159,7 @@ return require('packer').startup({function()
   }
   use {
     "folke/trouble.nvim",
-    requires = "kyazdani42/nvim-web-devicons"
+    requires = "nvim-tree/nvim-web-devicons"
   }
   use 'folke/lsp-colors.nvim'
   use {
@@ -190,7 +194,7 @@ return require('packer').startup({function()
   use 'stephpy/vim-yaml'
   use 'pearofducks/ansible-vim'
   use 'zimbatm/haproxy.vim'
-  use 'darfink/vim-plist'
+  -- use 'darfink/vim-plist'
   use 'kchmck/vim-coffee-script'
   use 'slim-template/vim-slim'
   use 'hashivim/vim-terraform'
