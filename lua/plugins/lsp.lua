@@ -80,6 +80,7 @@ return {
             }
           },
           jedi_language_server = {},
+          terraformls = {}
         },
         -- you can do any additional lsp server setup here
         -- return true if you don't want this server to be setup with lspconfig
@@ -94,7 +95,7 @@ return {
         },
       },
       ---@param opts PluginLspOpts
-      config = function(plugin, opts)
+      config = function(_, opts)
         -- diagnostics
         for name, icon in pairs(diagnostics_icons) do
           name = "DiagnosticSign" .. name
