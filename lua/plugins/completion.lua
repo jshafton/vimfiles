@@ -54,6 +54,10 @@ return {
       { "<tab>", function() require("luasnip").jump(1) end, mode = "s" },
       { "<s-tab>", function() require("luasnip").jump(-1) end, mode = { "i", "s" } },
     },
+    config = function ()
+      require('luasnip').filetype_extend("ruby", {"rails"})
+      require('luasnip').filetype_extend("bash", {"sh"})
+    end
   },
 
   -- auto completion
