@@ -1,5 +1,10 @@
-require('Comment').setup(
-  {
+return {
+  'numToStr/Comment.nvim',
+  keys = {
+    { '÷', '<esc><Plug>(comment_toggle_linewise_current)', desc = 'Toggle line comment' }
+  },
+  lazy = false,
+  opts = {
     ---Add a space b/w comment and the line
     ---@type boolean
     padding = true,
@@ -19,7 +24,7 @@ require('Comment').setup(
     ---@type table
     toggler = {
       ---Line-comment toggle keymap
-      line = '÷', -- alt-/
+      line = 'gcc',
       ---Block-comment toggle keymap
       block = 'gbc',
     },
@@ -60,18 +65,9 @@ require('Comment').setup(
     },
 
     ---Pre-hook, called before commenting the line
-    ---@type fun(ctx: Ctx):string
     pre_hook = nil,
 
     ---Post-hook, called after commenting is done
-    ---@type fun(ctx: Ctx)
     post_hook = nil,
   }
-)
-
-vim.api.nvim_set_keymap(
-  'x',
-  '÷',
-  '<esc><CMD>lua require("Comment.api").toggle_linewise_op(vim.fn.visualmode())<CR>',
-  { noremap = true, silent = true }
-)
+}

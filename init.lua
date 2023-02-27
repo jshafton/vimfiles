@@ -2,30 +2,19 @@
 -- Import Lua modules
 -----------------------------------------------------------
 
-require('plugins/packer')
+local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
+if not vim.loop.fs_stat(lazypath) then
+  vim.fn.system({
+    "git",
+    "clone",
+    "--filter=blob:none",
+    "https://github.com/folke/lazy.nvim.git",
+    "--branch=stable", -- latest stable release
+    lazypath,
+  })
+end
+vim.opt.rtp:prepend(lazypath)
+
 require('settings')
+require("lazy").setup("plugins")
 require('keymaps')
-require('plugins/vim-maximizer')
-require('plugins/neotree')
-require('plugins/fzf-lua')
-require('plugins/gitsigns')
-require('plugins/git-messenger')
-require('plugins/gitlinker')
-require('plugins/lualine')
-require('plugins/tree-sitter')
-require('plugins/tree-sitter-textobjects')
-require('plugins/nvim-lspconfig')
-require('plugins/nvim-ts-rainbow')
-require('plugins/null-ls')
-require('plugins/trouble')
-require('plugins/comment-nvim')
-require('plugins/indent-blankline')
-require('plugins/ansible-vim')
-require('plugins/neoclip')
-require('plugins/investigate')
-require('plugins/matchup')
-require('plugins/nvim-autopairs')
-require('plugins/luasnip')
-require('plugins/nvim-cmp')
-require('plugins/nvim-lint')
-require('plugins/metals')

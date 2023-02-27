@@ -78,7 +78,6 @@ opt.synmaxcol = 240       -- max column for syntax highlight
 -- Colors
 -----------------------------------------------------------
 opt.termguicolors = true      -- enable 24-bit RGB colors
-vim.cmd("colorscheme nordfox")
 
 -----------------------------------------------------------
 -- Tabs, indent
