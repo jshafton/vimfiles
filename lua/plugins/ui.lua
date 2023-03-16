@@ -2,7 +2,7 @@ return {
   {
     'szw/vim-maximizer',
     keys = {
-      { '<leader>f', '<cmd>MaximizerToggle<CR>', 'n' },
+      { '<leader>f', '<cmd>MaximizerToggle<CR>',   'n' },
       { '<leader>f', '<cmd>MaximizerToggle<CR>gv', 'v' }
     },
     config = function()
@@ -10,7 +10,16 @@ return {
     end
   },
 
-  { 'christoomey/vim-tmux-navigator' },
+  {
+    'numToStr/Navigator.nvim',
+    keys = {
+      { '<C-h>', '<cmd>NavigatorLeft<CR>',  'n' },
+      { '<C-l>', '<cmd>NavigatorRight<CR>', 'n' },
+      { '<C-k>', '<cmd>NavigatorUp<CR>',    'n' },
+      { '<C-j>', '<cmd>NavigatorDown<CR>',  'n' },
+    },
+    config = true
+  },
 
   {
     'lukas-reineke/indent-blankline.nvim',
@@ -24,26 +33,26 @@ return {
 
   {
     'nvim-lualine/lualine.nvim',
-    dependencies = {'nvim-tree/nvim-web-devicons'},
+    dependencies = { 'nvim-tree/nvim-web-devicons' },
     opts = {
       options = {
         icons_enabled = true,
         theme = 'auto',
         -- component_separators = { left = '', right = ''},
         -- section_separators = { left = '', right = ''},
-        section_separators = { left = '', right = ''},
-        component_separators = { left = '', right = ''},
+        section_separators = { left = '', right = '' },
+        component_separators = { left = '', right = '' },
         disabled_filetypes = {},
         always_divide_middle = false,
       },
       sections = {
-        lualine_a = {'mode'},
-        lualine_b = {'branch', 'diff', 'diagnostics'},
+        lualine_a = { 'mode' },
+        lualine_b = { 'branch', 'diff', 'diagnostics' },
         lualine_c = {
           {
             'filename',
-            file_status = true,      -- Displays file status (readonly status, modified status)
-            path = 1,                -- 0: Just the filename
+            file_status = true, -- Displays file status (readonly status, modified status)
+            path = 1,           -- 0: Just the filename
             -- 1: Relative path
             -- 2: Absolute path
 
@@ -55,8 +64,8 @@ return {
             },
           }
         },
-        lualine_x = {'filetype'},
-        lualine_y = {'progress'},
+        lualine_x = { 'filetype' },
+        lualine_y = { 'progress' },
         -- lualine_z = {'location'}
         lualine_z = {
         }
@@ -67,8 +76,8 @@ return {
         lualine_c = {
           {
             'filename',
-            file_status = true,      -- Displays file status (readonly status, modified status)
-            path = 1,                -- 0: Just the filename
+            file_status = true, -- Displays file status (readonly status, modified status)
+            path = 1,           -- 0: Just the filename
             -- 1: Relative path
             -- 2: Absolute path
 
@@ -80,7 +89,7 @@ return {
             },
           }
         },
-        lualine_x = {'location'},
+        lualine_x = { 'location' },
         lualine_y = {},
         lualine_z = {}
       },

@@ -17,12 +17,6 @@ map('n', '<F5>', ':source %<CR>', { silent = false })
 map('', 'H', '^', default_opts)
 map('', 'L', 'g_', default_opts)
 
--- move around splits using Ctrl + {h,j,k,l}
-map('n', '<C-h>', '<C-w>h', default_opts)
-map('n', '<C-j>', '<C-w>j', default_opts)
-map('n', '<C-k>', '<C-w>k', default_opts)
-map('n', '<C-l>', '<C-w>l', default_opts)
-
 -- easy save
 map('n', 'S', '<cmd>w<CR>', default_opts)
 
