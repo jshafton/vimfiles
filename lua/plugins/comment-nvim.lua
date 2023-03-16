@@ -1,7 +1,8 @@
 return {
   'numToStr/Comment.nvim',
   keys = {
-    { '÷', '<esc><Plug>(comment_toggle_linewise_current)', desc = 'Toggle line comment' }
+    { '÷', '<esc><Plug>(comment_toggle_linewise_current)', mode = { "n" } },
+    { '÷', '<Plug>(comment_toggle_linewise_visual)',       mode = { "x" } }
   },
   lazy = false,
   opts = {

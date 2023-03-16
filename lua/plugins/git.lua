@@ -10,8 +10,6 @@ return {
       { '<leader>gr',   '<cmd>Gread<CR>' },
       { '<leader>grm',  '<cmd>Gread master:%<CR>' },
       { '<leader>gw',   '<cmd>Gwrite<CR>' },
-      { '<leader>gl',   '<cmd>BCommits<CR>' },
-      { '<leader>gL',   '<cmd>lua require("plugins/nvim-telescope-functions").git_bcommits()<CR>' },
       { '<leader>gp',   '<cmd>Git push<CR>' },
       { '<leader>gpf',  '<cmd>Git push --force<CR>' },
       { '<leader>gpsu', '<cmd>! git push -u origin $(git rev-parse --abbrev-ref HEAD)<CR>' },

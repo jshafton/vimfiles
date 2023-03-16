@@ -1,5 +1,4 @@
 return {
-   { 'robbles/logstash.vim' },
    { 'stephpy/vim-yaml', ft = 'yaml' },
    { 'zimbatm/haproxy.vim' },
    { 'kchmck/vim-coffee-script', ft = 'coffee' },
