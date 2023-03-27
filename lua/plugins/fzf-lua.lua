@@ -1,72 +1,75 @@
 return {
-  'ibhagwan/fzf-lua',
+  "ibhagwan/fzf-lua",
   dependencies = {
-    'nvim-tree/nvim-web-devicons'
+    "nvim-tree/nvim-web-devicons",
   },
   keys = {
-    { '<C-p>',    '<cmd>FzfLua files<CR>' },
+    { "<C-p>", "<cmd>FzfLua files<CR>" },
     -- alt-r "resume"
-    { '®',       '<cmd>FzfLua resume<CR>' },
+    { "®",    "<cmd>FzfLua resume<CR>" },
     -- alt-b
-    { '∫',      '<cmd>FzfLua buffers<CR>' },
+    { "∫",   "<cmd>FzfLua buffers<CR>" },
     -- alt-w "window"
-    { '∑',      '<cmd>FzfLua tabs<CR>' },
+    { "∑",   "<cmd>FzfLua tabs<CR>" },
     -- alt-l
-    { '¬',       '<cmd>FzfLua blines<CR>' },
+    { "¬",    "<cmd>FzfLua blines<CR>" },
     -- "find"
-    { '<C-f>',    '<cmd>FzfLua grep_project<CR>' },
+    { "<C-f>", "<cmd>FzfLua grep_project<CR>" },
     -- alt-f "find" including file path
-    { 'ƒ',       '<cmd>lua require("fzf-lua.providers.grep").grep_project({ fzf_opts = { ["--nth"] = "1.." } })<CR>' },
+    {
+      "ƒ",
+      '<cmd>lua require("fzf-lua.providers.grep").grep_project({ fzf_opts = { ["--nth"] = "1.." } })<CR>',
+    },
     -- alt-o "old files"
-    { 'ø',       '<cmd>FzfLua oldfiles<CR>' },
+    { "ø",       "<cmd>FzfLua oldfiles<CR>" },
     -- alt-v for paste
-    { '√',      '<cmd>lua require("neoclip.fzf")()<CR>' },
+    { "√",      '<cmd>lua require("neoclip.fzf")()<CR>' },
     -- alt-shift-c "changes"
-    { 'Ç',       '<cmd>FzfLua git_bcommits<CR>' },
+    { "Ç",       "<cmd>FzfLua git_bcommits<CR>" },
     -- alt-c "commands"
-    { 'ç',       '<cmd>FzfLua commands<CR>' },
+    { "ç",       "<cmd>FzfLua commands<CR>" },
     -- alt-m "maps"
-    { 'µ',       '<cmd>FzfLua keymaps<CR>' },
+    { "µ",       "<cmd>FzfLua keymaps<CR>" },
     -- alt-h "help tags"
-    { '˙',       '<cmd>FzfLua help_tags<CR>' },
+    { "˙",       "<cmd>FzfLua help_tags<CR>" },
     -- "references"
-    { '<space>r', '<cmd>FzfLua grep_cword<CR>' },
+    { "<space>r", "<cmd>FzfLua grep_cword<CR>" },
     -- alt-shift-f "file types"
-    { 'Ï',       '<cmd>FzfLua filetypes<CR>' },
-    { '<space>R', '<cmd>FzfLua lsp_referencess<CR>' }
+    { "Ï",       "<cmd>FzfLua filetypes<CR>" },
+    { "<space>R", "<cmd>FzfLua lsp_referencess<CR>" },
   },
   config = function()
     -- Create fzf history file if not present
-    local fzf_history_dir = vim.fn.expand('~/.local/share/fzf-history')
-    local fzf_history_file = fzf_history_dir .. '/' .. 'fzf.lua'
+    local fzf_history_dir = vim.fn.expand("~/.local/share/fzf-history")
+    local fzf_history_file = fzf_history_dir .. "/" .. "fzf.lua"
     if vim.fn.isdirectory(fzf_history_dir) == 0 then
-      vim.fn.system('mkdir -p ' .. fzf_history_dir)
-      vim.fn.system('touch ' .. fzf_history_file)
+      vim.fn.system("mkdir -p " .. fzf_history_dir)
+      vim.fn.system("touch " .. fzf_history_file)
     end
 
-    require 'fzf-lua'.setup {
+    require("fzf-lua").setup({
       global_resume = true,
       global_resume_query = true,
       fzf_opts = {
-        ['--history'] = fzf_history_file
+        ["--history"] = fzf_history_file,
       },
       previewers = {
         git_diff = {
-          cmd_deleted   = "git diff --color HEAD --",
-          cmd_modified  = "git diff --color HEAD",
+          cmd_deleted = "git diff --color HEAD --",
+          cmd_modified = "git diff --color HEAD",
           cmd_untracked = "git diff --color --no-index /dev/null",
-          pager         = "delta --width=$FZF_PREVIEW_COLUMNS",
+          pager = "delta --width=$FZF_PREVIEW_COLUMNS",
         },
       },
       files = {
         winopts = {
-          preview = { layout = 'vertical' }
-        }
+          preview = { layout = "vertical" },
+        },
       },
       grep = {
         winopts = {
-          preview = { layout = 'vertical', vertical = 'down:80%' }
-        }
+          preview = { layout = "vertical", vertical = "down:80%" },
+        },
       },
       git = {
         commits = {
@@ -78,9 +81,43 @@ return {
           -- This comments out the "rotate-to" functionality that's hard-coded into the bcommits
           -- command, which doesn't work with delta
           preview_pager = "delta --width=$FZF_PREVIEW_COLUMNS",
-        }
-      }
-    }
+        },
+      },
+      keymap = {
+        -- These override the default tables completely
+        -- no need to set to `false` to disable a bind
+        -- delete or modify is sufficient
+        builtin = {
+          -- neovim `:tmap` mappings for the fzf win
+          -- ["<F1>"] = "toggle-help",
+          -- ["<F2>"] = "toggle-fullscreen",
+          -- Only valid with the 'builtin' previewer
+          -- ["<F3>"] = "toggle-preview-wrap",
+          -- ["<F4>"] = "toggle-preview",
+          -- Rotate preview clockwise/counter-clockwise
+          -- ["<F5>"] = "toggle-preview-ccw",
+          -- ["<F6>"] = "toggle-preview-cw",
+          -- ["<S-down>"] = "preview-page-down",
+          -- ["<S-up>"] = "preview-page-up",
+          -- ["<S-left>"] = "preview-page-reset",
+        },
+        fzf = {
+          -- fzf '--bind=' options
+          -- ["ctrl-z"] = "abort",
+          -- ["ctrl-u"] = "unix-line-discard",
+          -- ["ctrl-f"] = "half-page-down",
+          -- ["ctrl-b"] = "half-page-up",
+          -- ["ctrl-a"] = "beginning-of-line",
+          -- ["ctrl-e"] = "end-of-line",
+          ["å"] = "toggle-all", -- alt-a
+          -- Only valid with fzf previewers (bat/cat/git/etc)
+          ["f3"] = "toggle-preview-wrap",
+          ["f4"] = "toggle-preview",
+          ["shift-down"] = "preview-page-down",
+          ["shift-up"] = "preview-page-up",
+        },
+      },
+    })
     --   -- fzf_bin         = 'sk',            -- use skim instead of fzf?
     --                                         -- https://github.com/lotabout/skim
     --   global_resume      = true,            -- enable global `resume`?
@@ -485,5 +522,5 @@ return {
     --     ["lua"]   = "blue",
     --   },
     -- }
-  end
+  end,
 }
