@@ -5,5 +5,6 @@ return {
    { 'slim-template/vim-slim', ft = 'slim' },
    { 'hashivim/vim-terraform', ft = 'terraform' },
    { 'towolf/vim-helm' },
-   { 'scalameta/nvim-metals', dependencies = { "nvim-lua/plenary.nvim" } }
+   { 'scalameta/nvim-metals', dependencies = { "nvim-lua/plenary.nvim" } },
+   { 'martinda/Jenkinsfile-vim-syntax' }
 }

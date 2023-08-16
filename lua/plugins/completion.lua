@@ -63,7 +63,7 @@ return {
 					if vim.api.nvim_get_option_value("buftype", { buf = 0 }) == "prompt" then
 						return false
 					end
-					return vim.g.cmp_enabled
+					return true
 				end,
 				completion = {
 					completeopt = "menu,menuone,noinsert",
