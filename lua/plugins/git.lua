@@ -17,7 +17,7 @@ return {
       { '<leader>ga',   '<cmd>! git add .<CR> " adds everything to the index' },
       { '<leader>grh',  '<cmd>! git reset .<CR> " git reset head -- unstages everything' },
       { '<leader>gpr',
-                          '<cmd>! git push -u origin $(git rev-parse --abbrev-ref HEAD) && hub pull-request --no-edit -o<CR>' }, -- git 'pull request' to finish up a PR
+        '<cmd>! git push -u origin $(git rev-parse --abbrev-ref HEAD) && hub pull-request --no-edit -o<CR>' }, -- git 'pull request' to finish up a PR
     }
   },
 
@@ -35,7 +35,7 @@ return {
         topdelete    = { hl = 'GitSignsDelete', text = '‾', numhl = 'GitSignsDeleteNr', linehl = 'GitSignsDeleteLn' },
         changedelete = { hl = 'GitSignsChange', text = '~', numhl = 'GitSignsChangeNr', linehl = 'GitSignsChangeLn' },
       },
-      signcolumn                        = true, -- Toggle with `:Gitsigns toggle_signs`
+      signcolumn                        = true,  -- Toggle with `:Gitsigns toggle_signs`
       numhl                             = false, -- Toggle with `:Gitsigns toggle_numhl`
       linehl                            = false, -- Toggle with `:Gitsigns toggle_linehl`
       word_diff                         = false, -- Toggle with `:Gitsigns toggle_word_diff`
@@ -95,7 +95,7 @@ return {
     'voldikss/vim-floaterm',
     keys = {
       { '<leader>gf', '<cmd>FloatermNew --height=0.8 --width=0.8 vifm<CR>' },
-      { '<leader>gz', '<cmd>FloatermNew --height=0.8 --width=0.8 lazygit<CR>' },
+      { '<leader>gZ', '<cmd>FloatermNew --height=0.8 --width=0.8 lazygit<CR>' },
     }
   },
 
@@ -115,8 +115,21 @@ return {
     'ruifm/gitlinker.nvim',
     keys = {
       { '<leader>gy', '<cmd>lua require("gitlinker").get_buf_range_url("n")<CR>',      "n", { silent = false } }, -- copy github link
-      { '<leader>gy', '<cmd>lua require("gitlinker").get_buf_range_url("v")<CR><ESC>', "v", { silent = false } } -- copy github link
+      { '<leader>gy', '<cmd>lua require("gitlinker").get_buf_range_url("v")<CR><ESC>', "v", { silent = false } }  -- copy github link
     },
     dependencies = 'nvim-lua/plenary.nvim',
+  },
+
+  {
+    "NeogitOrg/neogit",
+    dependencies = {
+      "nvim-lua/plenary.nvim",         -- required
+      "nvim-telescope/telescope.nvim", -- optional
+      "sindrets/diffview.nvim",        -- optional
+    },
+    keys = {
+      { '<leader>gz', '<cmd>Neogit<CR>' },
+    },
+    config = true
   }
 }
