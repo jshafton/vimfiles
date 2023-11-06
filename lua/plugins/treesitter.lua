@@ -25,7 +25,8 @@ return {
         "regex",
         "scala",
         "toml",
-        "vim"
+        "vim",
+        "yaml"
       },
       highlight = {
         enable = true,
