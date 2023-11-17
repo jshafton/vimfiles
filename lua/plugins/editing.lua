@@ -273,6 +273,7 @@ return {
 				javascript = { { "prettierd", "prettier" } },
 				sh = { { "shfmt", "shellcheck" } },
 				terraform = { "terraform_fmt" },
+				hcl = { "terraform_fmt" },
 				yaml = { "yamlfmt" },
 				ruby = { "rubocop" },
 			},
