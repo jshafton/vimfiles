@@ -209,7 +209,7 @@ return {
 	},
 
 	{
-		"windwp/nvim-spectre",
+		"nvim-pack/nvim-spectre",
 		config = true,
 		opts = {
 			mapping = {
@@ -279,7 +279,7 @@ return {
 			-- Set up format-on-save
 			format_on_save = function(bufnr)
 				-- Disable autoformat on certain filetypes
-				local ignore_filetypes = { "dockerfile" }
+				local ignore_filetypes = { "dockerfile", "yaml", "yaml.ansible" }
 				if vim.tbl_contains(ignore_filetypes, vim.bo[bufnr].filetype) then
 					return
 				end
