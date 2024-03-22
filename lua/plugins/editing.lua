@@ -204,7 +204,6 @@ return {
 		"AckslD/nvim-neoclip.lua",
 		dependencies = {
 			{ "tami5/sqlite.lua", module = "sqlite" },
-			{ "ibhagwan/fzf-lua" },
 		},
 		config = true,
 	},
@@ -240,7 +239,7 @@ return {
 			"junegunn/fzf.vim",
 		},
 		opts = {
-			auto_enable = false,
+			auto_enable = true,
 		},
 	},
 
