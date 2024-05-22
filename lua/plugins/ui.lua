@@ -61,7 +61,7 @@ return {
 					},
 				},
 				lualine_x = { "filetype" },
-				lualine_y = { "progress" },
+				lualine_y = { "location" },
 				-- lualine_z = {'location'}
 				lualine_z = {},
 			},
@@ -100,6 +100,9 @@ return {
 		keys = {
 			{ "<leader>tr", ":TabRename ", { silent = false } },
 		},
+		init = function()
+			require("tabby.tabline").use_preset("tab_only")
+		end,
 	},
 
 	{
@@ -122,8 +125,8 @@ return {
 	{
 		"tyru/open-browser.vim",
 		keys = {
-			{ "gx", "<Plug>(openbrowser-open)", mode = { "n" }, { silent = false } },
-			{ "gx", "<Plug>(openbrowser-open)", mode = { "v" }, { silent = false } },
+			-- { "gx", "<Plug>(openbrowser-open)", mode = { "n" }, { silent = false } },
+			-- { "gx", "<Plug>(openbrowser-open)", mode = { "v" }, { silent = false } },
 			{ "gs", "<Plug>(openbrowser-smart-search)", mode = { "v" }, { silent = false } },
 		},
 	},

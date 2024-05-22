@@ -28,9 +28,30 @@ return {
       { "<tab>",   function() require("luasnip").jump(1) end,  mode = "s" },
       { "<s-tab>", function() require("luasnip").jump(-1) end, mode = { "i", "s" } },
     },
+		init = function()
+			local ls = require("luasnip")
+			ls.setup({
+				-- Required to automatically include base snippets, like "c" snippets for "cpp"
+				load_ft_func = require("luasnip_snippets.common.snip_utils").load_ft_func,
+				ft_func = require("luasnip_snippets.common.snip_utils").ft_func,
+				-- To enable auto expansin
+				enable_autosnippets = true,
+				-- Uncomment to enable visual snippets triggered using <c-x>
+				-- store_selection_keys = '<c-x>',
+			})
+		end,
 		config = function()
 			require("luasnip").filetype_extend("ruby", { "rails" })
 			require("luasnip").filetype_extend("bash", { "sh" })
+		end,
+	},
+
+	{
+		"mireq/luasnip-snippets",
+		dependencies = { "L3MON4D3/LuaSnip" },
+		init = function()
+			-- Mandatory setup function
+			require("luasnip_snippets.common.snip_utils").setup()
 		end,
 	},
 
@@ -43,6 +64,7 @@ return {
 			"hrsh7th/cmp-nvim-lsp",
 			"hrsh7th/cmp-buffer",
 			"hrsh7th/cmp-path",
+			"hrsh7th/cmp-nvim-lsp-signature-help",
 			"saadparwaiz1/cmp_luasnip",
 			"andersevenrud/cmp-tmux",
 			"onsails/lspkind.nvim",
@@ -58,12 +80,23 @@ return {
 			local luasnip = require("luasnip")
 			local cmp = require("cmp")
 
+			cmp.setup.cmdline({ "/", "?" }, {
+				mapping = cmp.mapping.preset.cmdline(),
+				sources = {
+					{ name = "buffer" },
+				},
+			})
+
 			return {
 				enabled = function()
-					if vim.api.nvim_get_option_value("buftype", { buf = 0 }) == "prompt" then
-						return false
-					end
-					return true
+					local context = require("cmp.config.context")
+					local disabled = false
+					disabled = disabled or (vim.api.nvim_buf_get_option(0, "buftype") == "prompt")
+					disabled = disabled or (vim.fn.reg_recording() ~= "")
+					disabled = disabled or (vim.fn.reg_executing() ~= "")
+					disabled = disabled or (context.in_treesitter_capture("comment") and vim.bo.filetype ~= "lua")
+					disabled = disabled or (string.match(vim.bo.filetype, "Telescope.*"))
+					return not disabled
 				end,
 				completion = {
 					completeopt = "menu,menuone,noinsert",
@@ -114,9 +147,10 @@ return {
 					end, { "i", "s" }),
 				}),
 				sources = cmp.config.sources({
-					{ name = "nvim_lsp" },
-					{ name = "luasnip" },
-					{ name = "buffer" },
+					{ name = "nvim_lsp_signature_help", group_index = 1 },
+					{ name = "nvim_lsp", group_index = 1 },
+					{ name = "luasnip", group_index = 1 },
+					{ name = "buffer", group_index = 2 },
 					{
 						name = "tmux",
 						option = {
@@ -124,8 +158,9 @@ return {
 							label = "[tmux]",
 							trigger_characters_ft = { markdown = {} },
 						},
+						group_index = 3,
 					},
-					{ name = "path" },
+					{ name = "path", group_index = 3 },
 				}),
 				formatting = {
 					fields = { "kind", "abbr", "menu" },

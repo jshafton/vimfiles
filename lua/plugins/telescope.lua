@@ -8,6 +8,7 @@ return {
 		},
 		config = function()
 			local telescope = require("telescope")
+			local actions = require("telescope.actions")
 			local lga = require("telescope-live-grep-args.actions")
 
 			telescope.setup({
@@ -61,42 +62,42 @@ return {
 			telescope.load_extension("menufacture")
 		end,
 		keys = {
-			{ "<C-p>", "<cmd>lua require('telescope').extensions.menufacture.git_files({ show_untracked = true})<CR>" },
-			-- alt-r "resume"
-			{ "®", "<cmd>Telescope resume<CR>" },
-			-- alt-b
-			{ "∫", "<cmd>Telescope buffers<CR>" },
-			-- alt-w "window"
-			{ "∑", "<cmd>Telescope telescope-tabs list_tabs<CR>" },
-			-- alt-l
-			{ "¬", "<cmd>Telescope current_buffer_fuzzy_find<CR>" },
-			-- "find"
-			{
-				"<C-f>",
-				'<cmd>lua require("telescope.builtin").grep_string{ shorten_path = true, word_match = "-w", only_sort_text = true, search = "" }<CR>',
-			},
-			-- alt-f "find" including file path
-			{
-				"ƒ",
-				':lua require("telescope").extensions.menufacture.live_grep()<CR>',
-			},
-			-- alt-o "old files"
-			{ "ø", "<cmd>Telescope oldfiles<CR>" },
-			-- alt-v for paste
-			{ "√", "<cmd>Telescope neoclip<CR>" },
-			-- alt-shift-c "changes"
-			{ "Ç", "<cmd>AdvancedGitSearch diff_commit_file<CR>" },
-			-- alt-c "commands"
-			{ "ç", "<cmd>Telescope commands<CR>" },
-			-- alt-m "maps"
-			{ "µ", "<cmd>Telescope keymaps<CR>" },
-			-- alt-h "help tags"
-			{ "˙", "<cmd>Telescope help_tags<CR>" },
-			-- "references"
-			{ "<space>r", ":lua require('telescope').extensions.menufacture.live_grep()<CR>" },
-			-- alt-shift-f "file types"
-			{ "Ï", "<cmd>Telescope filetypes<CR>" },
-			{ "<space>R", "<cmd>Telescope lsp_referencess<CR>" },
+			-- { "<C-p>", "<cmd>lua require('telescope').extensions.menufacture.git_files({ show_untracked = true})<CR>" },
+			-- -- alt-r "resume"
+			-- { "®", "<cmd>Telescope resume<CR>" },
+			-- -- alt-b
+			-- { "∫", "<cmd>Telescope buffers<CR>" },
+			-- -- alt-w "window"
+			-- { "∑", "<cmd>Telescope telescope-tabs list_tabs<CR>" },
+			-- -- alt-l
+			-- { "¬", "<cmd>Telescope current_buffer_fuzzy_find<CR>" },
+			-- -- "find"
+			-- {
+			-- 	"<C-f>",
+			-- 	':lua require("telescope").extensions.menufacture.grep_string{ shorten_path = true, word_match = "-w", only_sort_text = true, search = "" }<CR>',
+			-- },
+			-- -- alt-f "find" including file path
+			-- {
+			-- 	"ƒ",
+			-- 	':lua require("telescope").extensions.menufacture.live_grep()<CR>',
+			-- },
+			-- -- alt-o "old files"
+			-- { "ø", "<cmd>Telescope oldfiles<CR>" },
+			-- -- alt-v for paste
+			-- { "√", "<cmd>Telescope neoclip<CR>" },
+			-- -- alt-shift-c "changes"
+			-- { "Ç", "<cmd>AdvancedGitSearch diff_commit_file<CR>" },
+			-- -- alt-c "commands"
+			-- { "ç", "<cmd>Telescope commands<CR>" },
+			-- -- alt-m "maps"
+			-- { "µ", "<cmd>Telescope keymaps<CR>" },
+			-- -- alt-h "help tags"
+			-- { "˙", "<cmd>Telescope help_tags<CR>" },
+			-- -- "references"
+			-- { "<space>r", ":lua require('telescope').extensions.menufacture.grep_string()<CR>" },
+			-- -- alt-shift-f "file types"
+			-- { "Ï", "<cmd>Telescope filetypes<CR>" },
+			-- { "<space>R", "<cmd>Telescope lsp_referencess<CR>" },
 		},
 	},
 

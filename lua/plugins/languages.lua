@@ -1,5 +1,5 @@
 return {
-	{ "zimbatm/haproxy.vim" },
+	{ "Joorem/vim-haproxy" },
 	{ "stephpy/vim-yaml", ft = "yaml" },
 	{ "kchmck/vim-coffee-script", ft = "coffee" },
 	{ "slim-template/vim-slim", ft = "slim" },
