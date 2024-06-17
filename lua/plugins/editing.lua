@@ -228,6 +228,24 @@ return {
 	},
 
 	{
+		"MagicDuck/grug-far.nvim",
+		opts = {
+			keymaps = {
+				replace = { n = "gr" },
+				qflist = { n = "gq" },
+				syncLocations = { n = "gs" },
+				syncLine = { n = "gl" },
+				close = { n = "gc" },
+				historyOpen = { n = "gt" },
+				historyAdd = { n = "ga" },
+				refresh = { n = "gf" },
+				gotoLocation = { n = "<enter>" },
+				pickHistoryEntry = { n = "<enter>" },
+			},
+		},
+	},
+
+	{
 		"gabrielpoca/replacer.nvim",
 	},
 
