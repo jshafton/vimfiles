@@ -96,11 +96,14 @@ return {
 
 	-- ar, ir
 	{ "nelstrom/vim-textobj-rubyblock", ft = { "ruby" } },
-	-- ae, ie
-	{ "kana/vim-textobj-entire", dependencies = { "kana/vim-textobj-user" }, lazy = false },
+	-- https://github.com/chrisgrieser/nvim-various-textobjs?tab=readme-ov-file#list-of-text-objects
 	{
 		"chrisgrieser/nvim-various-textobjs",
-		opts = { useDefaultKeymaps = true },
+		opts = {
+			keymaps = {
+				useDefaults = true,
+			},
+		},
 	},
 
 	{
@@ -188,6 +191,7 @@ return {
 			"S",
 			"Subvert",
 		},
+		lazy = false,
 	},
 
 	{ "tpope/vim-eunuch", lazy = false },
@@ -264,6 +268,10 @@ return {
 	{
 		"johmsalas/text-case.nvim",
 		config = true,
+	},
+
+	{
+		"sk1418/Join",
 	},
 
 	{
