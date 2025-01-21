@@ -298,7 +298,7 @@ return {
 				javascript = { { "prettierd", "prettier" } },
 				sh = { { "shfmt", "shellcheck" } },
 				terraform = { "terraform_fmt" },
-				hcl = { "terraform_fmt" },
+				hcl = { "hclfmt" },
 				yaml = { "yamlfmt" },
 				ruby = { "rubocop" },
 			},
@@ -320,6 +320,10 @@ return {
 			formatters = {
 				shfmt = {
 					prepend_args = { "-i", "2" },
+				},
+				hclfmt = {
+					command = "terraform",
+					args = { "fmt", "-" },
 				},
 			},
 		},
