@@ -28,7 +28,7 @@ return {
 				servers = {
 					bashls = {},
 					jsonls = {},
-					tsserver = {},
+					ts_ls = {},
 					groovyls = {},
 					yamlls = {
 						settings = {
