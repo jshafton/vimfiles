@@ -35,7 +35,6 @@ return {
 							yaml = {
 								schemas = {
 									["https://raw.githubusercontent.com/yannh/kubernetes-json-schema/master/v1.22.1-standalone/all.json"] = "*k8s**/*",
-									["https://json.schemastore.org/yamllint.json"] = "*helm**/*",
 									["https://raw.githubusercontent.com/ansible/schemas/main/f/ansible.json"] = "*ansible**/*",
 									["http://json.schemastore.org/github-workflow"] = ".github/workflows/*",
 									["http://json.schemastore.org/github-action"] = ".github/action.{yml,yaml}",
