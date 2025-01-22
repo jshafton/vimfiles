@@ -298,6 +298,7 @@ return {
 				javascript = { { "prettierd", "prettier" } },
 				sh = { { "shfmt", "shellcheck" } },
 				terraform = { "terraform_fmt" },
+				packer = { "packerfmt" },
 				hcl = { "hclfmt" },
 				yaml = { "yamlfmt" },
 				ruby = { "rubocop" },
@@ -323,6 +324,10 @@ return {
 				},
 				hclfmt = {
 					command = "terraform",
+					args = { "fmt", "-" },
+				},
+				packerfmt = {
+					command = "packer",
 					args = { "fmt", "-" },
 				},
 			},
