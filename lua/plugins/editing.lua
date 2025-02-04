@@ -102,8 +102,13 @@ return {
 		opts = {
 			keymaps = {
 				useDefaults = true,
+				disabledDefaults = { "gG" },
 			},
 		},
+		keys = {
+			{ "ie", "<cmd>lua require('various-textobjs').entireBuffer()<CR>", mode = { "o", "x" } },
+		},
+		lazy = false,
 	},
 
 	{
