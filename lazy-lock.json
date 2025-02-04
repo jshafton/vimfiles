@@ -90,5 +90,5 @@
   "which-key.nvim": { "branch": "main", "commit": "1f8d414f61e0b05958c342df9b6a4c89ce268766" },
   "yaml-companion.nvim": { "branch": "main", "commit": "131b0d67bd2e0f1a02e0daf2f3460482221ce3c0" },
   "yaml.nvim": { "branch": "main", "commit": "7f1e6a368bc366d510eece0247440db7ed3a4552" },
-  "yazi.nvim": { "branch": "main", "commit": "4f67b94f1c99eed31c382c6e8a1f8474323086bf" }
+  "yazi.nvim": { "branch": "master", "commit": "a399150226006f55bc9485027e4876528badd040" }
 }
