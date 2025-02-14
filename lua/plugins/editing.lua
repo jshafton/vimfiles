@@ -16,35 +16,6 @@ return {
 		end,
 	},
 
-	-- {
-	-- 	"andymass/vim-matchup",
-	-- 	dependencies = "nvim-treesitter",
-	-- 	lazy = false,
-	-- 	config = function()
-	--      vim.g.matchup_enabled = false
-	-- 		vim.g.matchup_matchparen_offscreen = { ["method"] = "popup" } -- or 'status'
-	-- 		vim.g.matchup_matchparen_enabled = 1
-	-- 		vim.g.matchup_motion_enabled = 1
-	-- 		vim.g.matchup_text_obj_enabled = 1
-	-- 		vim.g.matchup_surround_enabled = 1
-	-- 		vim.g.matchup_transmute_enabled = 0
-	-- 		vim.g.matchup_delim_stopline = 1500
-	-- 		vim.g.matchup_matchparen_timeout = 300
-	-- 		vim.g.matchup_matchparen_insert_timeout = 60
-	-- 		vim.g.matchup_matchparen_deferred = 1
-	-- 		vim.g.matchup_matchparen_deferred_show_delay = 50
-	-- 		vim.g.matchup_matchparen_deferred_hide_delay = 700
-	--
-	-- 		require("nvim-treesitter.configs").setup({
-	-- 			matchup = {
-	-- 				enable = false, -- mandatory, false will disable the whole extension
-	-- 				-- disable = { "c", "ruby" },  -- optional, list of language that will be disabled
-	-- 				-- [options]
-	-- 			},
-	-- 		})
-	-- 	end,
-	-- },
-
 	{
 		"tpope/vim-unimpaired",
 		lazy = false,
@@ -95,7 +66,7 @@ return {
 	{ "dhruvasagar/vim-table-mode", ft = { "markdown" } },
 
 	-- ar, ir
-	{ "nelstrom/vim-textobj-rubyblock", ft = { "ruby" } },
+	-- { "nelstrom/vim-textobj-rubyblock", ft = { "ruby" } },
 	-- https://github.com/chrisgrieser/nvim-various-textobjs?tab=readme-ov-file#list-of-text-objects
 	{
 		"chrisgrieser/nvim-various-textobjs",
@@ -210,14 +181,6 @@ return {
 	},
 
 	{
-		"AckslD/nvim-neoclip.lua",
-		dependencies = {
-			{ "tami5/sqlite.lua", module = "sqlite" },
-		},
-		config = true,
-	},
-
-	{
 		"nvim-pack/nvim-spectre",
 		config = true,
 		opts = {
@@ -285,7 +248,6 @@ return {
 		cmd = { "ConformInfo" },
 		keys = {
 			{
-				-- Customize or remove this keymap to your liking
 				"<space>f",
 				function()
 					require("conform").format({ async = true, lsp_fallback = true })
@@ -293,6 +255,7 @@ return {
 				mode = "",
 				desc = "Format buffer",
 			},
+			{ "<leader>tf", "<cmd>ToggleFormat<CR>" },
 		},
 		-- Everything in opts will be passed to setup()
 		opts = {
@@ -310,6 +273,11 @@ return {
 			},
 			-- Set up format-on-save
 			format_on_save = function(bufnr)
+				-- Stop if we disabled auto-formatting.
+				if not vim.g.autoformat then
+					return nil
+				end
+
 				-- Disable autoformat on certain filetypes
 				local ignore_filetypes = { "dockerfile", "yaml", "yaml.ansible" }
 				if vim.tbl_contains(ignore_filetypes, vim.bo[bufnr].filetype) then
@@ -340,6 +308,17 @@ return {
 		init = function()
 			-- If you want the formatexpr, here is the place to set it
 			vim.o.formatexpr = "v:lua.require'conform'.formatexpr()"
+
+			vim.api.nvim_create_user_command("ToggleFormat", function()
+				vim.g.autoformat = not vim.g.autoformat
+				vim.notify(
+					string.format("%s formatting...", vim.g.autoformat and "Enabling" or "Disabling"),
+					vim.log.levels.INFO
+				)
+			end, { desc = "Toggle conform.nvim auto-formatting", nargs = 0 })
+
+			-- Start auto-formatting by default (and disable with my ToggleFormat command).
+			vim.g.autoformat = true
 		end,
 	},
 }

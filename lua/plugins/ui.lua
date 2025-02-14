@@ -1,16 +1,5 @@
 return {
 	{
-		"szw/vim-maximizer",
-		keys = {
-			{ "<leader>f", "<cmd>MaximizerToggle<CR>", "n" },
-			{ "<leader>f", "<cmd>MaximizerToggle<CR>gv", "v" },
-		},
-		config = function()
-			vim.g.maximizer_set_default_mapping = 0
-		end,
-	},
-
-	{
 		"numToStr/Navigator.nvim",
 		keys = {
 			{ "<C-h>", "<cmd>NavigatorLeft<CR>", "n" },
@@ -19,12 +8,6 @@ return {
 			{ "<C-j>", "<cmd>NavigatorDown<CR>", "n" },
 		},
 		config = true,
-	},
-
-	{
-		"lukas-reineke/indent-blankline.nvim",
-		main = "ibl",
-		opts = {},
 	},
 
 	{
@@ -109,14 +92,6 @@ return {
 		"duff/vim-bufonly",
 		keys = {
 			{ "<leader>co", "<cmd>BufOnly!<CR>" },
-		},
-	},
-
-	{
-		"qpkorr/vim-bufkill",
-		lazy = false,
-		keys = {
-			{ "<C-x>", "<cmd>BW!<CR>" },
 		},
 	},
 

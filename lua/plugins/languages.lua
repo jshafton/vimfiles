@@ -12,7 +12,7 @@ return {
 		ft = { "yaml" }, -- optional
 		dependencies = {
 			"nvim-treesitter/nvim-treesitter",
-			"nvim-telescope/telescope.nvim", -- optional
+			-- "nvim-telescope/telescope.nvim", -- optional
 		},
 		keys = {
 			{ "<leader>yk", "<cmd>YAMLYankKey<CR>", mode = "n", { silent = false } }, -- yank yaml key

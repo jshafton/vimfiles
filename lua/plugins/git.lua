@@ -2,7 +2,7 @@ return {
 	{
 		"tpope/vim-fugitive",
 		keys = {
-			{ "<leader>gs", "<cmd>Git<CR>" },
+			-- { "<leader>gs", "<cmd>Git<CR>" },
 			{ "<leader>gc", "<cmd>Git commit<CR>" },
 			{ "<leader>gca", "<cmd>Git commit --amend<CR>" },
 			{ "<leader>gb", "<cmd>Git blame<CR>" },
@@ -86,14 +86,6 @@ return {
 				-- Text object
 				map({ "o", "x" }, "ih", ":<C-U>Gitsigns select_hunk<CR>")
 			end,
-		},
-	},
-
-	{
-		"voldikss/vim-floaterm",
-		keys = {
-			{ "<leader>gf", "<cmd>FloatermNew --height=0.8 --width=0.8 vifm<CR>" },
-			{ "<leader>gz", "<cmd>FloatermNew --height=0.8 --width=0.8 lazygit<CR>" },
 		},
 	},
 
