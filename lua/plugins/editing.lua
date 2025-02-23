@@ -263,8 +263,8 @@ return {
 			formatters_by_ft = {
 				lua = { "stylua" },
 				python = { "isort", "black" },
-				javascript = { { "prettierd", "prettier" } },
-				sh = { { "shfmt", "shellcheck" } },
+				javascript = { "prettierd", "prettier" },
+				sh = { "shfmt", "shellcheck" },
 				terraform = { "terraform_fmt" },
 				packer = { "packerfmt" },
 				hcl = { "hclfmt" },
