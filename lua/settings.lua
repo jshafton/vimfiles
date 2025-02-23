@@ -16,8 +16,8 @@ g.ruby_host_prog = "$HOME/.asdf/shims/ruby"
 -----------------------------------------------------------
 -- Python
 -----------------------------------------------------------
-g.python3_host_prog = "$HOME/.asdf/shims/python3"
-g.python_host_prog = "$HOME/.asdf/shims/python2"
+g.python3_host_prog = os.getenv("HOME") .. "/.asdf/shims/python3"
+g.python_host_prog = os.getenv("HOME") .. "/.asdf/shims/python2"
 
 -----------------------------------------------------------
 -- General
