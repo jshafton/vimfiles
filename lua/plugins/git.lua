@@ -121,6 +121,13 @@ return {
 	},
 
 	{
+		"sindrets/diffview.nvim",
+		keys = {
+			{ "©", "<cmd>DiffviewOpen<CR>" },
+		},
+	},
+
+	{
 		"NeogitOrg/neogit",
 		dependencies = {
 			"nvim-lua/plenary.nvim", -- required
@@ -129,7 +136,7 @@ return {
 		keys = {
 			{ "<leader>gZ", "<cmd>Neogit<CR>" },
 		},
-		config = {
+		opts = {
 			commit_editor = {
 				kind = "split",
 			},
