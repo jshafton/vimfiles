@@ -90,6 +90,9 @@ map("v", "Q", ":normal @@<CR>", default_opts)
 -- easy window focus (closes all others)
 map("n", "<Leader>F", "<C-W>o", default_opts)
 
+-- close tab
+map("n", "∑", "<cmd>tabclose<cr>", default_opts)
+
 -- replace current word in file
 map("n", "<Leader>R", ":%s/<C-R><C-W>/", { silent = false })
 
