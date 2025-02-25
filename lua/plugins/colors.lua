@@ -7,7 +7,6 @@ return {
 			transparent = true,
 			dim_inactive = true,
 			styles = {
-				comments = "italic",
 				functions = "bold",
 			},
 		},
