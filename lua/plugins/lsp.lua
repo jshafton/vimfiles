@@ -13,7 +13,20 @@ return {
 			dependencies = {
 				"mason.nvim",
 				"williamboman/mason-lspconfig.nvim",
-				"hrsh7th/cmp-nvim-lsp",
+				-- main one
+				{ "ms-jpq/coq_nvim", branch = "coq" },
+
+				-- 9000+ Snippets
+				{ "ms-jpq/coq.artifacts", branch = "artifacts" },
+
+				-- lua & third party sources -- See https://github.com/ms-jpq/coq.thirdparty
+				-- Need to **configure separately**
+				{ "ms-jpq/coq.thirdparty", branch = "3p" },
+				-- - shell repl
+				-- - nvim lua api
+				-- - scientific calculator
+				-- - comment banner
+				-- - etc
 			},
 			---@class PluginLspOpts
 			opts = {
@@ -50,11 +63,6 @@ return {
 								},
 							},
 						},
-						-- on_attach = function(_, bufnr)
-						-- 	if vim.bo[bufnr].buftype ~= "" or vim.bo[bufnr].filetype == "helm" then
-						-- 		vim.diagnostic.disable()
-						-- 	end
-						-- end,
 					},
 					lua_ls = {
 						-- mason = false, -- set to false if you don't want this server to be installed with mason
@@ -86,18 +94,20 @@ return {
 				},
 				-- you can do any additional lsp server setup here
 				-- return true if you don't want this server to be setup with lspconfig
-				setup = {
-					-- example to setup with typescript.nvim
-					-- tsserver = function(_, opts)
-					--   require("typescript").setup({ server = opts })
-					--   return true
-					-- end,
-					-- Specify * to use this function as a fallback for any server
-					-- ["*"] = function(server, opts) end,
-				},
+				setup = {},
 			},
+			init = function()
+				vim.g.coq_settings = {
+					auto_start = true, -- if you want to start COQ at startup
+					keymap = {
+						pre_select = true,
+					},
+				}
+			end,
 			---@param opts PluginLspOpts
 			config = function(_, opts)
+				local coq = require("coq")
+
 				-- diagnostics
 				for name, icon in pairs(diagnostics_icons) do
 					name = "DiagnosticSign" .. name
@@ -106,8 +116,7 @@ return {
 				vim.diagnostic.config(opts.diagnostics)
 
 				local servers = opts.servers
-				local capabilities =
-					require("cmp_nvim_lsp").default_capabilities(vim.lsp.protocol.make_client_capabilities())
+				local capabilities = coq.lsp_ensure_capabilities(vim.lsp.protocol.make_client_capabilities())
 
 				local function setup(server)
 					local server_opts = vim.tbl_deep_extend("force", {
@@ -154,8 +163,18 @@ return {
 				require("mason-lspconfig").setup_handlers({ setup })
 
 				local lsp_config = require("lspconfig")
-				lsp_config.solargraph.setup({
-					cmd = { os.getenv("HOME") .. "/.asdf/shims/solargraph", "stdio" },
+				-- lsp_config.solargraph.setup({
+				-- 	cmd = { os.getenv("HOME") .. "/.asdf/shims/solargraph", "stdio" },
+				-- 	root_dir = lsp_config.util.root_pattern("Gemfile", ".git"),
+				-- 	flags = {
+				-- 		debounce_text_changes = 150,
+				-- 	},
+				-- 	init_options = {
+				-- 		formatting = true,
+				-- 	},
+				-- })
+				lsp_config.ruby_lsp.setup({
+					cmd = { os.getenv("HOME") .. "/.asdf/shims/ruby-lsp", "stdio" },
 					root_dir = lsp_config.util.root_pattern("Gemfile", ".git"),
 					flags = {
 						debounce_text_changes = 150,
@@ -197,6 +216,7 @@ return {
 				"shellcheck",
 				"shfmt",
 				"flake8",
+				"ruby-lsp",
 				-- "yamllint",
 			},
 		},
