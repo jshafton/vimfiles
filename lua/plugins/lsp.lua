@@ -1,10 +1,3 @@
-local diagnostics_icons = {
-	Error = " ",
-	Warn = " ",
-	Hint = " ",
-	Info = " ",
-}
-
 return {
 	{
 		{
@@ -13,7 +6,7 @@ return {
 			dependencies = {
 				"mason.nvim",
 				"williamboman/mason-lspconfig.nvim",
-				"hrsh7th/cmp-nvim-lsp",
+				"saghen/blink.cmp",
 			},
 			---@class PluginLspOpts
 			opts = {
@@ -26,10 +19,6 @@ return {
 				},
 				-- LSP Server Settings
 				servers = {
-					bashls = {},
-					jsonls = {},
-					ts_ls = {},
-					groovyls = {},
 					yamlls = {
 						settings = {
 							yaml = {
@@ -50,14 +39,8 @@ return {
 								},
 							},
 						},
-						-- on_attach = function(_, bufnr)
-						-- 	if vim.bo[bufnr].buftype ~= "" or vim.bo[bufnr].filetype == "helm" then
-						-- 		vim.diagnostic.disable()
-						-- 	end
-						-- end,
 					},
 					lua_ls = {
-						-- mason = false, -- set to false if you don't want this server to be installed with mason
 						settings = {
 							Lua = {
 								workspace = {
@@ -73,100 +56,48 @@ return {
 							},
 						},
 					},
-					dockerls = {},
-					jedi_language_server = {},
-					terraformls = {},
-					tflint = {},
 					helm_ls = {
 						yamlls = {
 							path = "yaml-language-server",
 						},
 					},
-					coffeesense = {},
-				},
-				-- you can do any additional lsp server setup here
-				-- return true if you don't want this server to be setup with lspconfig
-				setup = {
-					-- example to setup with typescript.nvim
-					-- tsserver = function(_, opts)
-					--   require("typescript").setup({ server = opts })
-					--   return true
-					-- end,
-					-- Specify * to use this function as a fallback for any server
-					-- ["*"] = function(server, opts) end,
+					ruby_lsp = {
+						flags = {
+							debounce_text_changes = 150,
+						},
+						init_options = {
+							formatting = true,
+						},
+					},
 				},
 			},
-			---@param opts PluginLspOpts
 			config = function(_, opts)
-				-- diagnostics
-				for name, icon in pairs(diagnostics_icons) do
-					name = "DiagnosticSign" .. name
-					vim.fn.sign_define(name, { text = icon, texthl = name, numhl = "" })
-				end
-				vim.diagnostic.config(opts.diagnostics)
-
-				local servers = opts.servers
-				local capabilities =
-					require("cmp_nvim_lsp").default_capabilities(vim.lsp.protocol.make_client_capabilities())
-
-				local function setup(server)
-					local server_opts = vim.tbl_deep_extend("force", {
-						capabilities = vim.deepcopy(capabilities),
-					}, servers[server] or {})
-
-					if opts.setup[server] then
-						if opts.setup[server](server, server_opts) then
-							return
-						end
-					elseif opts.setup["*"] then
-						if opts.setup["*"](server, server_opts) then
-							return
-						end
-					end
-					require("lspconfig")[server].setup(server_opts)
-				end
-
-				-- temp fix for lspconfig rename
-				-- https://github.com/neovim/nvim-lspconfig/pull/2439
-				local mappings = require("mason-lspconfig.mappings.server")
-				if not mappings.lspconfig_to_package.lua_ls then
-					mappings.lspconfig_to_package.lua_ls = "lua-language-server"
-					mappings.package_to_lspconfig["lua-language-server"] = "lua_ls"
-				end
-
-				local mlsp = require("mason-lspconfig")
-				local available = mlsp.get_available_servers()
-
-				local ensure_installed = {} ---@type string[]
-				for server, server_opts in pairs(servers) do
-					if server_opts then
-						server_opts = server_opts == true and {} or server_opts
-						-- run manual setup if mason=false or if this is a server that cannot be installed with mason-lspconfig
-						if server_opts.mason == false or not vim.tbl_contains(available, server) then
-							setup(server)
-						else
-							ensure_installed[#ensure_installed + 1] = server
-						end
-					end
-				end
-
-				require("mason-lspconfig").setup({ ensure_installed = ensure_installed })
-				require("mason-lspconfig").setup_handlers({ setup })
-
 				local lsp_config = require("lspconfig")
-				lsp_config.solargraph.setup({
-					cmd = { os.getenv("HOME") .. "/.asdf/shims/solargraph", "stdio" },
-					root_dir = lsp_config.util.root_pattern("Gemfile", ".git"),
-					flags = {
-						debounce_text_changes = 150,
-					},
-					init_options = {
-						formatting = true,
-					},
+
+				-- Ensure ruby-lsp's project root is set appropriately
+				opts.servers.ruby_lsp.root_dir = lsp_config.util.root_pattern("Gemfile", ".git")
+
+				-- Set ruby_lsp to use asdf shim if present for project-local binaries
+				local ruby_lsp_cmd = os.getenv("HOME") .. "/.asdf/shims/ruby-lsp"
+				if vim.fn.filereadable(ruby_lsp_cmd) == 1 then
+					opts.servers.ruby_lsp.cmd = { ruby_lsp_cmd, "stdio" }
+				end
+
+				require("mason").setup()
+				require("mason-lspconfig").setup()
+
+				-- Ensure setup is called for every lsp server set up with Mason,
+				-- and ensure it's configured for (blink) completion
+				require("mason-lspconfig").setup_handlers({
+					function(server_name) -- default handler
+						local config = opts.servers[server_name] or {}
+						config.capabilities = require("blink.cmp").get_lsp_capabilities(config.capabilities or {})
+						lsp_config[server_name].setup(config)
+					end,
 				})
 			end,
+
 			keys = {
-				{ "<space>,", "<cmd>Lspsaga diagnostic_jump_prev<CR>" },
 				{ "<space>;", "<cmd>Lspsaga diagnostic_jump_next<CR>" },
 				{ "<space>h", "<cmd>Lspsaga hover_doc<CR>" },
 				{ "<space>l", "<cmd>Lspsaga show_line_diagnostics<CR>" },
@@ -193,15 +124,40 @@ return {
 		keys = { { "<leader>cm", "<cmd>Mason<cr>", desc = "Mason" } },
 		opts = {
 			ensure_installed = {
-				"stylua",
+				"actionlint",
+				"bash-language-server",
+				"coffeesense-language-server",
+				"deno",
+				"dockerfile-language-server",
+				"flake8",
+				"gitlint",
+				"gitui",
+				"groovy-language-server",
+				"hclfmt",
+				"helm-ls",
+				"jedi-language-server",
+				"json-lsp",
+				"jsonlint",
+				"lua-language-server",
+				"python-lsp-server",
+				"ruby-lsp",
 				"shellcheck",
 				"shfmt",
-				"flake8",
-				-- "yamllint",
+				"sqlfmt",
+				"stylua",
+				"terraform-ls",
+				"tflint",
+				"typescript-language-server",
+				"yaml-language-server",
 			},
 		},
 		config = function(_, opts)
 			require("mason").setup(opts)
+
+			-- This is a custom implementation to ensure that all desired tools
+			-- are installed at startup, similar to a feature that's built in to
+			-- mason-lspconfig. It's a little better here because not everything is an
+			-- lsp server
 			local mr = require("mason-registry")
 			for _, tool in ipairs(opts.ensure_installed) do
 				local p = mr.get_package(tool)
