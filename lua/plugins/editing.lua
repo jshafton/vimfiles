@@ -102,6 +102,8 @@ return {
 							["if"] = "@function.inner",
 							["ac"] = "@class.outer",
 							["ic"] = "@class.inner",
+							["ar"] = "@block.outer",
+							["ir"] = "@block.inner",
 						},
 					},
 					move = {
@@ -110,18 +112,22 @@ return {
 						goto_next_start = {
 							["]m"] = "@function.outer",
 							["]]"] = "@class.outer",
+							["]r"] = "@block.outer",
 						},
 						goto_next_end = {
 							["]M"] = "@function.outer",
 							["]["] = "@class.outer",
+							["]R"] = "@block.outer",
 						},
 						goto_previous_start = {
 							["[m"] = "@function.outer",
 							["[["] = "@class.outer",
+							["[r"] = "@block.outer",
 						},
 						goto_previous_end = {
 							["[M"] = "@function.outer",
 							["[]"] = "@class.outer",
+							["[R"] = "@block.outer",
 						},
 					},
 					lsp_interop = {
