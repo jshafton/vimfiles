@@ -22,7 +22,16 @@ return {
 	},
 
 	{ "tpope/vim-repeat", lazy = false },
-	{ "vim-scripts/ReplaceWithRegister", lazy = false },
+	{
+		"vim-scripts/ReplaceWithRegister",
+		lazy = false,
+		config = function()
+			-- Unmap the default gr mappings after the plugin loads
+			vim.keymap.del("n", "grn")
+			vim.keymap.del("n", "gra")
+			vim.keymap.del("n", "gri")
+		end,
+	},
 
 	{
 		"windwp/nvim-autopairs",
