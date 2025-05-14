@@ -154,10 +154,13 @@ return {
   },
 
   {
-    "glepnir/lspsaga.nvim",
+    "nvimdev/lspsaga.nvim",
     branch = "main",
     config = true,
-    dependencies = { "nvim-tree/nvim-web-devicons" },
+    dependencies = {
+      'nvim-treesitter/nvim-treesitter',
+      'nvim-tree/nvim-web-devicons',
+    }
   },
 
   {
