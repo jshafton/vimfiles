@@ -132,5 +132,14 @@ return {
     opts = {
       -- your configuration comes here
     }
-  }
+  },
+
+  {
+    "voldikss/vim-floaterm",
+    keys = {
+      { "<leader>gz", "<cmd>FloatermNew --height=0.8 --width=0.8 lazygit<CR>" },
+    },
+  },
+
+
 }
