@@ -21,7 +21,7 @@ return {
     lazy = false,
   },
 
-  { "tpope/vim-repeat", lazy = false },
+  { "tpope/vim-repeat",                     lazy = false },
   {
     "vim-scripts/ReplaceWithRegister",
     lazy = false,
@@ -41,16 +41,16 @@ return {
 
       npairs.setup({
         disable_filetype = { "TelescopePrompt", "vim" },
-        disable_in_macro = false, -- disable when recording or executing a macro
+        disable_in_macro = false,       -- disable when recording or executing a macro
         disable_in_visualblock = false, -- disable when insert after visual block mode
         ignored_next_char = string.gsub([[ [%w%%%'%[%"%.] ]], "%s+", ""),
         enable_moveright = true,
-        enable_afterquote = true, -- add bracket pairs after quote
+        enable_afterquote = true,         -- add bracket pairs after quote
         enable_check_bracket_line = true, --- check bracket in same line
         check_ts = false,
-        map_bs = true, -- map the <BS> key
-        map_c_h = false, -- Map the <C-h> key to delete a pair
-        map_c_w = false, -- map <c-w> to delete a pair if possible
+        map_bs = true,                    -- map the <BS> key
+        map_c_h = false,                  -- Map the <C-h> key to delete a pair
+        map_c_w = false,                  -- map <c-w> to delete a pair if possible
         map_cr = true,
         map_complete = true,
       })
@@ -72,7 +72,7 @@ return {
   },
 
   { "axelf4/vim-strip-trailing-whitespace", lazy = false },
-  { "dhruvasagar/vim-table-mode", ft = { "markdown" } },
+  { "dhruvasagar/vim-table-mode",           ft = { "markdown" } },
 
   -- ar, ir
   -- { "nelstrom/vim-textobj-rubyblock", ft = { "ruby" } },
@@ -150,60 +150,7 @@ return {
       })
     end,
   },
-  {
-    "nvim-treesitter/nvim-treesitter-textobjects",
-    dependencies = {
-      "nvim-treesitter-textobjects",
-      "nvim-treesitter/nvim-treesitter",
-    },
-    lazy = false,
-    config = function()
-      require("nvim-treesitter.configs").setup({
-        textobjects = {
-          select = {
-            enable = true,
-            -- Automatically jump forward to textobj, similar to targets.vim
-            lookahead = true,
-            keymaps = {
-              -- You can use the capture groups defined in textobjects.scm
-              ["af"] = "@function.outer",
-              ["if"] = "@function.inner",
-              ["ac"] = "@class.outer",
-              ["ic"] = "@class.inner",
-            },
-          },
-          move = {
-            enable = true,
-            set_jumps = true, -- whether to set jumps in the jumplist
-            goto_next_start = {
-              ["]m"] = "@function.outer",
-              ["]]"] = "@class.outer",
-            },
-            goto_next_end = {
-              ["]M"] = "@function.outer",
-              ["]["] = "@class.outer",
-            },
-            goto_previous_start = {
-              ["[m"] = "@function.outer",
-              ["[["] = "@class.outer",
-            },
-            goto_previous_end = {
-              ["[M"] = "@function.outer",
-              ["[]"] = "@class.outer",
-            },
-          },
-          lsp_interop = {
-            enable = true,
-            border = "none",
-            peek_definition_code = {
-              ["<leader>df"] = "@function.outer",
-              ["<leader>dF"] = "@class.outer",
-            },
-          },
-        },
-      })
-    end,
-  },
+
   -- https://github.com/wellle/targets.vim/blob/master/cheatsheet.md
   { "wellle/targets.vim", lazy = false },
 
@@ -219,7 +166,7 @@ return {
   {
     "junegunn/vim-easy-align",
     keys = {
-      { "g=", "<Plug>(EasyAlign)", mode = { "n" } },
+      { "g=", "<Plug>(EasyAlign)",     mode = { "n" } },
       { "g=", "<Plug>(LiveEasyAlign)", mode = { "v" } },
     },
     cmd = {
@@ -237,7 +184,7 @@ return {
     lazy = false,
   },
 
-  { "tpope/vim-eunuch", lazy = false },
+  { "tpope/vim-eunuch",   lazy = false },
 
   {
     "simnalamburt/vim-mundo",
@@ -261,8 +208,8 @@ return {
     },
     keys = {
       { "<leader>r", "<cmd>lua require('spectre').open_file_search({select_word=true})<CR>", mode = { "n" } },
-      { "<leader>R", "<cmd>lua require('spectre').open_visual({select_word=true})<CR>", mode = { "n" } },
-      { "<leader>S", "<cmd>lua require('spectre').open()<CR>", mode = { "n" } },
+      { "<leader>R", "<cmd>lua require('spectre').open_visual({select_word=true})<CR>",      mode = { "n" } },
+      { "<leader>S", "<cmd>lua require('spectre').open()<CR>",                               mode = { "n" } },
     },
   },
 
@@ -317,7 +264,7 @@ return {
       {
         "<space>f",
         function()
-          require("conform").format({ async = true, lsp_fallback = true })
+          require("conform").format({ async = true, timeout_ms = 1000, lsp_fallback = true })
         end,
         mode = "",
         desc = "Format buffer",
@@ -337,6 +284,7 @@ return {
         hcl = { "hclfmt" },
         yaml = { "yamlfmt" },
         ruby = { "rubocop" },
+        sql = { "sqlfluff" },
       },
       -- Set up format-on-save
       format_on_save = function(bufnr)
@@ -355,7 +303,7 @@ return {
           return
         end
 
-        return { timeout_ms = 500, lsp_fallback = true }
+        return { timeout_ms = 1000, lsp_fallback = true }
       end,
       -- Customize formatters
       formatters = {
@@ -372,6 +320,29 @@ return {
         },
         stylua = {
           prepend_args = { "--indent-type", "Spaces", "--indent-width", "2" },
+        },
+        sqlfluff = {
+          command = "sqlfluff",
+          args = { "format", "--dialect=postgres", "-" },
+          stdin = true,
+          cwd = function(_, ctx)
+            -- Look for SQLFluff config files in project root
+            local root_patterns = { ".sqlfluff", ".sqlfluffignore", "pyproject.toml", "setup.cfg" }
+            local path = ctx.dirname
+
+            while path and path ~= "/" do
+              for _, pattern in ipairs(root_patterns) do
+                if vim.fn.filereadable(path .. "/" .. pattern) == 1 then
+                  return path
+                end
+              end
+              path = vim.fn.fnamemodify(path, ":h")
+            end
+
+            return ctx.dirname
+          end,
+          -- Exit codes that indicate success
+          exit_codes = { 0, 1 }, -- SQLFluff returns 1 when it makes changes
         },
       },
     },

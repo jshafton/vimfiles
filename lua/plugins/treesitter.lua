@@ -36,10 +36,12 @@ return {
         "helm",
         "jinja",
         "jinja_inline",
+        "prisma",
         "sql",
         "ssh_config",
         "terraform",
         "tmux",
+        "typescript",
       },
       highlight = {
         enable = true,

@@ -25,7 +25,8 @@ return {
           settings = {
             yaml = {
               schemas = {
-                ["https://raw.githubusercontent.com/yannh/kubernetes-json-schema/master/v1.22.1-standalone/all.json"] = "*k8s**/*",
+                ["https://raw.githubusercontent.com/yannh/kubernetes-json-schema/master/v1.22.1-standalone/all.json"] =
+                "*k8s**/*",
                 ["https://raw.githubusercontent.com/ansible/schemas/main/f/ansible.json"] = "*ansible**/*",
                 ["http://json.schemastore.org/github-workflow"] = ".github/workflows/*",
                 ["http://json.schemastore.org/github-action"] = ".github/action.{yml,yaml}",
@@ -35,9 +36,12 @@ return {
                 ["http://json.schemastore.org/chart"] = "Chart.{yml,yaml}",
                 ["https://json.schemastore.org/dependabot-v2"] = ".github/dependabot.{yml,yaml}",
                 ["https://json.schemastore.org/gitlab-ci"] = "*gitlab-ci*.{yml,yaml}",
-                ["https://raw.githubusercontent.com/OAI/OpenAPI-Specification/main/schemas/v3.1/schema.json"] = "*api*.{yml,yaml}",
-                ["https://raw.githubusercontent.com/compose-spec/compose-spec/master/schema/compose-spec.json"] = "*docker-compose*.{yml,yaml}",
-                ["https://raw.githubusercontent.com/argoproj/argo-workflows/master/api/jsonschema/schema.json"] = "*flow*.{yml,yaml}",
+                ["https://raw.githubusercontent.com/OAI/OpenAPI-Specification/main/schemas/v3.1/schema.json"] =
+                "*api*.{yml,yaml}",
+                ["https://raw.githubusercontent.com/compose-spec/compose-spec/master/schema/compose-spec.json"] =
+                "*docker-compose*.{yml,yaml}",
+                ["https://raw.githubusercontent.com/argoproj/argo-workflows/master/api/jsonschema/schema.json"] =
+                "*flow*.{yml,yaml}",
               },
             },
           },
@@ -87,14 +91,33 @@ return {
           },
         }
 
+        vim.lsp.config["ts_ls"] = {
+          settings = {
+            typescript = {
+              inlayHints = {
+                includeInlayParameterNameHints = 'all',
+                includeInlayParameterNameHintsWhenArgumentMatchesName = false,
+                includeInlayFunctionParameterTypeHints = true,
+                includeInlayVariableTypeHints = true,
+              }
+            },
+            javascript = {
+              inlayHints = {
+                includeInlayParameterNameHints = 'all',
+                includeInlayParameterNameHintsWhenArgumentMatchesName = false,
+                includeInlayFunctionParameterTypeHints = true,
+                includeInlayVariableTypeHints = true,
+              }
+            }
+          }
+        }
+
         require("mason").setup()
         require("mason-lspconfig").setup({
           ensure_installed = {
             "bashls",
             "lua_ls",
-            "denols",
             "dockerls",
-            "groovyls",
             "helm_ls",
             "jedi_language_server",
             "jsonls",
@@ -102,6 +125,9 @@ return {
             "ruby_lsp",
             "terraformls",
             "yamlls",
+            "ts_ls",
+            "prismals",
+            "eslint",
           },
         })
       end,
@@ -132,10 +158,10 @@ return {
     cmd = "Mason",
     keys = { { "<leader>cm", "<cmd>Mason<cr>", desc = "Mason" } },
     opts = {
-      registries = {
-        "github:mason-org/mason-registry",
-        "github:Crashdummyy/mason-registry",
-      },
+      -- registries = {
+      --   "github:mason-org/mason-registry",
+      --   "github:Crashdummyy/mason-registry",
+      -- },
       ensure_installed = {
         "actionlint",
         "coffeesense-language-server",
