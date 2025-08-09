@@ -155,4 +155,72 @@ return {
       },
     },
   },
+
+  {
+    "HiPhish/rainbow-delimiters.nvim",
+    event = { "BufReadPost", "BufNewFile" },
+  },
+
+  {
+    "lukas-reineke/indent-blankline.nvim",
+    main = "ibl",
+    event = { "BufReadPost", "BufNewFile" },
+    keys = {
+      { "<leader>ur", "<cmd>IBLToggleRainbow<cr>", desc = "Toggle rainbow indent" },
+    },
+    config = function()
+      -- Define muted rainbow colors
+      local rainbow_highlight = {
+        "RainbowRed",
+        "RainbowYellow",
+        "RainbowBlue",
+        "RainbowOrange",
+        "RainbowGreen",
+        "RainbowViolet",
+        "RainbowCyan",
+      }
+
+      -- Default gray color
+      local default_highlight = { "IblIndent" }
+
+      local hooks = require("ibl.hooks")
+
+      -- Create the highlight groups
+      hooks.register(hooks.type.HIGHLIGHT_SETUP, function()
+        -- Muted rainbow colors
+        vim.api.nvim_set_hl(0, "RainbowRed", { fg = "#7F3A43" })
+        vim.api.nvim_set_hl(0, "RainbowYellow", { fg = "#7A6C47" })
+        vim.api.nvim_set_hl(0, "RainbowBlue", { fg = "#3E5E7C" })
+        vim.api.nvim_set_hl(0, "RainbowOrange", { fg = "#6E5A3F" })
+        vim.api.nvim_set_hl(0, "RainbowGreen", { fg = "#546E4A" })
+        vim.api.nvim_set_hl(0, "RainbowViolet", { fg = "#664E6B" })
+        vim.api.nvim_set_hl(0, "RainbowCyan", { fg = "#3B5D62" })
+
+        -- Default gray color
+        vim.api.nvim_set_hl(0, "IblIndent", { fg = "#3B4048" })
+      end)
+
+      -- Start with rainbow OFF (gray colors)
+      require("ibl").setup({
+        indent = {
+          highlight = default_highlight,
+        },
+      })
+
+      -- Track rainbow state
+      local rainbow_enabled = false
+
+      -- Create toggle command
+      vim.api.nvim_create_user_command("IBLToggleRainbow", function()
+        rainbow_enabled = not rainbow_enabled
+        require("ibl").setup({
+          indent = {
+            highlight = rainbow_enabled and rainbow_highlight or default_highlight,
+          },
+        })
+        vim.notify("Rainbow indent " .. (rainbow_enabled and "enabled" or "disabled"))
+      end, {})
+    end,
+  }
+
 }
