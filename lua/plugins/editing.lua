@@ -21,7 +21,7 @@ return {
     lazy = false,
   },
 
-  { "tpope/vim-repeat",                     lazy = false },
+  { "tpope/vim-repeat",           lazy = false },
   {
     "vim-scripts/ReplaceWithRegister",
     lazy = false,
@@ -71,8 +71,8 @@ return {
     lazy = false,
   },
 
-  { "axelf4/vim-strip-trailing-whitespace", lazy = false },
-  { "dhruvasagar/vim-table-mode",           ft = { "markdown" } },
+  -- { "axelf4/vim-strip-trailing-whitespace", lazy = false },
+  { "dhruvasagar/vim-table-mode", ft = { "markdown" } },
 
   -- ar, ir
   -- { "nelstrom/vim-textobj-rubyblock", ft = { "ruby" } },
@@ -285,6 +285,7 @@ return {
         yaml = { "yamlfmt" },
         ruby = { "rubocop" },
         sql = { "sqlfluff" },
+        ["_"] = { "trim_whitespace" },
       },
       -- Set up format-on-save
       format_on_save = function(bufnr)
