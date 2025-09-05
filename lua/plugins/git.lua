@@ -1,6 +1,7 @@
 return {
   {
     "tpope/vim-fugitive",
+    lazy = false,
     keys = {
       { "<leader>gs",   "<cmd>Git<CR>" },
       { "<leader>gc",   "<cmd>Git commit<CR>" },
