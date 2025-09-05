@@ -137,9 +137,19 @@ return {
   {
     "voldikss/vim-floaterm",
     keys = {
-      { "<leader>gz", "<cmd>FloatermNew --height=0.8 --width=0.8 lazygit<CR>" },
+      { "<leader>gz", "<cmd>FloatermNew --name=lazygit --height=0.9 --width=0.9 lazygit<CR>" },
     },
+    config = function()
+      -- Don't exit insert mode with escape key in lazygit
+      vim.api.nvim_create_autocmd("FileType", {
+        pattern = "floaterm",
+        callback = function()
+          if vim.b.floaterm_name == "lazygit" then
+            vim.keymap.set('t', '<Esc>', '<Esc>', { buffer = true })
+          end
+        end
+      })
+    end
   },
-
 
 }
