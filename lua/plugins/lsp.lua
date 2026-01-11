@@ -145,12 +145,8 @@ return {
   },
 
   {
-    "someone-stole-my-name/yaml-companion.nvim",
+    "mosheavni/yaml-companion.nvim",
     config = true,
-    dependencies = {
-      "neovim/nvim-lspconfig",
-      "nvim-lua/plenary.nvim",
-    },
   },
 
   {
