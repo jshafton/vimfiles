@@ -21,7 +21,11 @@ return {
         -- section_separators = { left = '', right = ''},
         section_separators = { left = "", right = "" },
         component_separators = { left = "", right = "" },
-        disabled_filetypes = {},
+        disabled_filetypes = {
+          statusline = { 'AgenticChat', 'AgenticInput', 'AgenticCode', 'AgenticFiles' },
+          winbar = { 'AgenticChat', 'AgenticInput', 'AgenticCode', 'AgenticFiles' },
+
+        },
         always_divide_middle = false,
       },
       sections = {
