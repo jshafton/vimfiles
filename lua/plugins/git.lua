@@ -124,7 +124,7 @@ return {
   {
     "sindrets/diffview.nvim",
     keys = {
-      { "©", "<cmd>DiffviewOlen<CR>" },
+      { "©", "<cmd>DiffviewOpen main<CR>" }, -- Option+G on macOS
     },
   },
 
