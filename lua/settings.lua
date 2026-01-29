@@ -9,15 +9,32 @@ local g = vim.g                -- global variables
 local opt = vim.opt            -- global/buffer/windows-scoped options
 
 -----------------------------------------------------------
+-- Helper: find executable with fallback
+-----------------------------------------------------------
+local function find_executable(name)
+  local home = os.getenv("HOME")
+  local candidates = {
+    home .. "/.local/share/mise/shims/" .. name,  -- mise shims
+    home .. "/.asdf/shims/" .. name,              -- asdf shims
+  }
+  for _, path in ipairs(candidates) do
+    if vim.fn.executable(path) == 1 then
+      return path
+    end
+  end
+  return name  -- fallback to PATH
+end
+
+-----------------------------------------------------------
 -- Ruby
 -----------------------------------------------------------
-g.ruby_host_prog = "$HOME/.asdf/shims/ruby"
+g.ruby_host_prog = find_executable("ruby")
 
 -----------------------------------------------------------
 -- Python
 -----------------------------------------------------------
-g.python3_host_prog = os.getenv("HOME") .. "/.asdf/shims/python3"
-g.python_host_prog = os.getenv("HOME") .. "/.asdf/shims/python2"
+g.python3_host_prog = find_executable("python3")
+g.python_host_prog = find_executable("python2")
 
 -----------------------------------------------------------
 -- General

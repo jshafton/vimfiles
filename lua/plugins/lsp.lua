@@ -71,11 +71,19 @@ return {
         }
 
         vim.lsp.config["ruby-lsp"] = {
-          -- Set ruby_lsp to use asdf shim if present for project-local binaries
+          -- Find ruby-lsp: mise shims -> asdf shims -> PATH
           cmd = function()
-            local ruby_lsp_cmd = os.getenv("HOME") .. "/.asdf/shims/ruby-lsp"
-            if not vim.fn.filereadable(ruby_lsp_cmd) then
-              ruby_lsp_cmd = "ruby-lsp"
+            local home = os.getenv("HOME")
+            local candidates = {
+              home .. "/.local/share/mise/shims/ruby-lsp",
+              home .. "/.asdf/shims/ruby-lsp",
+            }
+            local ruby_lsp_cmd = "ruby-lsp"
+            for _, path in ipairs(candidates) do
+              if vim.fn.executable(path) == 1 then
+                ruby_lsp_cmd = path
+                break
+              end
             end
             return { ruby_lsp_cmd, "stdio" }
           end,
