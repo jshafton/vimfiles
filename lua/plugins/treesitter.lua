@@ -42,6 +42,8 @@ return {
         "terraform",
         "tmux",
         "typescript",
+        "angular",
+        "css",
       },
       highlight = {
         enable = true,
