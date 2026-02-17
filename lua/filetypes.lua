@@ -6,5 +6,6 @@ cmd([[
     autocmd BufNewFile,BufReadPost .github/*.yml,.github/*.yaml,.github/*.workflow setlocal filetype=ghaworkflow.yaml
     autocmd BufNewFile,BufReadPost *.pkr.hcl,*.pkrvars.hcl setlocal filetype=packer.hcl
     autocmd BufNewFile,BufReadPost argocd/**/*.yaml setlocal filetype=helm
+    autocmd BufNewFile,BufReadPost *.component.html setlocal filetype=htmlangular
   augroup END
 ]])
