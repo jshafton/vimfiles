@@ -28,6 +28,7 @@ return {
     { "√", '<cmd>lua require("neoclip.fzf")()<CR>' },
     -- alt-shift-c "changes"
     { "Ç", "<cmd>FzfLua git_bcommits<CR>" },
+    { "<leader>gt", "<cmd>FzfLua git_worktrees<CR>" },
     -- alt-c "commands"
     { "ç", "<cmd>FzfLua commands<CR>" },
     -- alt-m "maps"
