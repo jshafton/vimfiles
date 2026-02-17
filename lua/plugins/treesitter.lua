@@ -3,71 +3,77 @@ return {
     "nvim-treesitter/nvim-treesitter",
     version = false, -- last release is way too old and doesn't work on Windows
     build = ":TSUpdate",
-    event = { "BufReadPost", "BufNewFile" },
-    opts = {
-      ensure_installed = {
+    lazy = false,
+    config = function()
+      -- Install missing parsers on startup
+      local ensure_installed = {
+        "angular",
         "bash",
         "c_sharp",
+        "css",
+        "git_rebase",
         "gitcommit",
+        "gitignore",
         "go",
+        "groovy",
         "hcl",
+        "helm",
         "html",
         "http",
         "java",
         "javascript",
+        "jinja",
+        "jinja_inline",
         "jsdoc",
         "json",
         "json5",
-        "jsonc",
         "lua",
         "make",
         "markdown",
         "markdown_inline",
+        "prisma",
         "python",
         "regex",
         "ruby",
         "scala",
-        "toml",
-        "vim",
-        "yaml",
-        "git_rebase",
-        "gitignore",
-        "groovy",
-        "helm",
-        "jinja",
-        "jinja_inline",
-        "prisma",
         "sql",
         "ssh_config",
         "terraform",
         "tmux",
+        "toml",
         "typescript",
-        "angular",
-        "css",
-      },
-      highlight = {
-        enable = true,
-        -- Setting this to true will run `:h syntax` and tree-sitter at the same time.
-        -- Set this to `true` if you depend on 'syntax' being enabled (like for indentation).
-        -- Using this option may slow down your editor, and you may see some duplicate highlights.
-        -- Instead of true it can also be a list of languages
-        additional_vim_regex_highlighting = false, -- { 'ansible', 'yaml' },
-        disable = { "yaml", "ansible" },
-      },
-      indent = {
-        enable = false,
-        disable = { "yaml" },
-      },
-      endwise = {
-        enabled = true,
-      },
-      matchup = {
-        enable = true, -- mandatory, false will disable the whole extension
-        -- disable = { "c", "ruby" }, -- optional, list of language that will be disabled
-      },
-    },
-    config = function(_, opts)
-      require("nvim-treesitter.configs").setup(opts)
+        "vim",
+        "yaml",
+      }
+
+      local ts = require("nvim-treesitter")
+      local installed = ts.get_installed()
+      local installed_set = {}
+      for _, lang in ipairs(installed) do
+        installed_set[lang] = true
+      end
+
+      local missing = {}
+      for _, lang in ipairs(ensure_installed) do
+        if not installed_set[lang] then
+          table.insert(missing, lang)
+        end
+      end
+
+      if #missing > 0 then
+        ts.install(missing)
+      end
+
+      -- Enable treesitter highlighting globally (replaces old highlight = { enable = true })
+      -- vim.treesitter.start() resolves the parser language from filetype automatically
+      -- and pcall silently skips filetypes without a parser installed
+      vim.api.nvim_create_autocmd("FileType", {
+        callback = function(args)
+          if not args.match:find("^yaml") then
+            pcall(vim.treesitter.start, args.buf)
+          end
+        end,
+      })
     end,
   },
 }

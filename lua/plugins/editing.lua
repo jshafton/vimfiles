@@ -92,62 +92,84 @@ return {
   },
   {
     "nvim-treesitter/nvim-treesitter-textobjects",
+    branch = "main",
     dependencies = {
-      "nvim-treesitter-textobjects",
       "nvim-treesitter/nvim-treesitter",
     },
     lazy = false,
     config = function()
-      require("nvim-treesitter.configs").setup({
-        textobjects = {
-          select = {
-            enable = true,
-            -- Automatically jump forward to textobj, similar to targets.vim
-            lookahead = true,
-            keymaps = {
-              -- You can use the capture groups defined in textobjects.scm
-              ["af"] = "@function.outer",
-              ["if"] = "@function.inner",
-              ["ac"] = "@class.outer",
-              ["ic"] = "@class.inner",
-              ["ar"] = "@block.outer",
-              ["ir"] = "@block.inner",
-            },
-          },
-          move = {
-            enable = true,
-            set_jumps = true, -- whether to set jumps in the jumplist
-            goto_next_start = {
-              ["]m"] = "@function.outer",
-              ["]]"] = "@class.outer",
-              ["]r"] = "@block.outer",
-            },
-            goto_next_end = {
-              ["]M"] = "@function.outer",
-              ["]["] = "@class.outer",
-              ["]R"] = "@block.outer",
-            },
-            goto_previous_start = {
-              ["[m"] = "@function.outer",
-              ["[["] = "@class.outer",
-              ["[r"] = "@block.outer",
-            },
-            goto_previous_end = {
-              ["[M"] = "@function.outer",
-              ["[]"] = "@class.outer",
-              ["[R"] = "@block.outer",
-            },
-          },
-          lsp_interop = {
-            enable = true,
-            border = "none",
-            peek_definition_code = {
-              ["<leader>df"] = "@function.outer",
-              ["<leader>dF"] = "@class.outer",
-            },
-          },
+      local select = require("nvim-treesitter-textobjects.select")
+      local move = require("nvim-treesitter-textobjects.move")
+
+      require("nvim-treesitter-textobjects").setup({
+        select = {
+          lookahead = true,
+        },
+        move = {
+          set_jumps = true,
         },
       })
+
+      -- Select textobjects
+      local select_maps = {
+        ["af"] = "@function.outer",
+        ["if"] = "@function.inner",
+        ["ac"] = "@class.outer",
+        ["ic"] = "@class.inner",
+        ["ar"] = "@block.outer",
+        ["ir"] = "@block.inner",
+      }
+      for key, query in pairs(select_maps) do
+        vim.keymap.set({ "x", "o" }, key, function()
+          select.select_textobject(query, "textobjects")
+        end)
+      end
+
+      -- Move: goto next
+      local next_start = {
+        ["]m"] = "@function.outer",
+        ["]]"] = "@class.outer",
+        ["]r"] = "@block.outer",
+      }
+      for key, query in pairs(next_start) do
+        vim.keymap.set({ "n", "x", "o" }, key, function()
+          move.goto_next_start(query, "textobjects")
+        end)
+      end
+
+      local next_end = {
+        ["]M"] = "@function.outer",
+        ["]["] = "@class.outer",
+        ["]R"] = "@block.outer",
+      }
+      for key, query in pairs(next_end) do
+        vim.keymap.set({ "n", "x", "o" }, key, function()
+          move.goto_next_end(query, "textobjects")
+        end)
+      end
+
+      -- Move: goto previous
+      local prev_start = {
+        ["[m"] = "@function.outer",
+        ["[["] = "@class.outer",
+        ["[r"] = "@block.outer",
+      }
+      for key, query in pairs(prev_start) do
+        vim.keymap.set({ "n", "x", "o" }, key, function()
+          move.goto_previous_start(query, "textobjects")
+        end)
+      end
+
+      local prev_end = {
+        ["[M"] = "@function.outer",
+        ["[]"] = "@class.outer",
+        ["[R"] = "@block.outer",
+      }
+      for key, query in pairs(prev_end) do
+        vim.keymap.set({ "n", "x", "o" }, key, function()
+          move.goto_previous_end(query, "textobjects")
+        end)
+      end
     end,
   },
 
@@ -369,6 +391,7 @@ return {
     event = "BufReadPost",
     config = function()
       vim.g.matchup_matchparen_offscreen = { method = "popup" }
+      vim.g.matchup_treesitter_enabled = true
     end,
   },
 
