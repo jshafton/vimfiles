@@ -284,7 +284,7 @@ return {
     cmd = { "ConformInfo" },
     keys = {
       {
-        "<space>f",
+        "<leader>f",
         function()
           require("conform").format({ async = true, timeout_ms = 1000, lsp_fallback = true })
         end,
@@ -300,6 +300,7 @@ return {
         lua = { "stylua" },
         python = { "isort", "black" },
         javascript = { "prettierd", "prettier" },
+        typescript = { "prettierd", "prettier" },
         sh = { "shfmt", "shellcheck" },
         terraform = { "terraform_fmt" },
         packer = { "packerfmt" },
