@@ -123,8 +123,30 @@ return {
 
   {
     "sindrets/diffview.nvim",
+    lazy = false,
     keys = {
-      { "©", "<cmd>DiffviewOpen main<CR>" }, -- Option+G on macOS
+      {
+        "©", -- Option+G on macOS
+        function()
+          if next(require("diffview.lib").views) then
+            vim.cmd("DiffviewClose")
+          else
+            vim.cmd("DiffviewOpen")
+          end
+        end,
+      },
+      {
+        "˝", -- Option+shift-G on macOS
+        function()
+          if next(require("diffview.lib").views) then
+            vim.cmd("DiffviewClose")
+          else
+            vim.fn.system("git rev-parse --verify --quiet main")
+            local base = vim.v.shell_error == 0 and "main" or "master"
+            vim.cmd("DiffviewOpen " .. base)
+          end
+        end,
+      },
     },
   },
 
