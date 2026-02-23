@@ -60,6 +60,16 @@ return {
       fzf_opts = {
         ["--history"] = fzf_history_file,
       },
+      git = {
+        worktrees = {
+          cmd = [[git worktree list | awk 'NR==1{root=$1; n=length(root)} {p=$1; d=(p==root) ? "." : substr(p,n+2); $1=p "\t" d; print}']],
+          fzf_opts = {
+            ["--delimiter"] = [[\t]],
+            ["--with-nth"] = "2",
+          },
+          winopts = { height = 0.3, width = 0.5, preview = { hidden = "hidden" } },
+        },
+      },
       grep = {
         rg_glob = true,            -- enable glob parsing by default to all
         glob_flag = "--iglob",     -- for case sensitive globs use '--glob'
