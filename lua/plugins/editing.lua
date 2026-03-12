@@ -211,28 +211,9 @@ return {
   {
     "simnalamburt/vim-mundo",
     keys = {
-      { "F5", "<call>MundoToggle<CR>" },
+      { "F5", "<cmd>MundoToggle<CR>" },
     },
     cmd = "MundoToggle",
-  },
-
-  {
-    "nvim-pack/nvim-spectre",
-    config = true,
-    opts = {
-      mapping = {
-        ["send_to_qf"] = {
-          map = "<C-q>",
-          cmd = "<cmd>lua require('spectre.actions').send_to_qf()<CR>",
-          desc = "send all item to quickfix",
-        },
-      },
-    },
-    keys = {
-      { "<leader>r", "<cmd>lua require('spectre').open_file_search({select_word=true})<CR>", mode = { "n" } },
-      { "<leader>R", "<cmd>lua require('spectre').open_visual({select_word=true})<CR>",      mode = { "n" } },
-      { "<leader>S", "<cmd>lua require('spectre').open()<CR>",                               mode = { "n" } },
-    },
   },
 
   {
@@ -286,7 +267,7 @@ return {
       {
         "<leader>f",
         function()
-          require("conform").format({ async = true, timeout_ms = 1000, lsp_fallback = true })
+          require("conform").format({ async = true, timeout_ms = 1000, lsp_format = "fallback" })
         end,
         mode = "",
         desc = "Format buffer",
@@ -327,7 +308,7 @@ return {
           return
         end
 
-        return { timeout_ms = 1000, lsp_fallback = true }
+        return { timeout_ms = 1000, lsp_format = "fallback" }
       end,
       -- Customize formatters
       formatters = {

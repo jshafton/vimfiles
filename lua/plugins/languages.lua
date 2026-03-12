@@ -38,9 +38,9 @@ return {
     -- dependencies = { 'nvim-treesitter/nvim-treesitter', 'nvim-tree/nvim-web-devicons' }, -- if you prefer nvim-web-devicons
     ---@module 'render-markdown'
     ---@type render.md.UserConfig
-    opts = {},
-    config = {
+    opts = {
       completions = { blink = { enabled = true } },
+      latex = { enabled = false },
     },
   },
 }

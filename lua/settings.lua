@@ -3,10 +3,9 @@
 -----------------------------------------------------------
 
 --local map = vim.api.nvim_set_keymap  -- set global keymap
-local cmd = vim.cmd            -- execute Vim commands
-local exec = vim.api.nvim_exec -- execute Vimscript
-local g = vim.g                -- global variables
-local opt = vim.opt            -- global/buffer/windows-scoped options
+local cmd = vim.cmd -- execute Vim commands
+local g = vim.g     -- global variables
+local opt = vim.opt -- global/buffer/windows-scoped options
 
 -----------------------------------------------------------
 -- Helper: find executable with fallback
@@ -34,7 +33,6 @@ g.ruby_host_prog = find_executable("ruby")
 -- Python
 -----------------------------------------------------------
 g.python3_host_prog = find_executable("python3")
-g.python_host_prog = find_executable("python2")
 
 -----------------------------------------------------------
 -- General
@@ -64,16 +62,13 @@ opt.wrap = false          -- don't wrap by default
 opt.list = false          -- don't show list chars
 opt.gdefault = true       -- default to /g global subst (rather than first instance)
 
--- -- highlight on yank
-exec(
-  [[
-  augroup YankHighlight
-    autocmd!
-    autocmd TextYankPost * silent! lua vim.highlight.on_yank{higroup="IncSearch", timeout=250}
-  augroup end
-]],
-  false
-)
+-- highlight on yank
+vim.api.nvim_create_autocmd("TextYankPost", {
+  group = vim.api.nvim_create_augroup("YankHighlight", { clear = true }),
+  callback = function()
+    vim.highlight.on_yank({ higroup = "IncSearch", timeout = 250 })
+  end,
+})
 
 -----------------------------------------------------------
 -- Diagnostics
@@ -91,7 +86,7 @@ vim.diagnostic.config({
 -----------------------------------------------------------
 opt.hidden = true     -- enable background buffers
 opt.history = 1000    -- remember n lines in history
-opt.lazyredraw = true -- faster scrolling
+-- opt.lazyredraw removed in Neovim 0.11
 opt.synmaxcol = 240   -- max column for syntax highlight
 
 -----------------------------------------------------------

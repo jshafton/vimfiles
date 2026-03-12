@@ -21,7 +21,7 @@ return {
       -- git 'pull request' to finish up a PR
       {
         "<leader>gpr",
-        "<cmd>! git push -u origin $(git rev-parse --abbrev-ref HEAD) && hub pull-request --no-edit -o<CR>",
+        "<cmd>! git push -u origin $(git rev-parse --abbrev-ref HEAD) && gh pr create --fill --web<CR>",
       },
     },
   },
@@ -31,7 +31,6 @@ return {
   {
     "lewis6991/gitsigns.nvim",
     lazy = false,
-    dependencies = "nvim-lua/plenary.nvim",
     opts = {
       on_attach = function(bufnr)
         local gitsigns = require("gitsigns")
@@ -103,22 +102,16 @@ return {
   },
 
   {
-    "ruifm/gitlinker.nvim",
-    keys = {
-      {
-        "<leader>gy",
-        '<cmd>lua require("gitlinker").get_buf_range_url("n")<CR>',
-        mode = "n",
-        { silent = false },
-      }, -- copy github link
-      {
-        "<leader>gy",
-        '<cmd>lua require("gitlinker").get_buf_range_url("v")<CR><ESC>',
-        mode = "v",
-        { silent = false },
-      }, -- copy github link
+    "linrongbin16/gitlinker.nvim",
+    opts = {
+      hosts = {
+        ["github%-[%w_]+"] = "https://github.com",
+      },
     },
-    dependencies = "nvim-lua/plenary.nvim",
+    keys = {
+      { "<leader>gy", "<cmd>GitLink<CR>", mode = { "n", "v" }, desc = "Copy git link" },
+      { "<leader>gY", "<cmd>GitLink!<CR>", mode = { "n", "v" }, desc = "Open git link" },
+    },
   },
 
   {
