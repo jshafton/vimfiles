@@ -99,7 +99,7 @@ return {
           },
         }
 
-        vim.lsp.config["ts_ls"] = {
+        vim.lsp.config["vtsls"] = {
           settings = {
             typescript = {
               inlayHints = {
@@ -123,19 +123,22 @@ return {
         require("mason").setup()
         require("mason-lspconfig").setup({
           ensure_installed = {
+            "angularls",
             "bashls",
-            "lua_ls",
+            "docker_compose_language_service",
             "dockerls",
+            "eslint",
             "helm_ls",
-            "jedi_language_server",
             "jsonls",
+            "lua_ls",
+            "marksman",
+            "prismals",
             "pylsp",
             "ruby_lsp",
+            "taplo",
             "terraformls",
+            "vtsls",
             "yamlls",
-            "ts_ls",
-            "prismals",
-            "eslint",
           },
         })
       end,
@@ -163,24 +166,26 @@ return {
     "williamboman/mason.nvim",
     cmd = "Mason",
     keys = { { "<leader>cm", "<cmd>Mason<cr>", desc = "Mason" } },
+    opts = {},
+  },
+
+  {
+    "WhoIsSethDaniel/mason-tool-installer.nvim",
+    dependencies = { "mason.nvim" },
     opts = {
-      -- registries = {
-      --   "github:mason-org/mason-registry",
-      --   "github:Crashdummyy/mason-registry",
-      -- },
       ensure_installed = {
         "actionlint",
-        "coffeesense-language-server",
-        "flake8",
         "gitlint",
-        "gitui",
         "hclfmt",
         "jsonlint",
+        "prettier",
         "shellcheck",
         "shfmt",
         "sqlfmt",
+        "sqlfluff",
         "stylua",
         "tflint",
+        "yamllint",
       },
     },
   },

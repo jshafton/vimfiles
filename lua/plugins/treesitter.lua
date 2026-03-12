@@ -1,6 +1,7 @@
 return {
   {
     "nvim-treesitter/nvim-treesitter",
+    branch = 'main',
     version = false, -- last release is way too old and doesn't work on Windows
     build = ":TSUpdate",
     lazy = false,
@@ -46,23 +47,7 @@ return {
         "yaml",
       }
 
-      local ts = require("nvim-treesitter")
-      local installed = ts.get_installed()
-      local installed_set = {}
-      for _, lang in ipairs(installed) do
-        installed_set[lang] = true
-      end
-
-      local missing = {}
-      for _, lang in ipairs(ensure_installed) do
-        if not installed_set[lang] then
-          table.insert(missing, lang)
-        end
-      end
-
-      if #missing > 0 then
-        ts.install(missing)
-      end
+      require("nvim-treesitter").install(ensure_installed)
 
       -- Enable treesitter highlighting globally (replaces old highlight = { enable = true })
       -- vim.treesitter.start() resolves the parser language from filetype automatically

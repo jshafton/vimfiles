@@ -2,18 +2,18 @@ return {
   "mfussenegger/nvim-lint",
   dependencies = {
     "williamboman/mason.nvim",
-    "rshkarin/mason-nvim-lint",
   },
   event = { "BufWritePost", "TextChanged", "TextChangedI" }, -- Added real-time events
   config = function()
-    require("mason-nvim-lint").setup()
-
     require("lint").linters_by_ft = {
       json = { "jsonlint" },
       ghaworkflow = { "actionlint" },
       yaml = { "yamllint" },
       helm = { "yamllint" },
-      sql = { "sqlfluff" }, -- Added SQL support
+      sh = { "shellcheck" },
+      bash = { "shellcheck" },
+      terraform = { "tflint" },
+      sql = { "sqlfluff" },
     }
 
     -- Configure SQLFluff linter
@@ -45,7 +45,7 @@ return {
 
     -- Keep your original autocmd for other filetypes
     vim.api.nvim_create_autocmd({ "BufWritePost" }, {
-      pattern = { "*.json", "*.yaml", "*.yml" }, -- Specify non-SQL patterns
+      pattern = { "*.json", "*.yaml", "*.yml", "*.sh", "*.bash", "*.tf" },
       callback = function()
         require("lint").try_lint()
       end,
