@@ -99,6 +99,40 @@ return {
           },
         }
 
+        -- Set JAVA_HOME on Neovim's process so all child processes (including jdtls) inherit it.
+        -- The jdtls Python launcher checks JAVA_HOME when --java-executable is not provided.
+        do
+          local mise = vim.fn.exepath("mise") ~= "" and vim.fn.exepath("mise")
+            or (os.getenv("HOME") .. "/.local/bin/mise")
+          if vim.fn.executable(mise) == 1 then
+            local java_bin = vim.fn.trim(vim.fn.system(mise .. " which java 2>/dev/null"))
+            if java_bin ~= "" then
+              vim.env.JAVA_HOME = vim.fn.fnamemodify(java_bin, ":h:h")
+            end
+          end
+        end
+
+        -- Load the Lombok java agent into jdtls's JVM so it understands Lombok-generated
+        -- members (@Data accessors, builder(), etc). lspconfig's bundled jdtls.lua reads
+        -- JDTLS_JVM_ARGS and forwards each whitespace-separated entry as --jvm-arg=.
+        do
+          local lombok = os.getenv("HOME") .. "/.local/share/nvim/mason/packages/jdtls/lombok.jar"
+          if vim.fn.filereadable(lombok) == 1 then
+            vim.env.JDTLS_JVM_ARGS = "-javaagent:" .. lombok
+          end
+        end
+
+        -- nvim-lspconfig's bundled lsp/jdtls.lua already provides cmd (with per-project
+        -- -data workspace dirs) and root_markers. We only layer on Java settings; jdtls
+        -- finds the JVM via the JAVA_HOME set above.
+        vim.lsp.config["jdtls"] = {
+          settings = {
+            java = {
+              format = { enabled = true },
+            },
+          },
+        }
+
         vim.lsp.config["vtsls"] = {
           settings = {
             typescript = {
@@ -122,8 +156,12 @@ return {
 
         require("mason").setup()
         require("mason-lspconfig").setup({
+          automatic_enable = {
+            exclude = { "snyk_ls" },
+          },
           ensure_installed = {
             "angularls",
+            "jdtls",
             "bashls",
             "docker_compose_language_service",
             "dockerls",
