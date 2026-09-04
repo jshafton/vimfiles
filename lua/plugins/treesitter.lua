@@ -54,7 +54,7 @@ return {
       -- and pcall silently skips filetypes without a parser installed
       vim.api.nvim_create_autocmd("FileType", {
         callback = function(args)
-          if not args.match:find("^yaml") then
+          if args.match ~= "yaml.ansible" then
             pcall(vim.treesitter.start, args.buf)
           end
         end,
