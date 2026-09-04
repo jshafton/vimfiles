@@ -40,6 +40,21 @@ g.python3_host_prog = find_executable("python3")
 g.mapleader = ","                 -- change leader to a comma
 opt.mouse = "a"                   -- enable mouse support
 opt.clipboard = ""                -- copy/paste to system clipboard
+
+-- On a headless remote box (no pbcopy/xclip/wl-copy) the only route to the local
+-- machine's clipboard is OSC 52. nvim auto-enables it when SSH_TTY is set, but
+-- herdr panes don't set SSH_TTY, so wire the OSC 52 provider explicitly (herdr and
+-- WezTerm both forward OSC 52). Gated on "no native clipboard tool" so these
+-- dotfiles keep the native provider if they ever run on the Mac (pbcopy).
+if vim.fn.executable("pbcopy") == 0 and vim.fn.executable("xclip") == 0
+  and vim.fn.executable("wl-copy") == 0 and vim.fn.executable("xsel") == 0 then
+  local osc52 = require("vim.ui.clipboard.osc52")
+  g.clipboard = {
+    name = "OSC 52",
+    copy = { ["+"] = osc52.copy("+"), ["*"] = osc52.copy("*") },
+    paste = { ["+"] = osc52.paste("+"), ["*"] = osc52.paste("*") },
+  }
+end
 opt.backup = false                -- don't save backup files
 opt.swapfile = false              -- don't use swapfile
 opt.undofile = true               -- keep track of undo history
