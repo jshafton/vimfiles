@@ -112,6 +112,31 @@ return {
           end
         end
 
+        -- The mason-installed Roslyn server is framework-dependent: it locates the .NET
+        -- runtime via DOTNET_ROOT, not PATH. A shell that only contributes mise shims
+        -- (no `mise activate` env hook) never exports DOTNET_ROOT, so the server would
+        -- fail to spawn. Resolve the root the same way as JAVA_HOME above.
+        do
+          if not vim.env.DOTNET_ROOT then
+            local dotnet_root = os.getenv("HOME") .. "/.local/share/mise/dotnet-root"
+            if vim.fn.executable(dotnet_root .. "/dotnet") == 1 then
+              vim.env.DOTNET_ROOT = dotnet_root
+            else
+              local mise = vim.fn.exepath("mise") ~= "" and vim.fn.exepath("mise")
+                or (os.getenv("HOME") .. "/.local/bin/mise")
+              if vim.fn.executable(mise) == 1 then
+                local dotnet_bin = vim.fn.trim(vim.fn.system(mise .. " which dotnet 2>/dev/null"))
+                if dotnet_bin == "" then
+                  dotnet_bin = vim.fn.trim(vim.fn.system(mise .. " which dotnet-core 2>/dev/null"))
+                end
+                if dotnet_bin ~= "" then
+                  vim.env.DOTNET_ROOT = vim.fn.fnamemodify(dotnet_bin, ":h:h")
+                end
+              end
+            end
+          end
+        end
+
         -- Load the Lombok java agent into jdtls's JVM so it understands Lombok-generated
         -- members (@Data accessors, builder(), etc). lspconfig's bundled jdtls.lua reads
         -- JDTLS_JVM_ARGS and forwards each whitespace-separated entry as --jvm-arg=.
