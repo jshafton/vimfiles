@@ -117,6 +117,21 @@ return {
   {
     "sindrets/diffview.nvim",
     lazy = false,
+    opts = {
+      -- GitHub-like review. The left panel is the "all files" list (github's
+      -- "Files changed" sidebar); enhanced_diff_hl dims removed / brightens added
+      -- lines for github's red/green feel; winbar_info puts a per-file header bar
+      -- over each diff so you always know which file you're in.
+      enhanced_diff_hl = true,
+      view = {
+        default = { winbar_info = true },
+      },
+      file_panel = {
+        listing_style = "tree", -- collapsible file tree, not a flat list
+        tree_options = { flatten_dirs = true, folder_statuses = "only_folded" },
+        win_config = { position = "left", width = 32 },
+      },
+    },
     keys = {
       {
         "©", -- Option+G on macOS
