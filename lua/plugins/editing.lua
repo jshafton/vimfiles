@@ -279,7 +279,8 @@ return {
       -- Define your formatters
       formatters_by_ft = {
         lua = { "stylua" },
-        python = { "isort", "black" },
+        -- ruff reads each project's pyproject.toml; its default style is Black's.
+        python = { "ruff_organize_imports", "ruff_format" },
         javascript = { "prettierd", "prettier" },
         typescript = { "prettierd", "prettier" },
         sh = { "shfmt", "shellcheck" },

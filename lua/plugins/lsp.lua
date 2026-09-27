@@ -179,6 +179,21 @@ return {
           }
         }
 
+        -- Python: ruff (its own LSP, below) handles lint and style from each project's pyproject.toml.
+        -- pylsp stays for completion, hover and go-to-definition, with its own style checkers off so
+        -- they don't report a second, different line length (pycodestyle defaults to 79).
+        vim.lsp.config["pylsp"] = {
+          settings = {
+            pylsp = {
+              plugins = {
+                pycodestyle = { enabled = false },
+                pyflakes = { enabled = false },
+                mccabe = { enabled = false },
+              },
+            },
+          },
+        }
+
         require("mason").setup()
         require("mason-lspconfig").setup({
           automatic_enable = {
@@ -197,6 +212,7 @@ return {
             "marksman",
             "prismals",
             "pylsp",
+            "ruff",
             "ruby_lsp",
             "taplo",
             "terraformls",
